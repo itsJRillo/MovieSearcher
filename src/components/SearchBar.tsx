@@ -1,7 +1,8 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import "../styles/searchBar.css"
+import { useState, ChangeEvent, FormEvent } from 'react';
+import "../styles/main.css"
+import lupaIcon from '../assets/lupa.png'
 
-const SearchBar: React.FC = () => {
+const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +23,7 @@ const SearchBar: React.FC = () => {
         onChange={handleInputChange}
       />
       <button type="submit">
-        <i className="fa fa-search"></i>
+        <img src={lupaIcon}/>
       </button>
     </form>
   );

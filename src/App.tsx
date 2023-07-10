@@ -1,15 +1,11 @@
-import movieIcon from './assets/movie.png'
-import './styles/App.css'
 import SearchBar from "./components/SearchBar"
+import Header from "./components/Header"
 
 function App() {
 
   return (
     <>
-      <div className='header'>
-        <img src={movieIcon} className="icon" alt="Movie icon" />
-        <h1>Movie Searcher</h1>
-      </div>
+      <Header/>
       <div>
         <SearchBar/>
       </div>
