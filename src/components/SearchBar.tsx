@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import "../styles/main.css"
+import styles from "../styles/main.module.css"
 import lupaIcon from '../assets/lupa.png'
 
 const SearchBar = () => {
@@ -15,7 +15,7 @@ const SearchBar = () => {
   };
 
   return (
-    <form className="search-container" onSubmit={handleFormSubmit}>
+    <form className={styles.searchContainer} onSubmit={handleFormSubmit}>
       <input
         type="text"
         placeholder="Search"
