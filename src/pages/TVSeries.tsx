@@ -1,4 +1,4 @@
-import '../styles/movies.css';
+import '../styles/card.css';
 import SerieCard from '../components/SerieCard';
 
 export default function TVSeries({ data }: { data: SerieType[] | undefined }) {

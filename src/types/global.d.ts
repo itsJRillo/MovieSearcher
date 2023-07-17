@@ -1,5 +1,7 @@
+import { types } from "util";
+
 declare global {
-  interface MovieType {
+  type MovieType = {
     adult: boolean;
     backdrop_path: string;
     genre_ids: number[];
@@ -16,7 +18,7 @@ declare global {
     vote_count: number;
   }
 
-  interface SerieType {
+  type SerieType = {
     backdrop_path: string;
     first_air_date: Date;
     genre_ids: number[];

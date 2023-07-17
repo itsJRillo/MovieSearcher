@@ -1,4 +1,5 @@
 .header {
+  margin: 0 auto;
   width: 100%;
   background-color: #edcc58;
   display: flex;

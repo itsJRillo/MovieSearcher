@@ -1,0 +1,108 @@
+.pagination-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f2f2f2;
+  padding: 10px 0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  color: #333333;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.page-link:hover,
+.page-link:focus {
+  background-color: #f2f2f2;
+}
+
+.page-item.active .page-link {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.page-item.disabled .page-link {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-item.previous .page-link,
+.page-item.next .page-link {
+  font-size: 14px;
+  padding: 0;
+  width: auto;
+  height: auto;
+  border: none;
+  background-color: transparent;
+  color: #333333;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.page-item.previous .page-link:hover,
+.page-item.next .page-link:hover,
+.page-item.previous .page-link:focus,
+.page-item.next .page-link:focus {
+  color: #666666;
+}
+
+.page-item.previous.disabled .page-link,
+.page-item.next.disabled .page-link {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.movies-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.movies-container h1{
+  text-align: center;
+  font-size: 5rem;
+}
+
+.movie-grid {
+  margin-bottom: 50px; /* Agrega un espacio en la parte inferior para la paginación */
+}
+
+.pagination-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-height: 100vh) {
+  .pagination-container {
+    position: static;
+    margin-top: auto;
+  }
+}
