@@ -79,13 +79,13 @@
   min-height: 100vh;
 }
 
-.movies-container h1{
+.movies-container-title{
   text-align: center;
   font-size: 5rem;
 }
 
 .movie-grid {
-  margin-bottom: 50px; /* Agrega un espacio en la parte inferior para la paginación */
+  margin-bottom: 50px;
 }
 
 .pagination-container {

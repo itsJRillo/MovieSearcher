@@ -99,9 +99,18 @@
 }
 
 .container {
-    padding: 3rem;
+  padding: 3rem;
 }
 
-.sub-container{
+.sub-container {
   padding: 10px;
+}
+
+/* Estilos para eliminar los estilos de los enlaces */
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
 }

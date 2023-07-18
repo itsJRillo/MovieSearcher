@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
 import ReactPaginate from 'react-paginate';
 import '../styles/card.css';
+import '../styles/pagination.css';
 
-export default function Movies({ data }: { data: MovieType[] | undefined }) {
+export default function Movies({ data, onMovieClick }: { data: MovieType[] | undefined, onMovieClick: (movie: MovieType) => void }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
@@ -17,11 +19,12 @@ export default function Movies({ data }: { data: MovieType[] | undefined }) {
 
   return (
     <div className="movies-container">
-      <h1>Movies</h1>
-      
+      <h1 className='movies-container-title'>Movies</h1>
       <div className="movie-grid">
         {currentItems?.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <Link to={`/movies/${movie.id}`} key={movie.id} onClick={() => onMovieClick(movie)}>
+            <MovieCard movie={movie} />
+          </Link>
         ))}
       </div>
 
