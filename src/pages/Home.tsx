@@ -41,6 +41,7 @@ export default function Home({ data }: { data: { movies: MovieType[] | undefined
           removeArrowOnDeviceType={["tablet", "mobile"]}
           ssr={true}
         >
+          {/* <div>1</div> */}
           {data.movies?.map((movie) => (
             <CarouselCard key={movie.id} movie={movie} />
           ))}

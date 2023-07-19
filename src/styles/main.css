@@ -1,28 +1,12 @@
-.header {
-  margin: 0 auto;
-  width: 100%;
-  background-color: #edcc58;
+body {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
 }
 
-.title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-
-  h1 {
-    display: none;
-    font-size: 30px;
-    text-align: center;
-  }
-}
-
-.icon {
-  width: 60px;
-  height: 60px;
+.container {
+  flex: 1; /* Fill remaining vertical space */
 }
 
 .searchContainer {

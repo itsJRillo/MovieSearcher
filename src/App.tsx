@@ -6,7 +6,9 @@ import Home from "./pages/Home";
 import Movies from "./pages/Movies";
 import TVSeries from "./pages/TVSeries";
 import Footer from "./components/Footer";
-
+import "./styles/main.css"
+import LoginForm from "./pages/LoginForm";
+import RegisterForm from "./pages/RegisterForm";
 
 function App() {
   const api_key = import.meta.env.VITE_API_KEY;
@@ -21,7 +23,7 @@ function App() {
 
   const handleMovieClick = (movie: MovieType) => {
     setSelectedMovie(movie);
-  };  
+  };
 
   const fetchTrending = async () => {
     const fetchMovies = fetch(
@@ -31,7 +33,7 @@ function App() {
       `https://api.themoviedb.org/3/discover/tv?api_key=${api_key}`
     );
     const fetchPopularMovies = fetch(
-      `https://api.themoviedb.org/3/movie/trending?api_key=${api_key}`
+      `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}`
     );
     const fetchUpcomingMovies = fetch(
       `https://api.themoviedb.org/3/movie/upcoming?api_key=${api_key}`
@@ -64,16 +66,21 @@ function App() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route
-          path="/"
-          element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: series }} />}
-        />
-        <Route path="/movies" element={<Movies data={movies} onMovieClick={handleMovieClick} />} />
-        <Route path="/tv-series" element={<TVSeries data={series} />} />
-        <Route path="/movies/*" element={<MovieDetails movie={selectedMovie} />}/>
+      <div className="container">
 
-      </Routes>
+        <Routes>
+          <Route
+            path="/"
+            element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: series }} />}
+          />
+          <Route path="/movies" element={<Movies data={movies} onMovieClick={handleMovieClick} />} />
+          <Route path="/tv-series" element={<TVSeries data={series} />} />
+          <Route path="/movies/*" element={<MovieDetails movie={selectedMovie} />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+
+        </Routes>
+      </div>
       <Footer />
     </>
   );
