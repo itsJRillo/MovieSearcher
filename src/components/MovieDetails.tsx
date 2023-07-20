@@ -1,8 +1,8 @@
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import "../styles/movies.css"
 
 export default function MovieDetails({ movie }: { movie: MovieType | null }) {
-    const { id } = useParams();
+    // const { id } = useParams();
 
     if (!movie) {
         return <div className="errorMovie">Ha habido algún error al ver los detalles de la película.</div>;

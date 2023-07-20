@@ -49,9 +49,9 @@ export default function Home({ data }: { data: { movies: MovieType[] | undefined
 
       </div>
       <br />
-      <div className='sub-container'>
+      {/* <div className='sub-container'>
         <h1>Popular TV-Series</h1>
-        {/* <Carousel
+        <Carousel
           arrows
           autoPlay
           swipeable
@@ -65,8 +65,8 @@ export default function Home({ data }: { data: { movies: MovieType[] | undefined
           {data.series?.map((serie) => (
             <SerieCard key={serie.id} serie={serie} />
           ))}
-        </Carousel> */}
-      </div>
+        </Carousel>
+      </div> */}
     </div>
   );
 }

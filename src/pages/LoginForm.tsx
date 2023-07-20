@@ -74,7 +74,7 @@ const LoginForm = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/login', { username, password });
+            const response = await axios.post('/logi n', { username, password });
             console.log('Login success:', response.data);
         } catch (error) {
             console.error('Login failed:', error);
