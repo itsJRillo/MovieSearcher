@@ -34,7 +34,6 @@ export default function Home({ data }: { data: { movies: MovieType[] | undefined
           arrows
           autoPlay
           swipeable
-          showDots
           responsive={responsive}
           itemClass="carousel-item"
           className='slider-container'

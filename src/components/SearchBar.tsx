@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import styles from "../styles/main.module.css"
-import lupaIcon from '../assets/lupa.png'
+import lupaIcon from '../assets/searchIcon.png'
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');

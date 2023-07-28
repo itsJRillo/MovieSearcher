@@ -6,7 +6,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px;
   padding: 1.5rem;
-  width: 250px;
+  width: 100%;
+  max-width: 300px;
   background-color: #323232;
   overflow: hidden;
   position: relative;
@@ -100,13 +101,13 @@
 
 .container {
   padding: 2rem;
+  min-height: 100vh;
 }
 
 .sub-container {
   padding: 10px;
 }
 
-/* Estilos para eliminar los estilos de los enlaces */
 a,
 a:hover,
 a:focus,

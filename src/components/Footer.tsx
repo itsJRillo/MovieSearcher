@@ -1,12 +1,12 @@
-// Footer.js
 import styled from 'styled-components';
 import '../styles/footer.css';
 import heartIcon from '../assets/heart.png';
 
 const FooterContainer = styled.footer`
-  background-color: #edcc58;
+  background-color: #f8b500;
   padding: 20px;
   text-align: center;
+  width: 100%;
 `;
 
 const FooterContent = styled.div`

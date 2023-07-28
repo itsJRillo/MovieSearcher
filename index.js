@@ -1,7 +1,7 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
+import express from "express";
+import "bcrypt";
+import mongoose from "mongoose";
+
 const app = express();
 
 const UserSchema = new mongoose.Schema({
@@ -11,12 +11,9 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema);
 
-const secretKey = '';
-
 app.use(express.json());
 
-// MongoDB connection
-mongoose.connect('mongodb://localhost:27017/your_database_name', {
+mongoose.connect('mongodb://localhost:27017/ShotenDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
@@ -53,9 +50,6 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ message: 'Authentication failed' });
     }
 
-    const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
-
-    res.json({ token });
   } catch (error) {
     console.error('Login failed:', error);
     res.status(500).json({ message: 'Login failed' });

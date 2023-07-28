@@ -82,7 +82,7 @@ const RegistrationForm = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/register', { username, email, password });
+            const response = await axios.post('/api/register', { username, email, password });
             console.log('Registration success:', response.data);
         } catch (error) {
             console.error('Registration failed:', error);

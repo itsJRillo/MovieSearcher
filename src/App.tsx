@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import "./styles/main.css"
 import Header from "./components/Header";
 import MovieDetails from "./components/MovieDetails";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Movies from "./pages/Movies";
 import TVSeries from "./pages/TVSeries";
-import Footer from "./components/Footer";
-import "./styles/main.css"
 import LoginForm from "./pages/LoginForm";
 import RegisterForm from "./pages/RegisterForm";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   const api_key = import.meta.env.VITE_API_KEY;
@@ -73,11 +74,12 @@ function App() {
             path="/"
             element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: series }} />}
           />
-          <Route path="/movies" element={<Movies data={movies} onMovieClick={handleMovieClick} />} />
-          <Route path="/tv-series" element={<TVSeries data={series} />} />
-          <Route path="/movies/*" element={<MovieDetails movie={selectedMovie} />} />
+          <Route path="/buscar" element={<SearchPage onMovieClick={handleMovieClick}/>} />
+          <Route path="/peliculas" element={<Movies data={movies} onMovieClick={handleMovieClick} />} />
+          <Route path="/peliculas/*" element={<MovieDetails movie={selectedMovie} />} />
+          <Route path="/series" element={<TVSeries data={series} />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/registro" element={<RegisterForm />} />
 
         </Routes>
       </div>
