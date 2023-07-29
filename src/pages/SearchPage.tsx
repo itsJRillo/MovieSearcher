@@ -52,14 +52,19 @@ const SearchIcon = styled.i`
 
 const ResultContainer = styled.div`
   min-height: 50vh;
+  width: 75%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 20px;
+  grid-gap: 75px;
   justify-items: center;
   align-items: start;
   padding: 20px;
 `;
 
+const NoResultText = styled.div`
+  font-size: 48px;
+  margin-top: 10rem;
+`
 export default function Movies({ onMovieClick }: { onMovieClick: (movie: MovieType) => void }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<MovieType[]>([]);
@@ -96,15 +101,15 @@ export default function Movies({ onMovieClick }: { onMovieClick: (movie: MovieTy
             </SearchBarContainer>
             <ResultContainer>
                 {searchResults.length > 0 ? (
-                    <ul>
-                        {searchResults?.map((movie) => (
+                    <>
+                        {searchResults.map((movie) => (
                             <Link to={`/peliculas/${movie.id}`} key={movie.id} onClick={() => onMovieClick(movie)}>
                                 <MovieCard movie={movie} />
                             </Link>
                         ))}
-                    </ul>
+                    </>
                 ) : (
-                    'No results found'
+                    <NoResultText>No results found</NoResultText>
                 )}
             </ResultContainer>
         </PageContainer>
