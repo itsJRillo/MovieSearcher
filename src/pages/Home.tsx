@@ -1,5 +1,4 @@
 import CarouselCard from '../components/CarouselCard';
-// import SerieCard from '../components/SerieCard';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css"
 
@@ -32,7 +31,6 @@ export default function Home({ data }: { data: { movies: MovieType[] | undefined
         <h1>Popular Movies</h1>
         <Carousel
           arrows
-          autoPlay
           swipeable
           responsive={responsive}
           itemClass="carousel-item"
@@ -48,24 +46,24 @@ export default function Home({ data }: { data: { movies: MovieType[] | undefined
 
       </div>
       <br />
-      {/* <div className='sub-container'>
-        <h1>Popular TV-Series</h1>
+      <div className='sub-container'>
+        <h1>Upcoming Movies</h1>
         <Carousel
           arrows
-          autoPlay
           swipeable
-          showDots
           responsive={responsive}
           itemClass="carousel-item"
           className='slider-container'
           removeArrowOnDeviceType={["tablet", "mobile"]}
           ssr={true}
         >
-          {data.series?.map((serie) => (
-            <SerieCard key={serie.id} serie={serie} />
+          {/* <div>1</div> */}
+          {data.upcomingMovies?.map((movie) => (
+            <CarouselCard key={movie.id} movie={movie} />
           ))}
         </Carousel>
-      </div> */}
+
+      </div>
     </div>
   );
 }

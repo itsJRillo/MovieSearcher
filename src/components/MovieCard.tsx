@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/card.css';
+import defaultImage from '../assets/placeholder-no-image.png';
 
 interface MovieCardProps {
   movie: MovieType;
@@ -8,17 +9,24 @@ interface MovieCardProps {
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const hasPoster = movie.poster_path !== null && movie.poster_path !== undefined;
+
   return (
     <div
       className={`card ${isHovered ? 'hovered' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img
-        className="card-image"
-        src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-        alt={movie.title}
-      />
+      {hasPoster ? (
+        <img
+          className="card-image"
+          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          alt={movie.title}
+        />
+      ) : (
+        <img className="card-image" src={defaultImage} alt="Imagen predeterminada" />
+      )}
+
       <div className="card-content">
         <h2 className="card-title">{movie.title}</h2>
         <div className="vote-container">

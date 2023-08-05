@@ -18,8 +18,8 @@ export default function Movies({ data, onMovieClick }: { data: MovieType[] | und
   };
 
   return (
-    <div className="movies-container">
-      <h1 className='movies-container-title'>Movies</h1>
+    <div className="container">
+      <h1 className='container-title'>Movies</h1>
       <div className="movie-grid">
         {currentItems?.map((movie) => (
           <Link to={`/peliculas/${movie.id}`} key={movie.id} onClick={() => onMovieClick(movie)}>

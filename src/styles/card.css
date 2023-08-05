@@ -1,7 +1,25 @@
+/* General styles */
+.container {
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.sub-container {
+  padding: 10px;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Card styles */
 .card {
   display: flex;
   flex-direction: column;
-  border: 1px solid #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px;
@@ -13,6 +31,54 @@
   position: relative;
 }
 
+.card .title {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #333333;
+}
+
+.card-description {
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+
+.vote-container {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  height: 10px;
+}
+
+.vote-average {
+  font-size: 20px;
+  color: #fff;
+  padding-top: 5px;
+}
+
+.card .overview p {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #666666;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.card-image:hover {
+  transform: scale(1.04);
+}
+
+/* Card overlay */
 .card-overlay {
   position: absolute;
   top: 0;
@@ -31,51 +97,6 @@
 .card.hovered .card-overlay {
   transition: .5s ease-in;
   opacity: 1;
-}
-
-.card-description {
-  color: white;
-  font-size: 16px;
-  text-align: center;
-  padding: 20px;
-}
-
-.card-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
-}
-
-.card-image:hover {
-  transform: scale(1.04);
-}
-
-.card .title {
-  font-size: 20px;
-  margin-bottom: 8px;
-  color: #333333;
-}
-
-.vote-average {
-  font-size: 20px;
-  color: #fff;
-  padding-top: 5px;
-}
-
-.vote-container {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  width: 100%;
-  height: 10px;
-}
-
-.card .overview p {
-  font-size: 14px;
-  margin-bottom: 5px;
-  color: #666666;
 }
 
 /* GRID */
@@ -97,21 +118,4 @@
     padding: 10px;
     grid-gap: 10px;
   }
-}
-
-.container {
-  padding: 2rem;
-  min-height: 100vh;
-}
-
-.sub-container {
-  padding: 10px;
-}
-
-a,
-a:hover,
-a:focus,
-a:active {
-  text-decoration: none;
-  color: inherit;
 }

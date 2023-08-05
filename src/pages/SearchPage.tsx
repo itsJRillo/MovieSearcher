@@ -3,6 +3,8 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import MovieCard from '../components/MovieCard';
+import noSearchFoundIcon from '../assets/notResultsFoundIcon.png';
+
 
 const api_key = import.meta.env.VITE_API_KEY;
 
@@ -61,10 +63,23 @@ const ResultContainer = styled.div`
   padding: 20px;
 `;
 
-const NoResultText = styled.div`
-  font-size: 48px;
-  margin-top: 10rem;
+const NoResultDiv = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 20px;
+margin-top: 20rem;
 `
+
+const NoResultText = styled.div`
+  font-size: 36px;
+`
+
+const Image = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
 export default function Movies({ onMovieClick }: { onMovieClick: (movie: MovieType) => void }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<MovieType[]>([]);
@@ -109,7 +124,10 @@ export default function Movies({ onMovieClick }: { onMovieClick: (movie: MovieTy
                         ))}
                     </>
                 ) : (
-                    <NoResultText>No results found</NoResultText>
+                    <NoResultDiv>
+                        <Image src={noSearchFoundIcon} alt="no search found icon" />
+                        <NoResultText>No hay ningún resultado</NoResultText>
+                    </NoResultDiv>
                 )}
             </ResultContainer>
         </PageContainer>

@@ -74,12 +74,12 @@
   cursor: not-allowed;
 }
 
-.movies-container {
+.container {
   position: relative;
   min-height: 100vh;
 }
 
-.movies-container-title{
+.container-title{
   text-align: center;
   font-size: 5rem;
   margin-top: 100px;

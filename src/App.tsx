@@ -4,12 +4,14 @@ import "./styles/main.css"
 import Header from "./components/Header";
 import MovieDetails from "./components/MovieDetails";
 import Footer from "./components/Footer";
+
 import Home from "./pages/Home";
 import Movies from "./pages/Movies";
 import TVSeries from "./pages/TVSeries";
 import LoginForm from "./pages/LoginForm";
 import RegisterForm from "./pages/RegisterForm";
 import SearchPage from "./pages/SearchPage";
+import MyListPage from "./pages/MyListPage";
 
 function App() {
   const api_key = import.meta.env.VITE_API_KEY;
@@ -74,9 +76,10 @@ function App() {
             path="/"
             element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: series }} />}
           />
-          <Route path="/buscar" element={<SearchPage onMovieClick={handleMovieClick}/>} />
+          <Route path="/buscar" element={<SearchPage onMovieClick={handleMovieClick} />} />
           <Route path="/peliculas" element={<Movies data={movies} onMovieClick={handleMovieClick} />} />
           <Route path="/peliculas/*" element={<MovieDetails movie={selectedMovie} />} />
+          <Route path="/mi-lista" element={<MyListPage />} />
           <Route path="/series" element={<TVSeries data={series} />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/registro" element={<RegisterForm />} />

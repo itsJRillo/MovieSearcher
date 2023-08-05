@@ -14,12 +14,18 @@ const CarouselCard: React.FC<CarouselCardProps> = ({ movie }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="carousel-card-image-container">
-        <img
-          className="carousel-card-image"
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-          alt={movie.title}
-        />
+      <div
+        className="carousel-card-image-container"
+        style={{
+          backgroundImage: `url(https://image.tmdb.org/t/p/w500/${movie.poster_path})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          borderRadius: '10px',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <div style={{ paddingTop: '100%' }}></div>
       </div>
       <div className="carousel-card-content">
         <h2 className="carousel-card-title">{movie.title}</h2>
