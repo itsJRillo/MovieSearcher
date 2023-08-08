@@ -14,6 +14,7 @@ const PageContainer = styled.div`
   min-height: 100vh;
   align-items: center;
   overflow-x: hidden;
+  padding: 2rem;
 `;
 
 const SearchBarContainer = styled.form`
