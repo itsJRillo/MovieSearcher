@@ -1,7 +1,7 @@
 // import { useParams } from "react-router-dom";
 import "../styles/movies.css"
 
-export default function MovieDetails({ movie }: { movie: MovieType | null }) {
+const MovieDetails = ({ movie }: { movie: MovieType | null }) => {
     // const { id } = useParams();
 
     if (!movie) {
@@ -36,3 +36,5 @@ export default function MovieDetails({ movie }: { movie: MovieType | null }) {
         </div>
     );
 }
+
+export default MovieDetails;

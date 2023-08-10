@@ -19,7 +19,6 @@ const Title = styled.img`
   height: 75px;
 `;
 
-// Usage
 const EmptyHeader = () => {
   return (
     <HeaderContainer>

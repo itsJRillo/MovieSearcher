@@ -5,8 +5,10 @@ import listIcon from '../assets/listIcon.png';
 import movieIcon from '../assets/movieIcon.svg';
 import seriesIcon from '../assets/tvIcon.png';
 import profileIcon from '../assets/profile.png';
+
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const HeaderContainer = styled.header`
   background-color: #f8b500;
@@ -28,43 +30,20 @@ const Icon = styled.img`
   transition: opacity 0.3s ease;
 `;
 
-const TextOverlay = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1rem;
-  opacity: 0;
-  z-index: 2;
-  transition: opacity 0.3s ease;
-`;
-
-const LoginButton = styled(Link)`
-  text-decoration: none;
+const LogoutButton = styled.a`
   color: black;
-`;
-
-const RegisterButton = styled(Link)`
   text-decoration: none;
-  color: black;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  &:hover {
+    color: #f8b500;
+  }
 `;
 
 const HoverContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  &:hover {
-    ${Icon} {
-      opacity: 0;
-    }
-    ${TextOverlay} {
-      opacity: 1;
-    }
-  }
 `;
 
 const Nav = styled.nav`
@@ -85,10 +64,6 @@ const NavLinkText = styled(Link)`
   color: black;
   transition: color 0.3s ease;
   margin-top: 3px;
-
-  &:hover {
-    color: #fff;
-  }
 `;
 
 const Image = styled.img`
@@ -102,11 +77,63 @@ const Title = styled.img`
   margin-right: 2rem;
 `;
 
-const Header = () => {
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 4px;
+  z-index: 3;
+`;
+
+const DropdownMenuItem = styled(NavLinkText)`
+  width: 100px;
+  display: flex;
+  align-items: center;
+  color: black;
+  text-decoration: none;
+  padding: 5px;
+  transition: color 0.3s ease;
+  &:hover {
+    color: #f8b500;
+  }
+`;
+
+const Divider = styled.div`
+  height: 1px;
+  background-color: #ccc;
+  margin: 0.5rem 0;
+`;
+
+
+interface HeaderProps {
+  onLogout: (user: UserType) => void;
+}
+
+const Header = ({ onLogout }: HeaderProps) => {
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const handleDropdownOpen = () => {
+    setDropdownVisible(true);
+  };
+
+  const handleDropdownClose = () => {
+    setDropdownVisible(false);
+  };
+
+  const handleLogout = () => {
+    const userJSON = localStorage.getItem('loggedInUser');
+    if (userJSON) {
+      const user: UserType = JSON.parse(userJSON);
+      onLogout(user);
+    }
+  };
   return (
     <HeaderContainer>
       <div>
-        <Title src={logo} alt="logo Shoten"/>
+        <Title src={logo} alt="logo Shoten" />
       </div>
 
       <Nav>
@@ -132,13 +159,22 @@ const Header = () => {
         </NavItem>
       </Nav>
 
-      <HoverContainer>
+      <HoverContainer onMouseEnter={handleDropdownOpen} onMouseLeave={handleDropdownClose}>
         <Icon src={profileIcon} alt="Profile icon" />
-        <TextOverlay>
-          <LoginButton to="/login">LOG IN</LoginButton>
-          <RegisterButton to="/register">REGISTER</RegisterButton>
-        </TextOverlay>
+        {dropdownVisible && (
+          <DropdownMenu>
+            <DropdownMenuItem to="/cuenta">
+              Cuenta
+            </DropdownMenuItem>
+            <DropdownMenuItem to="/ayuda">
+              Ayuda
+            </DropdownMenuItem>
+            <Divider />
+            <LogoutButton onClick={handleLogout}>Cerrar sesión</LogoutButton>
+          </DropdownMenu>
+        )}
       </HoverContainer>
+
     </HeaderContainer>
   );
 };

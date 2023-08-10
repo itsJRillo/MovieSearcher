@@ -1,6 +1,15 @@
 import { types } from "util";
 
 declare global {
+  type UserType = {
+    username: string
+    password: string
+  }
+
+  type UserList = {
+
+  }
+
   type MovieType = {
     adult: boolean;
     backdrop_path: string;
@@ -16,7 +25,7 @@ declare global {
     video: boolean;
     vote_average: number;
     vote_count: number;
-  }
+  };
 
   type SerieType = {
     backdrop_path: string;
@@ -32,7 +41,42 @@ declare global {
     poster_path: string;
     vote_average: number;
     vote_count: number;
-  }
+  };
+
+  type ErrorType = {
+    url: string;
+    status: number;
+    response: Response;
+    isAbort: boolean;
+    originalError: OriginalError;
+    name: string;
+    stack: string;
+    message: string;
+  };
+  
+  type OriginalError = {
+    url: string;
+    status: number;
+    data: Response;
+  };
+
+  type Response = {
+    code: number;
+    message: string;
+    data: Data;
+  };
+
+  type Data = {
+    email: Email;
+    password: Email;
+    username: Email;
+  };
+
+  type Email = {
+    code: string;
+    message: string;
+  };
 }
 
-export {};
+{
+}
