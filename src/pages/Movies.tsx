@@ -25,8 +25,8 @@ const FilterButton = styled(motion.button)`
 
 export default function Movies({ data, onMovieClick, filters }: { data: MovieType[] | undefined, onMovieClick: (movie: MovieType) => void, filters: GenreType[] }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [titleFilter] = useState("");
-  const [genreFilter, setGenreFilter] = useState<number>(12);
+  // const [titleFilter] = useState("");
+  // const [genreFilter, setGenreFilter] = useState<number>(12);
 
   const itemsPerPage = 12;
 
@@ -39,17 +39,19 @@ export default function Movies({ data, onMovieClick, filters }: { data: MovieTyp
   };
 
   const handleGenreFilterChange = (genreID: number) => {
-    setGenreFilter(genreID);
+    // setGenreFilter(genreID);
+    console.log(genreID);
+    
     setCurrentPage(1);
   }
 
-  const filteredMovies = data?.filter((movie) => {
-    const titleMatch = movie.title.toLowerCase().includes(titleFilter.toLowerCase());
+  // const filteredMovies = data?.filter((movie) => {
+  //   const titleMatch = movie.title.toLowerCase().includes(titleFilter.toLowerCase());
 
-    const genreMatch = movie.genre_ids.includes(genreFilter);
+  //   const genreMatch = movie.genre_ids.includes(genreFilter);
   
-    return titleMatch && genreMatch;
-  });
+  //   return titleMatch && genreMatch;
+  // });
   
   const buttonVariants = {
     hover: {

@@ -1,8 +1,6 @@
-// import { useParams } from "react-router-dom";
 import "../styles/movies.css"
 
 const MediaDetails = ({ media }: { media: MovieType | SerieType }) => {
-    // const { id } = useParams();
     const isMovieType = media.type === "movie";
 
     if (!media) {

@@ -22,7 +22,7 @@ function App() {
   const [movies, setMovies] = useState<MovieType[]>()
   const [popularMovies, setPopularMovies] = useState<MovieType[]>()
   const [upcomingMovies, setUpcomingMovies] = useState<MovieType[]>()
-  const [selectedMovie, setSelectedMovie] = useState<MovieType | SerieType>() ?? undefined
+  //const [selectedMovie, setSelectedMovie] = useState<MovieType | SerieType>()
 
   const [series, setSeries] = useState<SerieType[]>()
   const [popularSeries, setPopularSeries] = useState<SerieType[]>()
@@ -35,7 +35,6 @@ function App() {
   const fetchTrending = async () => {
     const fetchGenres = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${api_key}`)
 
-
     const fetchMovies: any =  [];
 
     for (let page = 1; page <= 10; page++) {
@@ -43,8 +42,8 @@ function App() {
         `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&page=${page}`
       );
     
-      const responseData = await response.json(); // Parse the response body
-      fetchMovies.push(...responseData.results); // Append results to the fetchMovies array
+      const responseData = await response.json();
+      fetchMovies.push(...responseData.results);
     }
     
     const fetchSeries = await fetch(
@@ -125,7 +124,8 @@ function App() {
   }
 
   const handleMovieClick = (media: MovieType | SerieType) => {
-    setSelectedMovie(media)
+    // setSelectedMovie(media)
+    console.log(media);
   }
 
   const handleLogin = (user: UserType) => {

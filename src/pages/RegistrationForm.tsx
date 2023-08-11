@@ -9,15 +9,6 @@ import "../styles/backgroundAnimation.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Background = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-`;
-
 const Container = styled.div`
   width: 100%;
   height: 100vh;

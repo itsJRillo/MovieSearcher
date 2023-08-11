@@ -11,5 +11,9 @@ export default defineConfig({
       include: ["./src/**/*.js", "./src/**/*.jsx"],
       exclude: [],
     }),
-  ],
+  ], server: {
+    host: true,
+    strictPort: true,
+    port: 8080
+  }
 });
