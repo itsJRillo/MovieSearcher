@@ -2,24 +2,28 @@
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 10px;
-  padding: 1.5rem;
-  background-color: #323232;
+  background-color: #1d1d1d;
   overflow: hidden;
   position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 500px;
+}
+
+.carousel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-card-image {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: 50%;
   object-fit: cover;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
-}
-
-.carousel-card-image:hover {
-  transform: scale(1.04);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .carousel-card-content {
@@ -27,11 +31,12 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
+  padding: 1.5rem;
 }
 
 .carousel-card-title {
-  font-size: 20px;
+  font-size: 24px;
   margin-bottom: 8px;
   color: #ffffff;
 }
@@ -40,8 +45,6 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  width: 100%;
-  height: 10px;
 }
 
 .carousel-card-vote-icon {
@@ -50,9 +53,15 @@
 }
 
 .carousel-card-vote-average {
-  font-size: 20px;
+  font-size: 18px;
   color: #ffffff;
-  padding-top: 5px;
+}
+
+.carousel-card-description {
+  color: #b0b0b0;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
 }
 
 .carousel-card-overlay {
@@ -68,58 +77,24 @@
   opacity: 0;
   transition: opacity 0.3s;
   z-index: 2;
+  border-radius: 10px;
 }
 
-.carousel-card.hovered .carousel-card-overlay {
-  transition: 0.5s ease-in;
+.carousel-card:hover .carousel-card-overlay {
   opacity: 1;
 }
 
-.carousel-card-description {
-  color: white;
-  font-size: 16px;
-  text-align: center;
-  padding: 20px;
-}
-
-.carousel-card-image-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.carousel-card-image-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.6;
-}
-
-
-/* Estilos responsive */
-@media (max-width: 600px) {
+@media (max-width: 1200px) {
   .carousel-card {
-    height: auto;
-    width: 90%;
-    margin: 10px auto;
-    padding: 1rem;
-  }
-
-  .carousel-card-image-container {
-    height: 200px;
+    height: 450px;
   }
 
   .carousel-card-content {
-    padding: 0.5rem 0;
+    padding: 1rem;
   }
 
   .carousel-card-title {
-    font-size: 16px;
+    font-size: 22px;
   }
 
   .carousel-card-vote-average {
@@ -127,6 +102,81 @@
   }
 
   .carousel-card-description {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 992px) {
+  .carousel-card {
+    height: 400px;
+  }
+
+  .carousel-card-image {
+    height: 40%;
+  }
+
+  .carousel-card-content {
+    padding: 0.8rem;
+  }
+
+  .carousel-card-title {
+    font-size: 20px;
+  }
+
+  .carousel-card-vote-average {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-card {
+    height: 350px;
+  }
+
+  .carousel-card-image {
+    height: 35%;
+  }
+
+  .carousel-card-content {
+    padding: 0.6rem;
+  }
+
+  .carousel-card-title {
+    font-size: 18px;
+  }
+
+  .carousel-card-vote-average {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-card {
+    height: auto;
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .carousel-card-image {
+    height: auto;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .carousel-card-content {
+    padding: 0.5rem;
+  }
+
+  .carousel-card-title {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .carousel-card-vote-average {
+    font-size: 14px;
+  }
+
+  .carousel-card-description {
+    font-size: 12px;
   }
 }

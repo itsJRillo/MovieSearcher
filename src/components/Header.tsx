@@ -20,14 +20,24 @@ const HeaderContainer = styled.header`
   left: 0;
   right: 0;
   z-index: 999;
+  flex-direction: column; 
+  @media (min-width: 992px) {
+    flex-direction: row; 
+    font-size: 1rem;
+  }
 `;
 
 const Icon = styled.img`
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   position: relative;
   z-index: 1;
   transition: opacity 0.3s ease;
+  margin: 10px 10px;
+  @media (min-width: 992px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 const LogoutButton = styled.a`
@@ -46,17 +56,26 @@ const HoverContainer = styled.div`
   align-items: center;
 `;
 
-const Nav = styled.nav`
-  display: flex;
-  gap: 2rem;
-  margin-right: auto;
-  align-items: center;
-`;
 
 const NavItem = styled.div`
+display: flex;
+align-items: center;
+gap: 0.25rem;
+`;
+
+const Nav = styled.nav`
   display: flex;
+  gap: 1rem;
+  margin-right: 0;
   align-items: center;
-  gap: 0.25rem;
+  font-size: 10px;
+  @media (min-width: 992px) {
+    margin-left: 0;
+    margin-right: auto;
+    flex-direction: row; 
+    gap: 2rem;
+    font-size: 15px;
+  }
 `;
 
 const NavLinkText = styled(Link)`
@@ -67,14 +86,22 @@ const NavLinkText = styled(Link)`
 `;
 
 const Image = styled.img`
-  width: 25px;
-  height: 25px;
+  width: 12px;
+  height: 12px;
+  @media (min-width: 992px) {
+    width: 25px;
+    height: 25px;
+  }
 `;
 
 const Title = styled.img`
-  width: 275px;
-  height: 75px;
-  margin-right: 2rem;
+  width: 200px;
+  height: 50px;
+  @media (min-width: 992px) {
+    width: 275px;
+    height: 75px;
+    margin-right: 2rem;
+  }
 `;
 
 const DropdownMenu = styled.div`
@@ -166,8 +193,8 @@ const Header = ({ onLogout }: HeaderProps) => {
             <DropdownMenuItem to="/cuenta">
               Cuenta
             </DropdownMenuItem>
-            <DropdownMenuItem to="/ayuda">
-              Ayuda
+            <DropdownMenuItem to="/mi-lista">
+              Mi lista
             </DropdownMenuItem>
             <Divider />
             <LogoutButton onClick={handleLogout}>Cerrar sesión</LogoutButton>

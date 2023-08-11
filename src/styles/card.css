@@ -1,7 +1,3 @@
-.container {
-  min-height: 100vh;
-}
-
 .sub-container {
   padding: 10px;
 }
@@ -14,23 +10,22 @@ a:active {
   color: inherit;
 }
 
-/* Card styles */
 .card {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 10px;
-  padding: 1.5rem;
-  width: 100%;
-  max-width: 300px;
-  background-color: #323232;
+  background-color: #1d1d1d;
   overflow: hidden;
   position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 300px;
+  font-size: 12px;
+  height: 400px;
 }
 
 .card .title {
-  font-size: 20px;
   margin-bottom: 8px;
   color: #333333;
 }
@@ -43,6 +38,9 @@ a:active {
   overflow: hidden;
 }
 
+.card-content{
+  padding: 20px;
+}
 
 .vote-container {
   display: flex;
@@ -65,18 +63,19 @@ a:active {
 }
 
 .card-image {
-  width: 100%;
-  height: auto;
+  max-width: 100%;
+  height: 65%;
   object-fit: cover;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .card-image:hover {
   transform: scale(1.04);
 }
 
-/* Card overlay */
 .card-overlay {
   position: absolute;
   top: 0;
@@ -97,7 +96,6 @@ a:active {
   opacity: 1;
 }
 
-/* GRID */
 .movie-grid,
 .series-grid {
   display: grid;

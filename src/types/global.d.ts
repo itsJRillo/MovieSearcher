@@ -2,15 +2,14 @@ import { types } from "util";
 
 declare global {
   type UserType = {
-    username: string
-    password: string
-  }
+    username: string;
+    password: string;
+  };
 
-  type UserList = {
-
-  }
+  type UserList = {};
 
   type MovieType = {
+    type?: "movie";
     adult: boolean;
     backdrop_path: string;
     genre_ids: number[];
@@ -28,6 +27,7 @@ declare global {
   };
 
   type SerieType = {
+    type?: "serie";
     backdrop_path: string;
     first_air_date: Date;
     genre_ids: number[];
@@ -42,6 +42,11 @@ declare global {
     vote_average: number;
     vote_count: number;
   };
+  
+  type GenreType = {
+    id: number;
+    name: string;
+  };
 
   type ErrorType = {
     url: string;
@@ -53,7 +58,7 @@ declare global {
     stack: string;
     message: string;
   };
-  
+
   type OriginalError = {
     url: string;
     status: number;
