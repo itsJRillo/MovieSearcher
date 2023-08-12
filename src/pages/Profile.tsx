@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import editIcon from "../../public/edit.png"
+import editIcon from "../../public/assets/edit.png"
 
 const DetailsContainer = styled.div`
   margin-top: 6rem;

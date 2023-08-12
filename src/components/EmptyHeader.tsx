@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ShotenLogo from "../../public/shotenLogo.png";
+import ShotenLogo from "../../public/assets/shotenLogo.png";
 
 const HeaderContainer = styled.header`
   background-color: #f8b500;
