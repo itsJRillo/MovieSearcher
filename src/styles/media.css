@@ -1,0 +1,78 @@
+.errorMedia {
+  text-align: center;
+  font-size: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.media-details {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 5rem;
+}
+
+.media-details-image img {
+  padding-right: 2rem;
+  width: 400px;
+  height: auto;
+}
+
+.media-details-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.media-details-info h2 {
+  font-size: 3rem;
+}
+
+.media-details-rating {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.media-details-overview {
+  margin-bottom: 20px;
+  width: 75%;
+}
+
+.media-details-video {
+  margin-top: 20px;
+}
+
+.filter-container {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  gap: 1rem;
+  overflow-y: scroll;
+  overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 50px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  transition: background-color 0.3;
+}

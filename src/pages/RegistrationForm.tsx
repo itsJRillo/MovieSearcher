@@ -138,13 +138,10 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
       });
 
       localStorage.setItem("isLoggedIn", "true");
-      onRegister({username, password})
+      onRegister({username, email, password})
       navigate("/home");
 
     } catch (error: any) {
-      toast.error(error.response.message, {
-        position: toast.POSITION.BOTTOM_RIGHT
-      });
     }
   };
 

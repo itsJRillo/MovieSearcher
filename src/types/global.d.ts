@@ -3,6 +3,7 @@ import { types } from "util";
 declare global {
   type UserType = {
     username: string;
+    email?: string;
     password: string;
   };
 

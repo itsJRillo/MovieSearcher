@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import '../styles/card.css';
 import '../styles/pagination.css';
-import '../styles/movies.css';
+import '../styles/media.css';
 import Card from '../components/Card';
 import { motion } from 'framer-motion';
 
@@ -20,39 +20,46 @@ const FilterButton = styled(motion.button)`
   font-weight: bold;
   cursor: pointer;
   outline: inherit;
-  background-color: #121212
+  background-color: #121212;
 `;
 
 export default function Movies({ data, onMovieClick, filters }: { data: MovieType[] | undefined, onMovieClick: (movie: MovieType) => void, filters: GenreType[] }) {
   const [currentPage, setCurrentPage] = useState(1);
-  // const [titleFilter] = useState("");
-  // const [genreFilter, setGenreFilter] = useState<number>(12);
+  const [titleFilter, setTitleFilter] = useState("");
+  const [genreFilter, setGenreFilter] = useState<number | null>(null);
+  const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
 
   const itemsPerPage = 12;
 
+  const filteredMovies = data?.filter((movie) => {
+    const titleMatch = movie.title.toLowerCase().includes(titleFilter.toLowerCase());
+    const genreMatch = genreFilter === null || movie.genre_ids.includes(genreFilter);
+    return titleMatch && genreMatch;
+  });
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredMovies?.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (selectedItem: { selected: number }) => {
     setCurrentPage(selectedItem.selected + 1);
   };
 
-  const handleGenreFilterChange = (genreID: number) => {
-    // setGenreFilter(genreID);
-    console.log(genreID);
-    
+  const handleGenreFilterChange = (genreID: number | null) => {
+    setGenreFilter(genreID);
+    setSelectedFilter(genreID);
     setCurrentPage(1);
   }
 
-  // const filteredMovies = data?.filter((movie) => {
-  //   const titleMatch = movie.title.toLowerCase().includes(titleFilter.toLowerCase());
+  const handleClearFilters = () => {
+    setTitleFilter("");
+    setSelectedFilter(null);
+    setGenreFilter(null);
+    setCurrentPage(1);
+  }
 
-  //   const genreMatch = movie.genre_ids.includes(genreFilter);
-  
-  //   return titleMatch && genreMatch;
-  // });
-  
+  const hasFilters = titleFilter !== "" || genreFilter !== null;
+
   const buttonVariants = {
     hover: {
       scale: 1.05,
@@ -60,38 +67,61 @@ export default function Movies({ data, onMovieClick, filters }: { data: MovieTyp
         duration: 0.2,
       },
     },
+    pressed: {
+      scale: 0.95,
+      transition: {
+        duration: 0.2,
+      },
+    },
+    selected: {
+      backgroundColor: '#FF5733',
+    },
   };
 
   return (
     <div className="container">
-      <h1 className='container-title'>Movies</h1>
+      <h1 className='container-title'>Películas</h1>
       <div>
         {Object.values(filters).map((filter: any) => (
           <div key={filter[0].id} className='filter-container'>
+            {hasFilters && (<FilterButton
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="pressed"
+              onClick={handleClearFilters}>
+              Eliminar filtros
+            </FilterButton>)}
+
             {filter.map((item: any) => (
-              <FilterButton variants={buttonVariants} whileHover="hover" key={item.id} onClick={() => {handleGenreFilterChange(item.id)}}>
+              <FilterButton
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="pressed"
+                key={item.id}
+                onClick={() => handleGenreFilterChange(item.id)}
+              >
                 {item.name}
               </FilterButton>
             ))}
           </div>
         ))}
       </div>
-      <div className="movie-grid">
+      <div className="media-grid">
         {currentItems?.map((movie) => (
           <Link to={`/peliculas/${movie.id}`} key={movie.id} onClick={() => onMovieClick(movie)}>
             <Card media={movie} />
           </Link>
         ))}
       </div>
-      {data && (
+      {filteredMovies && (
         <div className="pagination-container">
           <ReactPaginate
             previousLabel={'<'}
             nextLabel={'>'}
             breakLabel={'...'}
-            pageCount={Math.ceil(data.length / itemsPerPage)}
+            pageCount={Math.ceil(filteredMovies.length / itemsPerPage)}
             marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
+            pageRangeDisplayed={2}
             onPageChange={handlePageChange}
             containerClassName={'pagination'}
             pageClassName={'page-item'}
@@ -109,4 +139,4 @@ export default function Movies({ data, onMovieClick, filters }: { data: MovieTyp
     </div>
   );
 
-}  
+}

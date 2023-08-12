@@ -22,7 +22,9 @@ a:active {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 300px;
   font-size: 12px;
-  height: 400px;
+  @media (min-width: 992px) {
+    height: 400px;
+  }
 }
 
 .card .title {
@@ -96,8 +98,7 @@ a:active {
   opacity: 1;
 }
 
-.movie-grid,
-.series-grid {
+.media-grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 20px;
@@ -107,8 +108,7 @@ a:active {
 }
 
 @media (max-width: 768px) {
-  .movie-grid,
-  .series-grid {
+  .media-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     justify-content: center;
     padding: 10px;

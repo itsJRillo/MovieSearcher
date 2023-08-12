@@ -65,7 +65,6 @@ margin-top: 15rem;
   
 }
 `
-
 const NoResultText = styled.div`
   font-size: 36px;
 `
@@ -120,9 +119,6 @@ export default function SearchPage({ onMediaClick }: { onMediaClick: (media: Mov
         });
 
         setSearchResults(searchResults || []);
-      } else if(!newSearchTerm) {
-        setSearchResults([])
-        return
       }
     } catch (error) {
       console.error('Error fetching movie data:', error);

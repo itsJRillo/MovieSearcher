@@ -3,7 +3,7 @@ import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-
 import "./styles/main.css"
 import Header from "./components/Header"
 import EmptyHeader from "./components/EmptyHeader"
-// import MovieDetails from "./components/MovieDetails"
+import MediaDetails from "./pages/MediaDetails"
 import Footer from "./components/Footer"
 
 import Home from "./pages/Home"
@@ -13,33 +13,40 @@ import LoginForm from "./pages/LoginForm"
 import RegisterForm from "./pages/RegistrationForm"
 import SearchPage from "./pages/SearchPage"
 import MyListPage from "./pages/MyListPage"
+import Profile from "./pages/Profile"
 
 function App() {
   const api_key = import.meta.env.VITE_API_KEY
+  const prefixAPI = "https://api.themoviedb.org/3"
   const navigate = useNavigate()
+  
   const [loggedInUser, setLoggedInUser] = useState<UserType | null>(null)
+  const [language, setLanguage] = useState("es-ES")
 
   const [movies, setMovies] = useState<MovieType[]>()
   const [popularMovies, setPopularMovies] = useState<MovieType[]>()
   const [upcomingMovies, setUpcomingMovies] = useState<MovieType[]>()
-  //const [selectedMovie, setSelectedMovie] = useState<MovieType | SerieType>()
+  const [selectedMovie, setSelectedMovie] = useState<MovieType | SerieType>()
 
   const [series, setSeries] = useState<SerieType[]>()
   const [popularSeries, setPopularSeries] = useState<SerieType[]>()
   const [trendingSeries, setTrendingSeries] = useState<SerieType[]>()
 
-  const [genres, setGenres] = useState<GenreType[]>([])
+  const [genresMovies, setGenresMovies] = useState<GenreType[]>([])
+  const [genresTV, setGenresTV] = useState<GenreType[]>([])
 
   const location = useLocation()
+  
 
   const fetchTrending = async () => {
-    const fetchGenres = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${api_key}`)
+    const fetchGenresMovies = await fetch(`${prefixAPI}/genre/movie/list?api_key=${api_key}&language=${language}`)
+    const fetchGenresTV = await fetch(`${prefixAPI}/genre/tv/list?api_key=${api_key}&language=${language}`)
 
     const fetchMovies: any =  [];
 
     for (let page = 1; page <= 10; page++) {
       const response = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&page=${page}`
+        `${prefixAPI}/discover/movie?api_key=${api_key}&page=${page}&language=${language}`
       );
     
       const responseData = await response.json();
@@ -47,31 +54,32 @@ function App() {
     }
     
     const fetchSeries = await fetch(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${api_key}`
+      `${prefixAPI}/discover/tv?api_key=${api_key}&language=${language}`
     )
 
     const fetchPopularMovies = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}`
+      `${prefixAPI}/movie/popular?api_key=${api_key}&language=${language}`
     )
     const fetchUpcomingMovies = await fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${api_key}`
+      `${prefixAPI}/movie/upcoming?api_key=${api_key}&language=${language}`
     )
 
     const fetchPopularSeries = await fetch(
-      `https://api.themoviedb.org/3/tv/popular?api_key=${api_key}`
+      `${prefixAPI}/tv/popular?api_key=${api_key}&language=${language}`
     )
     const fetchTrendingSeries = await fetch(
-      `https://api.themoviedb.org/3/tv/top_rated?api_key=${api_key}`
+      `${prefixAPI}/tv/top_rated?api_key=${api_key}&language=${language}`
     )
 
-    const [seriesRes, popularMoviesRes, upcomingMoviesRes, popularSeriesRes, trendingSeriesRes, genreListRes] =
+    const [seriesRes, popularMoviesRes, upcomingMoviesRes, popularSeriesRes, trendingSeriesRes, genreListMoviesRes, genreListTVRes] =
       await Promise.all([
         fetchSeries,
         fetchPopularMovies,
         fetchUpcomingMovies,
         fetchPopularSeries,
         fetchTrendingSeries,
-        fetchGenres
+        fetchGenresMovies,
+        fetchGenresTV
       ])
 
     const popularMoviesData = await popularMoviesRes.json()
@@ -81,7 +89,8 @@ function App() {
     const popularSeriesData = await popularSeriesRes.json()
     const trendingSeriesData = await trendingSeriesRes.json()
 
-    const genresList = await genreListRes.json()
+    const genresListMovies = await genreListMoviesRes.json()
+    const genresListTV = await genreListTVRes.json()
 
     const moviesWithType = fetchMovies.map((movie: MovieType) => ({
       type: 'movie',
@@ -110,8 +119,6 @@ function App() {
     }))
 
     setMovies(moviesWithType)
-    console.log(movies);
-    
     setPopularMovies(popularMoviesWithType)
     setUpcomingMovies(upcomingMoviesWithType)
 
@@ -119,12 +126,13 @@ function App() {
     setPopularSeries(popularSeriesWithType)
     setTrendingSeries(trendingSeriesWithType)
 
-    setGenres(genresList)
+    setGenresMovies(genresListMovies)
+    setGenresTV(genresListTV)
 
   }
 
-  const handleMovieClick = (media: MovieType | SerieType) => {
-    // setSelectedMovie(media)
+  const handleMediaClick = (media: MovieType | SerieType) => {
+    setSelectedMovie(media)
     console.log(media);
   }
 
@@ -165,11 +173,13 @@ function App() {
           {(loggedInUser || location.pathname === "/" || location.pathname === "/sign-up") && (
             <>
               <Route path="/home" element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: popularSeries, trendingSeries: trendingSeries }} />} />
-              <Route path="/buscar" element={<SearchPage onMediaClick={handleMovieClick} />} />
-              <Route path="/peliculas" element={<Movies data={movies} onMovieClick={handleMovieClick} filters={genres} />} />
-              {/* <Route path="/peliculas/*" element={<MovieDetails media={selectedMovie} />} /> */}
+              <Route path="/buscar" element={<SearchPage onMediaClick={handleMediaClick} />} />
+              <Route path="/peliculas" element={<Movies data={movies} onMovieClick={handleMediaClick} filters={genresMovies} />} />
+              <Route path="/peliculas/*" element={<MediaDetails media={selectedMovie} />} />
+              <Route path="/tv-series/*" element={<MediaDetails media={selectedMovie} />} />
               <Route path="/mi-lista" element={<MyListPage />} />
-              <Route path="/series" element={<TVSeries data={series} />} />
+              <Route path="/series" element={<TVSeries data={series} onSerieClick={handleMediaClick} filters={genresTV}/>} />
+              <Route path="/cuenta" element={<Profile user={loggedInUser}/>} />
             </>
           )}
         </Routes>

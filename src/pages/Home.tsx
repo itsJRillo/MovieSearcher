@@ -36,11 +36,12 @@ export default function Home({
     trendingSeries: SerieType[] | undefined;
   };
 }) {
+  // <div>1</div>
 
   return (
     <div className="container">
       <div className="sub-container">
-        <h1>Popular Movies</h1>
+        <h1>Películas populares</h1>
         <Carousel
           arrows
           swipeable
@@ -57,7 +58,7 @@ export default function Home({
       </div>
       <br />
       <div className="sub-container">
-        <h1>Upcoming Movies</h1>
+        <h1>Próximos estrenos</h1>
         <Carousel
           arrows
           swipeable
@@ -74,7 +75,7 @@ export default function Home({
       </div>
       <br />
       <div className="sub-container">
-        <h1>Popular Series</h1>
+        <h1>Series populares</h1>
         <Carousel
           arrows
           swipeable
@@ -91,7 +92,7 @@ export default function Home({
       </div>
       <br />
       <div className="sub-container">
-        <h1>Top-rated Series</h1>
+        <h1>Series mejor valoradas</h1>
         <Carousel
           arrows
           swipeable
