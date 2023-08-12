@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import heartIcon from '../assets/heart.png';
+import heartIcon from '../../public/heart.png';
 
 const FooterContainer = styled.footer`
   background-color: #f8b500;
