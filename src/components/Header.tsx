@@ -137,9 +137,10 @@ const Divider = styled.div`
 
 interface HeaderProps {
   onLogout: (user: UserType) => void;
+  onChangeLanguage: (lan: string) => void;
 }
 
-const Header = ({ onLogout }: HeaderProps) => {
+const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const handleDropdownOpen = () => {
@@ -156,13 +157,15 @@ const Header = ({ onLogout }: HeaderProps) => {
       const user: UserType = JSON.parse(userJSON);
       onLogout(user);
     }
+    console.log(onChangeLanguage);
   };
+
   return (
     <HeaderContainer>
       <div>
         <Title src={logo} alt="logo Shoten" />
       </div>
-
+      
       <Nav>
         <NavItem>
           <Image src={homeIcon} alt="search icon" />
@@ -185,6 +188,10 @@ const Header = ({ onLogout }: HeaderProps) => {
           <NavLinkText to="/series">SERIES</NavLinkText>
         </NavItem>
       </Nav>
+
+      {/* <div>
+        <button onClick={onChangeLanguage}></button>
+      </div> */}
 
       <HoverContainer onMouseEnter={handleDropdownOpen} onMouseLeave={handleDropdownClose}>
         <Icon src={profileIcon} alt="Profile icon" />

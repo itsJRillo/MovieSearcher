@@ -48,6 +48,7 @@ export default function Movies({ data, onMovieClick, filters }: { data: MovieTyp
   const handleGenreFilterChange = (genreID: number | null) => {
     setGenreFilter(genreID);
     setSelectedFilter(genreID);
+    console.log(selectedFilter);
     setCurrentPage(1);
   }
 

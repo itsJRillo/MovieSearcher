@@ -147,6 +147,10 @@ function App() {
     navigate("/", { replace: true })
   }
 
+  const handleChangeLanguage = (lan: string) => {
+    setLanguage(lan)
+  }
+
   useEffect(() => {
     fetchTrending()
 
@@ -156,7 +160,7 @@ function App() {
 
   return (
     <div>
-      {loggedInUser ? <Header onLogout={handleLogout} /> : <EmptyHeader />}
+      {loggedInUser ? <Header onLogout={handleLogout} onChangeLanguage={handleChangeLanguage}/> : <EmptyHeader />}
       <div className="container">
         <Routes>
           <Route

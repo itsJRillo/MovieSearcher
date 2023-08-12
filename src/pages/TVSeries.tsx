@@ -48,6 +48,7 @@ export default function TVSeries({ data, onSerieClick, filters }: { data: SerieT
   const handleGenreFilterChange = (genreID: number | null) => {
     setGenreFilter(genreID);
     setSelectedFilter(genreID);
+    console.log(selectedFilter);
     setCurrentPage(1);
   }
 

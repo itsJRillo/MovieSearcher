@@ -56,18 +56,18 @@ const Image = styled.img`
 
 export default function Profile({ user }: { user: UserType | null }) {
   const [editing, setEditing] = useState(false);
-  const [editedEmail, setEditedEmail] = useState(user?.email);
+  // const [editedEmail, setEditedEmail] = useState(user?.email);
   const [editedPassword, setEditedPassword] = useState(user?.password);
 
   const handleEditClick = () => {
     setEditing(true);
   };
 
-  const handleSaveClick = () => {
-    setEditing(false);
-    // user.email = editedEmail;
-    // user.password = editedPassword;
-  };
+  // const handleSaveClick = () => {
+  //   setEditing(false);
+  //   user.email = editedEmail;
+  //   user.password = editedPassword;
+  // };
 
   return (
     <div>
