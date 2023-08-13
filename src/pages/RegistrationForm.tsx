@@ -11,20 +11,26 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh; /* Use min-height to prevent content overflow */
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  margin-top: 2rem;
+`;
+
+const FormContainer = styled.div`
+  border-radius: 10px;
+  text-align: center;
+  padding: 2rem;
+  @media (min-width: 768px) {
+    padding: 4rem;
+  }
 `;
 
 const TextContainer = styled.div`
   display: inline-block;
 `
-
-const FormContainer = styled.div`
-  border-radius: 10px;
-  text-align: center;
-`;
 
 const FormTitle = styled.h1`
   color: #fff;
@@ -78,7 +84,7 @@ interface RegistrationFormProps {
 export default function RegistrationForm({ onRegister }: RegistrationFormProps) {
   const pb = new PocketBase('http://127.0.0.1:8090');
   const navigate = useNavigate();
-  
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -138,14 +144,14 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
       });
 
       localStorage.setItem("isLoggedIn", "true");
-      onRegister({username, email, password})
+      onRegister({ username, email, password })
       navigate("/home");
 
     } catch (error: any) {
     }
   };
 
-  const buttonVariants = {
+  const variants = {
     hover: {
       scale: 1.05,
       transition: {
@@ -173,11 +179,15 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
             <FormInput type="password" value={password} placeholder='Contraseña' onChange={handlePasswordChange} />
           </FormField>
           <ButtonsContainer>
-            <Button type="submit" variants={buttonVariants} whileHover="hover">
+            <Button type="submit" variants={variants} whileHover="hover">
               Registrarse
             </Button>
           </ButtonsContainer>
-          <FormSubtitle>Ya tienes una cuenta? <Link to="/" style={{ color: "#f8b500" }}>Inicia sesión</Link></FormSubtitle>
+          <FormSubtitle>Ya tienes una cuenta?
+            <Link to="/" style={{ color: "#f8b500" }}>
+              <motion.p variants={variants} whileHover="hover" style={{padding:8, margin:0}}>Inicia sesión</motion.p>
+            </Link>
+          </FormSubtitle>
         </form>
         <ToastContainer />
       </FormContainer>

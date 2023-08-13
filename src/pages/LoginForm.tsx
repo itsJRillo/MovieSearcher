@@ -11,22 +11,26 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh; /* Use min-height to prevent content overflow */
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  `;
-
-const TextContainer = styled.div`
-  display: inline-block;
-  text-align: center;
-  `;
+  margin-top: 2rem;
+`;
 
 const FormContainer = styled.div`
   border-radius: 10px;
   text-align: center;
-  padding: 5rem;
+  padding: 2rem;
+  @media (min-width: 768px) {
+    padding: 4rem;
+  }
+`;
+
+const TextContainer = styled.div`
+  display: inline-block;
+  text-align: center;
   `;
 
 const FormTitle = styled.h1`
@@ -90,6 +94,14 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!username || !password) {
+      toast.error("Por favor, completa todos los campos", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+      return;
+    }
+
     try {
       const data = {
         username,
@@ -135,9 +147,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
     }
   };
 
-
-
-  const buttonVariants = {
+  const variants = {
     hover: {
       scale: 1.05,
       transition: {
@@ -174,14 +184,14 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             />
           </FormField>
           <ButtonsContainer>
-            <Button type="submit" variants={buttonVariants} whileHover="hover">
+            <Button type="submit" variants={variants} whileHover="hover">
               Inicia sesión
             </Button>
           </ButtonsContainer>
           <FormSubtitle>
             Eres nuevo en la plataforma?{' '}
             <Link to="/sign-up" style={{ color: '#f8b500' }}>
-              Crea una cuenta
+              <motion.p variants={variants} whileHover="hover" style={{padding:8, margin:0}}>Crea una cuenta</motion.p>
             </Link>
           </FormSubtitle>
         </form>
