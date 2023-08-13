@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/card.css';
-import defaultImage from '/assets/placeholder-no-image.png';
+import defaultImage from '/placeholder-no-image.png';
 
 interface CardProps {
   media: MovieType | SerieType;

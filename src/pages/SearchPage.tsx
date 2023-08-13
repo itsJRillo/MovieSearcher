@@ -3,7 +3,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Card from '../components/Card';
-import noSearchFoundIcon from '/assets/notResultsFoundIcon.png';
+import noSearchFoundIcon from '/notResultsFoundIcon.png';
 
 const api_key = import.meta.env.VITE_API_KEY;
 
