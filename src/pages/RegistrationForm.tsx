@@ -82,7 +82,8 @@ interface RegistrationFormProps {
 }
 
 export default function RegistrationForm({ onRegister }: RegistrationFormProps) {
-  const pb = new PocketBase(import.meta.env.VITE_API_URL);
+  const pb = new PocketBase('https://shoten-api.pockethost.io');
+  
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');

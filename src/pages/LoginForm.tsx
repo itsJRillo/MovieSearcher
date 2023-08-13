@@ -78,7 +78,7 @@ interface LoginFormProps {
 
 export default function LoginForm({ onLogin }: LoginFormProps) {
 
-  const pb = new PocketBase(import.meta.env.VITE_API_URL);
+  const pb = new PocketBase('https://shoten-api.pockethost.io');
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
