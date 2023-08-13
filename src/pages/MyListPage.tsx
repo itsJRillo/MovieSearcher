@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import emptyListIcon from "../../public/assets/emptyList.png";
+import emptyListIcon from "/assets/emptyList.png";
 
 const EmptyListContainer = styled.div`
   display: flex;

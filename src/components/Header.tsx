@@ -1,10 +1,10 @@
-import logo from '../../public/assets/shotenLogo.png';
-import homeIcon from '../../public/assets/homeIcon.png';
-import searchIcon from '../../public/assets/searchIcon.png';
-import listIcon from '../../public/assets/listIcon.png';
-import movieIcon from '../../public/assets/movieIcon.svg';
-import seriesIcon from '../../public/assets/tvIcon.png';
-import profileIcon from '../../public/assets/profile.png';
+import logo from '/assets/shotenLogo.png';
+import homeIcon from '/assets/homeIcon.png';
+import searchIcon from '/assets/searchIcon.png';
+import listIcon from '/assets/listIcon.png';
+import movieIcon from '/assets/movieIcon.svg';
+import seriesIcon from '/assets/tvIcon.png';
+import profileIcon from '/assets/profile.png';
 
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
