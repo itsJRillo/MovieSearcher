@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Container = styled.div`
   width: 100%;
-  min-height: 100vh; /* Use min-height to prevent content overflow */
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,7 +82,7 @@ interface RegistrationFormProps {
 }
 
 export default function RegistrationForm({ onRegister }: RegistrationFormProps) {
-  const pb = new PocketBase('http://127.0.0.1:8090');
+  const pb = new PocketBase(import.meta.env.VITE_API_URL);
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
