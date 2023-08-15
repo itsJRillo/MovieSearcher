@@ -69,7 +69,7 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, lan }) => {
     const [titleImage, setTitleImage] = useState<string | null>(null);
 
     const handleFullWidthImages = async () => {
-        const urlImages = await fetch(`https://api.themoviedb.org/3/movie/${media.id}/images?language=en`, {
+        const urlImages = await fetch(`https://api.themoviedb.org/3/movie/${media.id}/images?language=${lan}`, {
             method: 'GET',
             headers: {
                 accept: 'application/json',
