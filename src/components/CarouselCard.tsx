@@ -18,7 +18,7 @@ const CarouselCard: React.FC<CarouselCardProps> = ({ media }) => {
       <div
         className="carousel-card-image-container"
         style={{
-          backgroundImage: `url(https://image.tmdb.org/t/p/w500/${media.poster_path})`,
+          backgroundImage: `url(https://image.tmdb.org/t/p/original/${media.poster_path})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           borderRadius: '10px',

@@ -2,6 +2,31 @@ import CarouselCard from '../components/CarouselCard';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import '../styles/card.css';
+import '../styles/home.css';
+import FullWidthCard from '../components/FullWidthCard';
+
+const responsiveFullWidth = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 1600 },
+    items: 1,
+    partialVisibilityGutter: 40,
+  },
+  desktop: {
+    breakpoint: { max: 1600, min: 1024 },
+    items: 1,
+    partialVisibilityGutter: 30,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 768 },
+    items: 1,
+    partialVisibilityGutter: 20,
+  },
+  mobile: {
+    breakpoint: { max: 768, min: 0 },
+    items: 1,
+    partialVisibilityGutter: 10,
+  },
+};
 
 const responsive = {
   superLargeDesktop: {
@@ -34,25 +59,25 @@ export default function Home({
     upcomingMovies: MovieType[] | undefined;
     series: SerieType[] | undefined;
     trendingSeries: SerieType[] | undefined;
+    lan: string
   };
 }) {
-  // <div>1</div>
+  // {/* <div>1</div> */}
 
   return (
-    <div className="container">
-      <div className="sub-container">
-        <h1>Películas populares</h1>
+    <div>
+      <div>
         <Carousel
           arrows
           swipeable
-          responsive={responsive}
+          responsive={responsiveFullWidth}
           removeArrowOnDeviceType={["tablet", "mobile"]}
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
           {/* <div>1</div> */}
           {data.movies?.map((movie) => (
-            <CarouselCard key={movie.id} media={movie} />
+            <FullWidthCard key={movie.id} media={movie} lan={data.lan}/>
           ))}
         </Carousel>
       </div>
@@ -63,13 +88,12 @@ export default function Home({
           arrows
           swipeable
           responsive={responsive}
-          removeArrowOnDeviceType={["tablet", "mobile"]}
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
           {/* <div>1</div> */}
           {data.upcomingMovies?.map((movie) => (
-            <CarouselCard key={movie.id} media={movie} />
+            <CarouselCard key={movie.id} media={movie}/>
           ))}
         </Carousel>
       </div>
@@ -80,7 +104,6 @@ export default function Home({
           arrows
           swipeable
           responsive={responsive}
-          removeArrowOnDeviceType={["tablet", "mobile"]}
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
@@ -97,7 +120,6 @@ export default function Home({
           arrows
           swipeable
           responsive={responsive}
-          removeArrowOnDeviceType={["tablet", "mobile"]}
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >

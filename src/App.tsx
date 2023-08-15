@@ -21,7 +21,7 @@ function App() {
   const navigate = useNavigate()
   
   const [loggedInUser, setLoggedInUser] = useState<UserType | null>(null)
-  const [language, setLanguage] = useState("es-ES")
+  const [language, setLanguage] = useState("en")
 
   const [movies, setMovies] = useState<MovieType[]>()
   const [popularMovies, setPopularMovies] = useState<MovieType[]>()
@@ -176,7 +176,7 @@ function App() {
 
           {(loggedInUser || location.pathname === "/" || location.pathname === "/sign-up") && (
             <>
-              <Route path="/home" element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: popularSeries, trendingSeries: trendingSeries }} />} />
+              <Route path="/home" element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: popularSeries, trendingSeries: trendingSeries, lan: language }} />} />
               <Route path="/buscar" element={<SearchPage onMediaClick={handleMediaClick} />} />
               <Route path="/peliculas" element={<Movies data={movies} onMovieClick={handleMediaClick} filters={genresMovies} />} />
               <Route path="/peliculas/*" element={<MediaDetails media={selectedMovie} />} />

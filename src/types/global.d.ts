@@ -43,46 +43,19 @@ declare global {
     vote_average: number;
     vote_count: number;
   };
-  
+
   type GenreType = {
     id: number;
     name: string;
   };
 
-  type ErrorType = {
-    url: string;
-    status: number;
-    response: Response;
-    isAbort: boolean;
-    originalError: OriginalError;
-    name: string;
-    stack: string;
-    message: string;
+  type JSONImageType = {
+    aspect_ratio: number;
+    file_path: string;
+    height: number;
+    iso_639_1: null;
+    vote_average: number;
+    vote_count: number;
+    width: number;
   };
-
-  type OriginalError = {
-    url: string;
-    status: number;
-    data: Response;
-  };
-
-  type Response = {
-    code: number;
-    message: string;
-    data: Data;
-  };
-
-  type Data = {
-    email: Email;
-    password: Email;
-    username: Email;
-  };
-
-  type Email = {
-    code: string;
-    message: string;
-  };
-}
-
-{
 }

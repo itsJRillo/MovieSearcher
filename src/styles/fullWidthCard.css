@@ -1,0 +1,42 @@
+.full-width-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #1d1d1d;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+
+.full-width-card-image {
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.full-width-card-content {
+  color: white;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.full-width-card-title {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.full-width-card-vote-container {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+
