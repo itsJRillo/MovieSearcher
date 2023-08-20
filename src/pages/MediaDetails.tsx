@@ -22,15 +22,15 @@ const MovieContainer = styled.div`
     `}
 `;
 
-const Title = styled.h2`
-    margin: 0;
-    text-align: center;
-    font-size: 2rem;
+// const Title = styled.h2`
+//     margin: 0;
+//     text-align: center;
+//     font-size: 2rem;
 
-    ${mediaQueries("md")`
-        font-size: 2.5rem;
-    `}
-`;
+//     ${mediaQueries("md")`
+//         font-size: 2.5rem;
+//     `}
+// `;
 
 const Image = styled.img`
     width: 100px;
@@ -56,17 +56,17 @@ const Filter = styled.div`
     background-color: #121212;
 `;
 
-const FiltersContainer = styled.div`
-    display: flex;
-    text-align: center;
-    gap: 0.5rem;
-`;
+// const FiltersContainer = styled.div`
+//     display: flex;
+//     text-align: center;
+//     gap: 0.5rem;
+// `;
 
-const ProductionContainer = styled.div`
-    display: flex;
-    text-align: center;
-    gap: 0.5rem;
-`;
+// const ProductionContainer = styled.div`
+//     display: flex;
+//     text-align: center;
+//     gap: 0.5rem;
+// `;
 
 const LoadingContainer = styled.div`
     display: flex;
@@ -118,10 +118,11 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
     const isMovieType = media?.type === "movie";
     const [details, setDetails] = useState<MovieDetails | TVDetails | undefined>();
 
-    const [listImages, setListImages] = useState<JSONImageType[]>([]);
+    // const [listImages, setListImages] = useState<JSONImageType[]>([]);
     const [titleImage, setTitleImage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-
+    console.log(loading);
+    
 
     const handleDetailsMedia = async () => {
         const type = isMovieType ? "movie" : "tv";
