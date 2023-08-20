@@ -138,7 +138,6 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
       }
 
       await pb.collection('users').create(data);
-      await pb.collection('users').requestVerification(email);
 
       toast.success("El usuario se ha creado satisfactoriamente", {
         position: toast.POSITION.BOTTOM_RIGHT

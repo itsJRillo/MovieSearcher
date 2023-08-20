@@ -62,8 +62,6 @@ export default function Home({
     lan: string
   };
 }) {
-  // {/* <div>1</div> */}
-
   return (
     <div>
       <div>
@@ -75,7 +73,6 @@ export default function Home({
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
-          {/* <div>1</div> */}
           {data.movies?.map((movie) => (
             <FullWidthCard key={movie.id} media={movie} lan={data.lan}/>
           ))}
@@ -91,7 +88,6 @@ export default function Home({
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
-          {/* <div>1</div> */}
           {data.upcomingMovies?.map((movie) => (
             <CarouselCard key={movie.id} media={movie}/>
           ))}
@@ -106,8 +102,7 @@ export default function Home({
           responsive={responsive}
           ssr={true}
           customTransition="transform 500ms ease-in-out"
-        >
-          {/* <div>1</div> */}
+        > 
           {data.series?.map((serie) => (
             <CarouselCard key={serie.id} media={serie} />
           ))}
@@ -123,7 +118,6 @@ export default function Home({
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
-          {/* <div>1</div> */}
           {data.trendingSeries?.map((serie) => (
             <CarouselCard key={serie.id} media={serie} />
           ))}

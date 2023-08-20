@@ -28,10 +28,11 @@ const TitleImageContainer = styled.div`
 `;
 
 const TitleImage = styled.img`
-    width: 75%;
-    height: 75%;
+    width: 65%;
+    height: 65%;
     object-fit: contain;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
 `;
 
 const OverviewContainer = styled.div`
@@ -45,6 +46,7 @@ const OverviewContainer = styled.div`
     font-size: 1rem;
     line-height: 1.5;
     gap: 3rem;
+    margin-bottom: 2rem;
 `;
 
 const DetailsButton = styled(motion.button)`
@@ -67,9 +69,12 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, lan }) => {
     const [listImages, setListImages] = useState<JSONImageType[]>([]);
     const [widestImage, setWidestImage] = useState<string>("");
     const [titleImage, setTitleImage] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true)
 
     const handleFullWidthImages = async () => {
-        const urlImages = await fetch(`https://api.themoviedb.org/3/movie/${media.id}/images?language=${lan}`, {
+        setLoading(true);
+
+        const fetchImages = await fetch(`https://api.themoviedb.org/3/movie/${media.id}/images?language=${lan}`, {
             method: 'GET',
             headers: {
                 accept: 'application/json',
@@ -77,31 +82,29 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, lan }) => {
             }
         });
 
-        const [images] = await Promise.all([urlImages]);
-        const imagesJSON = await images.json();
+        const imagesJSON = await fetchImages.json();
 
         setListImages(imagesJSON);
 
-        const widestImage = { width: 1090, filePath: "" };
+        const filteredBackdrops = imagesJSON.posters.map((image: any) => image.file_path);
 
-        Object.values(listImages).forEach((filter: any) => {
-            if (filter.length > 0) {
-                filter.forEach((image: any) => {
-                    if (image.width > widestImage.width && !image.file_path.endsWith('.png')) {
-                        widestImage.width = image.width;
-                        widestImage.filePath = image.file_path;
-                    }
+        if (filteredBackdrops.length > 0) {
+            const imagePath = filteredBackdrops[0];
+            setWidestImage(imagePath);
+        }
 
-                    if (image.file_path.endsWith('.png')) {
-                        setTitleImage(image.file_path);
-                    }
-                });
-            }
-        });
+        const filteredTitles = imagesJSON.logos.map((image: any) => image.file_path);
 
-        setWidestImage(widestImage.filePath);
+        if (filteredTitles.length > 0) {
+            const imagePath = filteredTitles[0];
+            setTitleImage(imagePath);
+        } else {
+            setTitleImage('');
+        }
+
+        setLoading(false);
+
     };
-
 
     useEffect(() => {
         handleFullWidthImages();
@@ -109,12 +112,12 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, lan }) => {
 
     const variants = {
         hover: {
-          scale: 1.05,
-          transition: {
-            duration: 0.2,
-          },
+            scale: 1.05,
+            transition: {
+                duration: 0.2,
+            },
         },
-      };
+    };
 
     return (
         <div className="full-width-card">

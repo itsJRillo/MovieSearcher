@@ -29,7 +29,7 @@ export default function TVSeries({ data, onSerieClick, filters }: { data: SerieT
   const [genreFilter, setGenreFilter] = useState<number | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 16;
 
   const filteredSeries = data?.filter((serie) => {
     const titleMatch = serie.name.toLowerCase().includes(titleFilter.toLowerCase());
@@ -80,9 +80,9 @@ export default function TVSeries({ data, onSerieClick, filters }: { data: SerieT
   };
 
   return (
-    <div className="container">
+    <div className="media-container">
       <h1 className='container-title'>TV Series</h1>
-      <div>
+      <div className='media-filters'>
         {Object.values(filters).map((filter: any) => (
           <div key={filter[0].id} className='filter-container'>
             {hasFilters && (<FilterButton
@@ -94,15 +94,17 @@ export default function TVSeries({ data, onSerieClick, filters }: { data: SerieT
             </FilterButton>)}
 
             {filter.map((item: any) => (
-              <FilterButton
+              <motion.button
                 variants={buttonVariants}
+                className={`filter-button ${genreFilter === item.id ? 'selected' : ''}`}
                 whileHover="hover"
                 whileTap="pressed"
                 key={item.id}
                 onClick={() => handleGenreFilterChange(item.id)}
               >
                 {item.name}
-              </FilterButton>
+                {genreFilter === item.id && <span className="selected-indicator">✅</span>}
+              </motion.button>
             ))}
           </div>
         ))}
