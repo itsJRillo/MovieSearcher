@@ -108,6 +108,9 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, lan }) => {
 
     useEffect(() => {
         handleFullWidthImages();
+        console.log(loading);
+        console.log(listImages);
+        
     }, []);
 
     const variants = {
