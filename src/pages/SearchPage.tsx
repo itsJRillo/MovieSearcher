@@ -144,9 +144,7 @@ export default function SearchPage({ onMediaClick }: { onMediaClick: (media: Mov
         {searchResults.length > 0 ? (
           <>
             {searchResults.map((media) => (
-              <Link to={`/peliculas/${media.id}`} key={media.id} onClick={() => onMediaClick(media)}>
                 <Card media={media} />
-              </Link>
             ))}
           </>
         ) : (

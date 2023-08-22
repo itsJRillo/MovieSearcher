@@ -30,11 +30,6 @@
   background-color: #121212;
 }
 
-.loading{
-  width: 100px;
-  height: 100px;
-}
-
 .media-details-info {
   display: flex;
   flex-direction: column;

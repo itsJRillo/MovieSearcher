@@ -1,16 +1,51 @@
 import React, { useState } from 'react';
 import '../styles/card.css';
+import styled from 'styled-components';
+import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+
 import defaultImage from '/placeholder-no-image.png';
+import addIcon from '/heart.svg';
+import removeIcon from '/heart-filled.svg';
 
 interface CardProps {
   media: MovieType | SerieType;
+  onAddToFavorites?: (media: MovieType | SerieType) => void;
+  onRemoveFromFavorites?: (movie: MovieType | SerieType) => void;
+  onMediaClick?: (movie: MovieType | SerieType) => void;
 }
 
-const Card: React.FC<CardProps> = ({ media }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const isMovieType = media.type === "movie";
+const Icon = styled.img`
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+`;
 
+const Card: React.FC<CardProps> = ({ media, onMediaClick }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const isMovieType = media.type === 'movie';
+
+  const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const [favorites, setFavorites] = useState(storedFavorites);
+  
+  const isFavorite = favorites.some((fav: any) => fav.id === media.id);
+  
   const hasPoster = media.poster_path !== null && media.poster_path !== undefined;
+
+  const handleAddToFavorites = () => {
+    if (isFavorite) {
+      const updatedFavorites = favorites.filter((fav: any) => fav.id !== media.id);
+      setFavorites(updatedFavorites);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      toast.info('Removed from favorites ❤️');
+      window.location.reload();
+    } else {
+      const updatedFavorites = [...favorites, media];
+      setFavorites(updatedFavorites);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      toast.success('Added to favorites⭐');
+    }
+  };
 
   return (
     <div
@@ -19,35 +54,31 @@ const Card: React.FC<CardProps> = ({ media }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {hasPoster ? (
-        <img
-          className="card-image"
-          src={`https://image.tmdb.org/t/p/w500/${media.poster_path}`}
-          alt={isMovieType ? media.title : (media as SerieType).name}
-        />
+        <Link
+          to={isMovieType ? `/peliculas/${media.id}` : `/series/${media.id}`}
+          key={media.id}
+          onClick={() => onMediaClick?.(media)}
+        >
+          <img
+            className="card-image"
+            src={`https://image.tmdb.org/t/p/w500/${media.poster_path}`}
+            alt={isMovieType ? media.title : (media as SerieType).name}
+          />
+        </Link>
       ) : (
         <img className="card-image" src={defaultImage} alt="Imagen predeterminada" />
       )}
+      <button className="add-to-favorites-button" onClick={handleAddToFavorites}>
+        <Icon src={isFavorite ? removeIcon : addIcon} alt={isFavorite ? 'remove icon' : 'add icon'} />
+      </button>
 
       <div className="card-content">
-        <h2 className="card-title">{isMovieType ? media.title : (media as SerieType).name}</h2>
+        <div className='card-content-top'>
+        </div>
         <div className="vote-container">
-          <svg
-            className="vote-icon"
-            style={{ fill: '#f9cc6c' }}
-            xmlns="http://www.w3.org/2000/svg"
-            height="1em"
-            viewBox="0 0 576 512"
-          >
-            <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-          </svg>
-          <p className="vote-average">{Math.round(media.vote_average)}</p>
         </div>
       </div>
-      {isHovered && (
-        <div className="card-overlay">
-          <p className="card-description">{media.overview}</p>
-        </div>
-      )}
+      <ToastContainer />
     </div>
   );
 };

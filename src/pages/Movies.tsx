@@ -1,20 +1,18 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 
-import '../styles/card.css';
 import '../styles/pagination.css';
 import '../styles/media.css';
 import Card from '../components/Card';
 import { motion } from 'framer-motion';
 
-export default function Movies({ data, onMovieClick, filters }: { data: MovieType[] | undefined, onMovieClick: (movie: MovieType) => void, filters: GenreType[] }) {
+export default function Movies({ data, onMediaClick, filters, onAddToFavorites }: { data: MovieType[] | undefined, onMediaClick: (movie: MovieType | SerieType) => void, filters: GenreType[], onAddToFavorites: (movie: MovieType | SerieType) => void }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 16;
+
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState<number | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
-
-  const itemsPerPage = 16;
 
   const filteredMovies = data?.filter((movie) => {
     const titleMatch = movie.title.toLowerCase().includes(titleFilter.toLowerCase());
@@ -35,7 +33,7 @@ export default function Movies({ data, onMovieClick, filters }: { data: MovieTyp
     setSelectedFilter(genreID);
     setCurrentPage(1);
   };
-  
+
   const handleClearFilters = () => {
     console.log(selectedFilter);
     setTitleFilter("");
@@ -98,9 +96,7 @@ export default function Movies({ data, onMovieClick, filters }: { data: MovieTyp
       </div>
       <div className="media-grid">
         {currentItems?.map((movie) => (
-          <Link to={`/peliculas/${movie.id}`} key={movie.id} onClick={() => onMovieClick(movie)}>
-            <Card media={movie} />
-          </Link>
+          <Card media={movie} onAddToFavorites={onAddToFavorites} onMediaClick={onMediaClick} />
         ))}
       </div>
       {filteredMovies && (

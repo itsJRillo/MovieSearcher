@@ -134,6 +134,29 @@ const Divider = styled.div`
   margin: 0.5rem 0;
 `;
 
+const LanguageDropdown = styled.select`
+  background-color: #f8b500;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin-right: 1rem;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  appearance:none;
+
+  &:hover {
+    background-color: #ffd966;
+  }
+`;
+
+const LanguageOption = styled.option`
+  font-size: 14px;
+`;
 
 interface HeaderProps {
   onLogout: (user: UserType) => void;
@@ -157,7 +180,11 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
       const user: UserType = JSON.parse(userJSON);
       onLogout(user);
     }
-    console.log(onChangeLanguage);
+  };
+
+  const handleLanguageChange = (event: any) => {
+    const selectedLanguage = event.target.value;
+    onChangeLanguage(selectedLanguage);
   };
 
   return (
@@ -189,9 +216,10 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
         </NavItem>
       </Nav>
 
-      {/* <div>
-        <button onClick={onChangeLanguage}></button>
-      </div> */}
+      <LanguageDropdown onChange={handleLanguageChange}>
+        <LanguageOption value="en">EN</LanguageOption>
+        <LanguageOption value="es">ES</LanguageOption>
+      </LanguageDropdown>
 
       <HoverContainer onMouseEnter={handleDropdownOpen} onMouseLeave={handleDropdownClose}>
         <Icon src={profileIcon} alt="Profile icon" />

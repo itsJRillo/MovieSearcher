@@ -59,7 +59,8 @@ export default function Home({
     upcomingMovies: MovieType[] | undefined;
     series: SerieType[] | undefined;
     trendingSeries: SerieType[] | undefined;
-    lan: string
+    language: string
+    onMediaClick?: (movie: MovieType | SerieType) => void;
   };
 }) {
   return (
@@ -74,7 +75,7 @@ export default function Home({
           customTransition="transform 500ms ease-in-out"
         >
           {data.movies?.map((movie) => (
-            <FullWidthCard key={movie.id} media={movie} lan={data.lan}/>
+            <FullWidthCard key={movie.id} media={movie} language={data.language} onMediaClick={data.onMediaClick}/>
           ))}
         </Carousel>
       </div>

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import "./styles/main.css"
-import loadingIcon from '/loading.svg';
 import Header from "./components/Header"
 import EmptyHeader from "./components/EmptyHeader"
 import MediaDetails from "./pages/MediaDetails"
 import Footer from "./components/Footer"
+import Loading from "./components/Loading";
 
 import Home from "./pages/Home"
 import Movies from "./pages/Movies"
@@ -15,36 +15,28 @@ import RegisterForm from "./pages/RegistrationForm"
 import SearchPage from "./pages/SearchPage"
 import MyListPage from "./pages/MyListPage"
 import Profile from "./pages/Profile"
-import styled from "styled-components";
-
-const Image = styled.img`
-  width: 12px;
-  height: 12px;
-  @media (min-width: 992px) {
-    width: 25px;
-    height: 25px;
-  }
-`;
 
 function App() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true);
-  
+
   const [loggedInUser, setLoggedInUser] = useState<UserType | null>(null)
   const [language, setLanguage] = useState("en")
-  
+
   const [movies, setMovies] = useState<MovieType[]>()
   const [popularMovies, setPopularMovies] = useState<MovieType[]>()
   const [upcomingMovies, setUpcomingMovies] = useState<MovieType[]>()
   const [selectedMovie, setSelectedMovie] = useState<MovieType | SerieType>()
-  
+
   const [series, setSeries] = useState<SerieType[]>()
   const [popularSeries, setPopularSeries] = useState<SerieType[]>()
   const [trendingSeries, setTrendingSeries] = useState<SerieType[]>()
-  
+
   const [genresMovies, setGenresMovies] = useState<GenreType[]>([])
   const [genresTV, setGenresTV] = useState<GenreType[]>([])
-  
+
+  const [, setFavorites] = useState([{}])
+
   const api_key = import.meta.env.VITE_API_KEY
   const prefixAPI = "https://api.themoviedb.org/3"
   const sufixAPI = `api_key=${api_key}&language=${language}`
@@ -153,8 +145,34 @@ function App() {
 
   const handleMediaClick = (media: MovieType | SerieType) => {
     setSelectedMovie(media)
-    console.log(media);
   }
+
+  const handleAddToFavorites = (media: MovieType | SerieType) => {
+    const storedFavorites = localStorage.getItem('favorites');
+
+    let favoritesArray: (MovieType | SerieType)[] = [];
+
+    if (storedFavorites) {
+      try {
+        favoritesArray = JSON.parse(storedFavorites);
+      } catch (error) {
+        console.error('Error parsing stored favorites:', error);
+      }
+    }
+
+    const isMediaInFavorites = favoritesArray.some(item => item.id === media.id);
+
+    if (!isMediaInFavorites) {
+      favoritesArray.push(media);
+
+      localStorage.setItem('favorites', JSON.stringify(favoritesArray));
+
+      setFavorites(favoritesArray);
+    } else {
+      console.log('Media is already in favorites.');
+    }
+  };
+
 
   const handleLogin = (user: UserType) => {
     setLoggedInUser(user)
@@ -182,7 +200,7 @@ function App() {
     <div>
       {loggedInUser ? <Header onLogout={handleLogout} onChangeLanguage={handleChangeLanguage} /> : <EmptyHeader />}
       <div className="container">
-        {loading ? (<p> <Image src={loadingIcon}/> Loading...</p>) : (
+        {loading ? (<Loading />) : (
           <Routes>
             <Route
               path="/"
@@ -197,13 +215,13 @@ function App() {
 
             {(loggedInUser || location.pathname === "/" || location.pathname === "/sign-up") && (
               <>
-                <Route path="/home" element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: popularSeries, trendingSeries: trendingSeries, lan: language }} />} />
+                <Route path="/home" element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: popularSeries, trendingSeries: trendingSeries, language: language, onMediaClick: handleMediaClick }} />} />
                 <Route path="/buscar" element={<SearchPage onMediaClick={handleMediaClick} />} />
-                <Route path="/peliculas" element={<Movies data={movies} onMovieClick={handleMediaClick} filters={genresMovies} />} />
+                <Route path="/peliculas" element={<Movies data={movies} onMediaClick={handleMediaClick} filters={genresMovies} onAddToFavorites={handleAddToFavorites} />} />
                 <Route path="/peliculas/*" element={<MediaDetails media={selectedMovie} language={language} />} />
                 <Route path="/tv-series/*" element={<MediaDetails media={selectedMovie} language={language} />} />
                 <Route path="/mi-lista" element={<MyListPage />} />
-                <Route path="/series" element={<TVSeries data={series} onSerieClick={handleMediaClick} filters={genresTV} />} />
+                <Route path="/series" element={<TVSeries data={series} onSerieClick={handleMediaClick} filters={genresTV} onAddToFavorites={handleAddToFavorites} />} />
                 <Route path="/cuenta" element={<Profile user={loggedInUser} />} />
               </>
             )}

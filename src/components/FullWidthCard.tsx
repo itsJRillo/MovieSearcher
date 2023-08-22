@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import '../styles/fullWidthCard.css';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 interface FullWidthCardProps {
     media: MovieType | SerieType,
-    lan: string
+    language: string
+    onMediaClick?: (movie: MovieType | SerieType) => void;
 }
 
 const CardContainer = styled.div`
@@ -65,16 +67,16 @@ const DetailsButton = styled(motion.button)`
     font-weight: bold;
 `;
 
-const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, lan }) => {
-    const [listImages, setListImages] = useState<JSONImageType[]>([]);
+const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, language, onMediaClick }) => {
+    const [, setListImages] = useState<JSONImageType[]>([]);
     const [widestImage, setWidestImage] = useState<string>("");
     const [titleImage, setTitleImage] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true)
+    const [, setLoading] = useState<boolean>(true)
 
     const handleFullWidthImages = async () => {
         setLoading(true);
 
-        const fetchImages = await fetch(`https://api.themoviedb.org/3/movie/${media.id}/images?language=${lan}`, {
+        const fetchImages = await fetch(`https://api.themoviedb.org/3/movie/${media.id}/images?language=${language}`, {
             method: 'GET',
             headers: {
                 accept: 'application/json',
@@ -108,9 +110,6 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, lan }) => {
 
     useEffect(() => {
         handleFullWidthImages();
-        console.log(loading);
-        console.log(listImages);
-        
     }, []);
 
     const variants = {
@@ -137,7 +136,13 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, lan }) => {
                 </TitleImageContainer>
                 <OverviewContainer>
                     {media.overview}
-                    <DetailsButton variants={variants} whileHover="hover">Más info</DetailsButton>
+                    <Link
+                        to={`/peliculas/${media.id}`}
+                        key={media.id}
+                        onClick={() => onMediaClick?.(media)}
+                    >
+                        <DetailsButton variants={variants} whileHover="hover">Más info</DetailsButton>
+                    </Link>
                 </OverviewContainer>
             </CardContainer>
         </div>

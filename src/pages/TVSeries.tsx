@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 
@@ -23,7 +22,7 @@ const FilterButton = styled(motion.button)`
   background-color: #121212;
 `;
 
-export default function TVSeries({ data, onSerieClick, filters }: { data: SerieType[] | undefined, onSerieClick: (serie: SerieType) => void, filters: GenreType[] }) {
+export default function TVSeries({ data, onSerieClick, filters, onAddToFavorites}: { data: SerieType[] | undefined, onSerieClick: (serie: MovieType | SerieType) => void, filters: GenreType[], onAddToFavorites: (serie: MovieType | SerieType) => void}) {
   const [currentPage, setCurrentPage] = useState(1);
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState<number | null>(null);
@@ -111,9 +110,7 @@ export default function TVSeries({ data, onSerieClick, filters }: { data: SerieT
       </div>
       <div className="media-grid">
         {currentItems?.map((serie) => (
-          <Link to={`/tv-series/${serie.id}`} key={serie.id} onClick={() => onSerieClick(serie)}>
-            <Card media={serie} />
-          </Link>
+            <Card media={serie} onAddToFavorites={onAddToFavorites} onMediaClick={onSerieClick}/>
         ))}
       </div>
       {filteredSeries && (
