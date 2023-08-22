@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Card from '../components/Card';
 import noSearchFoundIcon from '/notResultsFoundIcon.png';
@@ -144,7 +143,10 @@ export default function SearchPage({ onMediaClick }: { onMediaClick: (media: Mov
         {searchResults.length > 0 ? (
           <>
             {searchResults.map((media) => (
-                <Card media={media} />
+              <div key={media.id}>
+
+                <Card media={media} onMediaClick={onMediaClick}/>
+              </div>
             ))}
           </>
         ) : (

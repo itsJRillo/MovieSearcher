@@ -96,7 +96,9 @@ export default function Movies({ data, onMediaClick, filters, onAddToFavorites }
       </div>
       <div className="media-grid">
         {currentItems?.map((movie) => (
-          <Card media={movie} onAddToFavorites={onAddToFavorites} onMediaClick={onMediaClick} />
+          <div key={movie.id}>
+            <Card media={movie} onAddToFavorites={onAddToFavorites} onMediaClick={onMediaClick} />
+          </div>
         ))}
       </div>
       {filteredMovies && (

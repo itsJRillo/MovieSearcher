@@ -145,6 +145,7 @@ function App() {
 
   const handleMediaClick = (media: MovieType | SerieType) => {
     setSelectedMovie(media)
+    
   }
 
   const handleAddToFavorites = (media: MovieType | SerieType) => {
