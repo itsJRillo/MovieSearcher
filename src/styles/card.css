@@ -116,7 +116,6 @@ a:active {
   opacity: 1;
 }
 
-/* Media grid */
 .media-grid {
   display: grid;
   grid-gap: 20px;
