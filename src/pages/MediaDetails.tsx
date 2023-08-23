@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { mediaQueries } from "../types/mediaQueries";
 import Loading from "../components/Loading";
 
 interface MediaDetailsProps {
@@ -13,23 +12,7 @@ const MovieContainer = styled.div`
     flex-direction: column; 
     align-items: center;
     gap: 20px;
-
-    ${mediaQueries("md")`
-        margin-bottom: 4rem;
-        flex-direction: row;
-        align-items: flex-start;
-    `}
 `;
-
-// const Title = styled.h2`
-//     margin: 0;
-//     text-align: center;
-//     font-size: 2rem;
-
-//     ${mediaQueries("md")`
-//         font-size: 2.5rem;
-//     `}
-// `;
 
 const Filter = styled.div`
     background: none;
@@ -85,49 +68,46 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
     const [details, setDetails] = useState<MovieDetails | TVDetails | undefined>();
 
     const [titleImage, setTitleImage] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    console.log(loading);
+    const [, setLoading] = useState<boolean>(true);
 
     const handleDetailsMedia = async () => {
         const type = isMovieType ? "movie" : "tv";
         const apiKey = import.meta.env.VITE_API_KEY;
 
-        try {
-            const fetchDetails = await fetch(
-                `https://api.themoviedb.org/3/${type}/${media?.id}?language=${language}&api_key=${apiKey}`
-            );
 
-            const fetchImages = await fetch(
-                `https://api.themoviedb.org/3/${type}/${media?.id}/images?language=${language}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        accept: 'application/json',
-                        Authorization: import.meta.env.VITE_API_AUTH
-                    }
+        const fetchDetails = await fetch(
+            `https://api.themoviedb.org/3/${type}/${media?.id}?language=${language}&api_key=${apiKey}`
+        );
+
+        const fetchImages = await fetch(
+            `https://api.themoviedb.org/3/${type}/${media?.id}/images?language=${language}`,
+            {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: import.meta.env.VITE_API_AUTH
                 }
-            );
-
-            const detailsJSON = await fetchDetails.json();
-            const imagesJSON = await fetchImages.json();
-
-            setDetails({
-                type: type,
-                ...detailsJSON,
-            });
-
-            const filteredImages = imagesJSON.logos
-                .map((image: any) => image.file_path);
-
-            if (filteredImages.length > 0) {
-                const imagePath = filteredImages[0];
-                setTitleImage(imagePath);
             }
+        );
 
-            setLoading(false)
-        } catch (error) {
-            console.error("Error fetching media details:", error);
+        const detailsJSON = await fetchDetails.json();
+        const imagesJSON = await fetchImages.json();
+
+        setDetails({
+            type: type,
+            ...detailsJSON,
+        });
+
+        const filteredImages = imagesJSON.logos
+            .map((image: any) => image.file_path);
+
+        if (filteredImages.length > 0) {
+            const imagePath = filteredImages[0];
+            setTitleImage(imagePath);
         }
+
+        setLoading(false)
+
     };
 
     useEffect(() => {
@@ -146,6 +126,7 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
         <MovieContainer>
             <PosterContainer style={{
                 backgroundImage: `linear-gradient(to top, rgba(18, 18, 18, 1), rgba(18, 18, 18, 0.5)), url(https://image.tmdb.org/t/p/original/${details.backdrop_path})`,
+                backgroundRepeat: 'no-repeat',
             }}>
                 <TitleImageContainer>
                     <TitleImage

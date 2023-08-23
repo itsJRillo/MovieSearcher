@@ -7,7 +7,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 15px;
 }
 
 /* Track */
@@ -26,4 +26,10 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
   transition: background-color 0.3;
+}
+
+@media (max-width: 600px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  } 
 }

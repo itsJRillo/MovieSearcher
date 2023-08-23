@@ -1,0 +1,11 @@
+{
+    "headerHomeTitle": "INICIO",
+    "headerSearchTitle": "BÚSQUEDA",
+    "headerListTitle": "MI LISTA",
+    "headerMoviesTitle": "PELÍCULAS",
+    "headerTvTitle": "TV SERIES",
+    "footerMessage":"Hecho con",
+    "footerMessage2":"por",
+    "noResultMessage":"No hay ningún resultado",
+    "placeholderSearch":"Película o serie..."
+}

@@ -3,6 +3,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import Card from '../components/Card';
 import noSearchFoundIcon from '/notResultsFoundIcon.png';
+import { useTranslation } from 'react-i18next';
 
 const api_key = import.meta.env.VITE_API_KEY;
 
@@ -12,10 +13,10 @@ const PageContainer = styled.div`
   min-height: 100vh;
   align-items: center;
   overflow-x: hidden;
-  padding: 2rem;
-  margin-top: 2rem;
-  @media (min-width: 992px) {
-    margin-top: .25rem;
+  padding: 3rem;
+  @media (max-width: 600px) {
+    margin-top: 5rem;
+    padding: 3rem 0 3rem 0;
   }
 `;
 
@@ -30,6 +31,7 @@ const SearchBarContainer = styled.form`
 
 const SearchBarInput = styled.input`
   width: 100%;
+  height: 30px;
   padding: 40px 40px 40px 40px;
   font-size: 30px;
   border: 1px solid #ccc;
@@ -41,6 +43,12 @@ const SearchBarInput = styled.input`
     border-color: #f8b500;
     box-shadow: 0 0 5px rgba(248, 181, 0, 0.5);
   }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 25px;
+    font-size: 25px;
+  }
 `;
 
 const ResultContainer = styled.div`
@@ -51,31 +59,38 @@ const ResultContainer = styled.div`
   grid-gap: 75px;
   justify-items: center;
   align-items: start;
-  padding: 20px;
+  padding: 1rem;
 `;
 
 const NoResultDiv = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 20px;
-margin-top: 15rem;
-@media (min-width: 992px) {
-  
-}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 15rem;
 `
 const NoResultText = styled.div`
   font-size: 36px;
+  text-align: center;
+  @media (max-width: 600px) {
+    font-size: 25px;
+  }
 `
 
 const Image = styled.img`
   width: 100px;
   height: 100px;
+  @media (max-width: 600px) {
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 export default function SearchPage({ onMediaClick }: { onMediaClick: (media: MovieType | SerieType) => void }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<(MovieType | SerieType)[]>([]);
+
+  const {t} = useTranslation();
 
   const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const newSearchTerm = event.target.value;
@@ -134,7 +149,7 @@ export default function SearchPage({ onMediaClick }: { onMediaClick: (media: Mov
       <SearchBarContainer onSubmit={handleFormSubmit}>
         <SearchBarInput
           type="text"
-          placeholder="Película, serie o personaje..."
+          placeholder={t("placeholderSearch")}
           value={searchTerm}
           onChange={handleInputChange}
         />
@@ -145,14 +160,14 @@ export default function SearchPage({ onMediaClick }: { onMediaClick: (media: Mov
             {searchResults.map((media) => (
               <div key={media.id}>
 
-                <Card media={media} onMediaClick={onMediaClick}/>
+                <Card media={media} onMediaClick={onMediaClick} />
               </div>
             ))}
           </>
         ) : (
           <NoResultDiv>
             <Image src={noSearchFoundIcon} alt="no search found icon" />
-            <NoResultText>No hay ningún resultado</NoResultText>
+            <NoResultText>{t("noResultMessage")}</NoResultText>
           </NoResultDiv>
         )}
       </ResultContainer>

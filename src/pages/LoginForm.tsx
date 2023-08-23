@@ -23,7 +23,7 @@ const FormContainer = styled.div`
   border-radius: 10px;
   text-align: center;
   padding: 2rem;
-  @media (min-width: 768px) {
+  @media (max-width: 600px) {
     padding: 4rem;
   }
 `;
@@ -108,40 +108,21 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         password,
       };
 
-      const records = await pb.collection('users').getFullList({
-        sort: '-created',
-      });
-
-      let userFound = false;
-
-      for (const record of records) {
-        if (record.username === data.username) {
-          userFound = true;
-          if (record.password === data.password) {
-            toast.success("Se ha iniciado sesión correctamente", {
-              position: toast.POSITION.BOTTOM_RIGHT
-            });
-            
-            onLogin({ username, password });
-            navigate("/home");
-            break;
-
-          } else {
-            toast.error("Contraseña incorrecta", {
-              position: toast.POSITION.BOTTOM_RIGHT
-            });
-          }
-        }
-      }
-
-      if (!userFound) {
-        toast.error("Usuario no encontrado", {
+      const authData = await pb.collection('users').authWithPassword(
+        data.username,
+        data.password
+      );
+      
+      if(authData){
+        toast.success("Se ha iniciado sesión correctamente", {
           position: toast.POSITION.BOTTOM_RIGHT
         });
+        onLogin({ username, password });
+        navigate("/home");
       }
 
     } catch (error: any) {
-      toast.error(error.response ? error.response.message : "Error desconocido", {
+      toast.error(error.response.message, {
         position: toast.POSITION.BOTTOM_RIGHT
       });
     }

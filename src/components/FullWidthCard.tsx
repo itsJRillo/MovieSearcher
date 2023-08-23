@@ -23,6 +23,10 @@ const CardContainer = styled.div`
 `;
 
 const TitleImageContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
     margin-top: auto;
     width: 100%;
     max-width: 600px;
@@ -30,25 +34,11 @@ const TitleImageContainer = styled.div`
 `;
 
 const TitleImage = styled.img`
-    width: 65%;
-    height: 65%;
+    width: 85%;
+    height: 85%;
     object-fit: contain;
     margin-top: 2rem;
     margin-bottom: 1.5rem;
-`;
-
-const OverviewContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 50%;
-    margin-left: 3rem;
-    color: white;
-    font-size: 1rem;
-    line-height: 1.5;
-    gap: 3rem;
-    margin-bottom: 2rem;
 `;
 
 const DetailsButton = styled(motion.button)`
@@ -133,9 +123,6 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, language, onMediaC
                         src={`https://image.tmdb.org/t/p/original/${titleImage}`}
                         alt={`${media.type === "movie" ? media.title : ""}`}
                     />
-                </TitleImageContainer>
-                <OverviewContainer>
-                    {media.overview}
                     <Link
                         to={`/peliculas/${media.id}`}
                         key={media.id}
@@ -143,7 +130,7 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, language, onMediaC
                     >
                         <DetailsButton variants={variants} whileHover="hover">Más info</DetailsButton>
                     </Link>
-                </OverviewContainer>
+                </TitleImageContainer>
             </CardContainer>
         </div>
     );

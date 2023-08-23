@@ -31,19 +31,21 @@ const Card: React.FC<CardProps> = ({ media, onMediaClick }) => {
   const isFavorite = favorites.some((fav: any) => fav.id === media.id);
   
   const hasPoster = media.poster_path !== null && media.poster_path !== undefined;
-
+  
   const handleAddToFavorites = () => {
     if (isFavorite) {
       const updatedFavorites = favorites.filter((fav: any) => fav.id !== media.id);
       setFavorites(updatedFavorites);
       localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-      toast.info('Removed from favorites ❤️');
+      toast.info('Removed from favorites ❤️',);
       window.location.reload();
     } else {
       const updatedFavorites = [...favorites, media];
       setFavorites(updatedFavorites);
       localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-      toast.success('Added to favorites⭐');
+      toast.success('Added to favorites⭐',{
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
     }
   };
 
@@ -56,7 +58,6 @@ const Card: React.FC<CardProps> = ({ media, onMediaClick }) => {
       {hasPoster ? (
         <Link
           to={isMovieType ? `/peliculas/${media.id}` : `/series/${media.id}`}
-          key={media.id}
           onClick={() => onMediaClick?.(media)}
         >
           <img

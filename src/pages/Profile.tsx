@@ -1,44 +1,52 @@
+import PocketBase from 'pocketbase';
 import { useState } from "react";
 import styled from "styled-components";
-import editIcon from "/edit.png";
+import userIcon from "/user.png";
+import { ToastContainer, toast } from 'react-toastify';
 
-const DetailsContainer = styled.div`
-  margin-top: 4rem;
-  padding: 3rem;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(248, 181, 0, 0.3);
+const PageContainer = styled.div`
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const RoundButton = styled.button`
+const ProfileInfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  position: relative;
+  margin: 1rem 0;
+`;
+
+const ChangeImageButton = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: #f8b500;
   color: #fff;
   border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
   cursor: pointer;
+  z-index: 1;
 `;
 
-const Image = styled.img`
-  width: 18px;
-  height: 18px;
+const ProfileImage = styled.img`
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
 `;
 
-const ProfileContent = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const ProfileInfo = styled.div`
-  margin-left: 1rem;
+const DetailsContainer = styled.div`
+  padding: 1rem;
 `;
 
 const ProfileName = styled.h2`
-  font-size: 24px;
+  font-size: 36px;
   margin-bottom: 0.5rem;
+  text-align: center;
 `;
 
 const ProfileDetail = styled.p`
@@ -46,32 +54,85 @@ const ProfileDetail = styled.p`
   margin-bottom: 0.5rem;
 `;
 
-export default function Profile({ user }: { user: UserType | null }) {
-  const [editing, setEditing] = useState(false);
+const EditForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
 
-  const handleEditClick = () => {
-    setEditing(true);
+const SaveButton = styled.button`
+  background-color: #f8b500;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
+export default function Profile() {
+  const pb = new PocketBase('https://shoten-api.pockethost.io');
+
+  const [editing, setEditing] = useState(false);
+  const [editedUsername, setEditedUsername] = useState(pb.authStore.model?.username || "");
+  const [editedEmail, setEditedEmail] = useState(pb.authStore.model?.email || "");
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
+
+  const handleProfilePictureUpload = (event: any) => {
+    console.log(event);
+    
+    // const imageFile = event.target.files[0];
+    // Handle image upload logic here
+  };
+
+  const handleSaveClick = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!editedUsername || !editedEmail) {
+      setEditedEmail("")
+      setEditedUsername("")
+      toast.error("Por favor, completa todos los campos", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+      return;
+    }
+
+    try {
+      // lOGIC TO EDIT WITH POCKETBASE
+    } catch (error: any) {
+      toast.error(error.response ? error.response.message : "Error desconocido", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+    }
+
+    setEditing(false);
+    setUnsavedChanges(false);
   };
 
   return (
-    <div style={{padding: "3rem"}}>
-      <DetailsContainer>
-        <h2>Detalles de la cuenta</h2>
-        <ProfileContent>
-          <RoundButton onClick={handleEditClick}>
-            <Image src={editIcon} alt="Edit" />
-          </RoundButton>
-          <ProfileInfo>
-            <ProfileName>{user?.username}</ProfileName>
-            <ProfileDetail>Correo electrónico: {user?.email}</ProfileDetail>
-            {editing && (
-              <>
-                {/* Editing form fields go here */}
-              </>
-            )}
-          </ProfileInfo>
-        </ProfileContent>
-      </DetailsContainer>
-      </div>
+    <div style={{ padding: "3rem" }}>
+      <PageContainer>
+        <ProfileInfoContainer>
+          <ChangeImageButton>
+            <img src="/edit.png" alt="edit icon" width={20} height={20}/>
+            <input type="file" accept="image/*" onChange={handleProfilePictureUpload} style={{ display: "none" }} />
+          </ChangeImageButton>
+          <ProfileImage src={userIcon} alt="Profile" />          
+        </ProfileInfoContainer>
+        <DetailsContainer>
+          {editing ? (
+            <EditForm onSubmit={handleSaveClick}>
+              <SaveButton type="submit" disabled={!unsavedChanges}>
+                Guardar
+              </SaveButton>
+            </EditForm>
+          ) : (
+            <>
+              <ProfileName>{pb.authStore.model?.username}</ProfileName>
+              <ProfileDetail>{pb.authStore.model?.email}</ProfileDetail>
+            </>
+          )}
+        </DetailsContainer>
+        <ToastContainer />
+      </PageContainer>
+    </div>
   );
 }

@@ -1,14 +1,18 @@
+import PocketBase from 'pocketbase';
+
 import logo from '/shotenLogo.png';
 import homeIcon from '/homeIcon.png';
 import searchIcon from '/searchIcon.png';
 import listIcon from '/listIcon.png';
 import movieIcon from '/movieIcon.svg';
 import seriesIcon from '/tvIcon.png';
-import profileIcon from '/profile.png';
+import profileIcon from '/user.png';
 
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { mediaQueries } from '../types/mediaQueries';
+import { useTranslation } from 'react-i18next';
 
 const HeaderContainer = styled.header`
   background-color: #f8b500;
@@ -21,10 +25,10 @@ const HeaderContainer = styled.header`
   right: 0;
   z-index: 999;
   flex-direction: column; 
-  @media (min-width: 992px) {
+  ${mediaQueries("lg")`
     flex-direction: row; 
     font-size: 1rem;
-  }
+  `}
 `;
 
 const Icon = styled.img`
@@ -34,10 +38,10 @@ const Icon = styled.img`
   z-index: 1;
   transition: opacity 0.3s ease;
   margin: 10px 10px;
-  @media (min-width: 992px) {
+  ${mediaQueries("lg")`
     width: 60px;
     height: 60px;
-  }
+  `}
 `;
 
 const LogoutButton = styled.a`
@@ -69,13 +73,13 @@ const Nav = styled.nav`
   margin-right: 0;
   align-items: center;
   font-size: 10px;
-  @media (min-width: 992px) {
+  ${mediaQueries("lg")`
     margin-left: 0;
     margin-right: auto;
     flex-direction: row; 
     gap: 2rem;
     font-size: 15px;
-  }
+  `}
 `;
 
 const NavLinkText = styled(Link)`
@@ -88,20 +92,20 @@ const NavLinkText = styled(Link)`
 const Image = styled.img`
   width: 12px;
   height: 12px;
-  @media (min-width: 992px) {
-    width: 25px;
-    height: 25px;
-  }
+  ${mediaQueries("lg")`
+  width: 25px;
+  height: 25px;
+  `}
 `;
 
 const Title = styled.img`
   width: 200px;
   height: 50px;
-  @media (min-width: 992px) {
+  ${mediaQueries("lg")`
     width: 275px;
     height: 75px;
     margin-right: 2rem;
-  }
+  `}
 `;
 
 const DropdownMenu = styled.div`
@@ -160,10 +164,13 @@ const LanguageOption = styled.option`
 
 interface HeaderProps {
   onLogout: (user: UserType) => void;
-  onChangeLanguage: (lan: string) => void;
+  onChangeLanguage: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
+  const pb = new PocketBase('https://shoten-api.pockethost.io');
+
+  const { t } = useTranslation();
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const handleDropdownOpen = () => {
@@ -180,11 +187,7 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
       const user: UserType = JSON.parse(userJSON);
       onLogout(user);
     }
-  };
-
-  const handleLanguageChange = (event: any) => {
-    const selectedLanguage = event.target.value;
-    onChangeLanguage(selectedLanguage);
+    pb.authStore.clear();
   };
 
   return (
@@ -192,31 +195,31 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
       <div>
         <Title src={logo} alt="logo Shoten" />
       </div>
-      
+
       <Nav>
         <NavItem>
           <Image src={homeIcon} alt="search icon" />
-          <NavLinkText to="/">INICIO</NavLinkText>
+          <NavLinkText to="/">{t('headerHomeTitle')}</NavLinkText>
         </NavItem>
         <NavItem>
           <Image src={searchIcon} alt="list icon" />
-          <NavLinkText to="/buscar">BÚSQUEDA</NavLinkText>
+          <NavLinkText to="/buscar">{t('headerSearchTitle')}</NavLinkText>
         </NavItem>
         <NavItem>
           <Image src={listIcon} alt="movie icon" />
-          <NavLinkText to="/mi-lista">MI LISTA</NavLinkText>
+          <NavLinkText to="/mi-lista">{t('headerListTitle')}</NavLinkText>
         </NavItem>
         <NavItem>
           <Image src={movieIcon} alt="series" />
-          <NavLinkText to="/peliculas">PELÍCULAS</NavLinkText>
+          <NavLinkText to="/peliculas">{t('headerMoviesTitle')}</NavLinkText>
         </NavItem>
         <NavItem>
           <Image src={seriesIcon} alt="series" />
-          <NavLinkText to="/series">SERIES</NavLinkText>
+          <NavLinkText to="/series">{t('headerTvTitle')}</NavLinkText>
         </NavItem>
       </Nav>
 
-      <LanguageDropdown onChange={handleLanguageChange}>
+      <LanguageDropdown onChange={onChangeLanguage}>
         <LanguageOption value="en">EN</LanguageOption>
         <LanguageOption value="es">ES</LanguageOption>
       </LanguageDropdown>

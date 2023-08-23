@@ -12,12 +12,11 @@ export default function Movies({ data, onMediaClick, filters, onAddToFavorites }
 
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState<number | null>(null);
-  const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
+  const [, setSelectedFilter] = useState<number | null>(null);
 
   const filteredMovies = data?.filter((movie) => {
-    const titleMatch = movie.title.toLowerCase().includes(titleFilter.toLowerCase());
     const genreMatch = genreFilter === null || movie.genre_ids.includes(genreFilter);
-    return titleMatch && genreMatch;
+    return genreMatch;
   });
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -35,7 +34,6 @@ export default function Movies({ data, onMediaClick, filters, onAddToFavorites }
   };
 
   const handleClearFilters = () => {
-    console.log(selectedFilter);
     setTitleFilter("");
     setSelectedFilter(null);
     setSelectedFilter(null);
@@ -71,7 +69,7 @@ export default function Movies({ data, onMediaClick, filters, onAddToFavorites }
           <div key={filter[0].id} className='filter-container'>
             {hasFilters && (<motion.button
               variants={buttonVariants}
-              className='filter-button'
+              className='delete-filter-button'
               whileHover="hover"
               whileTap="pressed"
               onClick={handleClearFilters}>

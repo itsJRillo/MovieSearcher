@@ -8,24 +8,33 @@ import Card from "../components/Card";
 import styled from "styled-components";
 import "../styles/favoritesList.css";
 import "../styles/media.css";
+import { mediaQueries } from "../types/mediaQueries";
 
 const EmptyListContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
-  margin-top: 15%;
+  height: 100vh;
 `;
 
 const EmptyListImage = styled.img`
-  width: 250px;
+  width: 200px;
 `;
 
 const EmptyListTitle = styled.h1`
   font-size: 48px;
-`;
-
-const EmptyListText = styled.p`
+  ${mediaQueries("sm")`
+    font-size: 30px;
+  `} 
+  `;
+  
+  const EmptyListText = styled.p`
   font-size: 25px;
+  text-align: center;
+  ${mediaQueries("sm")`
+    font-size: 20px;
+  `} 
 `;
 
 export default function MyListPage() {
@@ -68,7 +77,7 @@ export default function MyListPage() {
           <h1 className='container-title'>Mi lista</h1>
           <div className="media-grid">
             {favorites.map((fav: any) => (
-              <div key={fav.id} id={fav.id}>
+              <div key={fav.id}>
                 <Card media={fav} />
               </div>
             ))}

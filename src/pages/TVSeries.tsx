@@ -26,7 +26,7 @@ export default function TVSeries({ data, onSerieClick, filters, onAddToFavorites
   const [currentPage, setCurrentPage] = useState(1);
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState<number | null>(null);
-  const [selectedFilter, setSelectedFilter] = useState<number | null>(null);
+  const [, setSelectedFilter] = useState<number | null>(null);
 
   const itemsPerPage = 16;
 
@@ -47,7 +47,6 @@ export default function TVSeries({ data, onSerieClick, filters, onAddToFavorites
   const handleGenreFilterChange = (genreID: number | null) => {
     setGenreFilter(genreID);
     setSelectedFilter(genreID);
-    console.log(selectedFilter);
     setCurrentPage(1);
   }
 

@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 import heartIcon from '/heart.png';
+import { useTranslation } from 'react-i18next';
 
 const FooterContainer = styled.footer`
+  display: flex;
+  align-items: center;
   background-color: #f8b500;
-  padding: 20px;
+  padding: 20px 0 20px 0;
   text-align: center;
   width: 100%;
 `;
 
 const FooterContent = styled.div`
-  max-width: 1200px;
   margin: 0 auto;
 `;
 
@@ -24,11 +26,13 @@ const HeartIcon = styled.img`
 `;
 
 const Footer = () => {
+  const { t } = useTranslation();
+  
   return (
     <FooterContainer>
       <FooterContent>
         <FooterText>
-          Made with <HeartIcon src={heartIcon} alt="heart icon" /> by{' '}
+          {t("footerMessage")} <HeartIcon src={heartIcon} alt="heart icon" /> {t("footerMessage2")}{' '}
           <a href="https://github.com/itsJRillo">itsJRillo</a>
         </FooterText>
       </FooterContent>

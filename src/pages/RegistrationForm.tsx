@@ -1,13 +1,14 @@
-import PocketBase from 'pocketbase';
 
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
-import "../styles/backgroundAnimation.css"
-
 import { ToastContainer, toast } from 'react-toastify';
+import "../styles/backgroundAnimation.css"
 import 'react-toastify/dist/ReactToastify.css';
+
+import PocketBase from 'pocketbase';
 
 const Container = styled.div`
   width: 100%;
@@ -23,7 +24,7 @@ const FormContainer = styled.div`
   border-radius: 10px;
   text-align: center;
   padding: 2rem;
-  @media (min-width: 768px) {
+  @media (max-width: 600px) {
     padding: 4rem;
   }
 `;
@@ -58,6 +59,7 @@ const ButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 2rem;
+  gap: 0.5rem;
 `;
 
 const Button = styled(motion.button)`
@@ -71,24 +73,19 @@ const Button = styled(motion.button)`
   cursor: pointer;
 `;
 
-type User = {
-  username: string
-  email: string
-  password: string
-}
-
 interface RegistrationFormProps {
   onRegister: (user: UserType) => void;
 }
 
 export default function RegistrationForm({ onRegister }: RegistrationFormProps) {
   const pb = new PocketBase('https://shoten-api.pockethost.io');
-  
+
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rePassword, setRepassword] = useState('');
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -102,6 +99,28 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
     setPassword(e.target.value);
   };
 
+  const handleRepasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRepassword(e.target.value);
+  };
+
+  // const handleGithubLogin = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   try {
+
+  //     await pb.collection('users').authWithOAuth2({ provider: 'github' });
+      
+  //     toast.success("El usuario se ha creado satisfactoriamente", {
+  //       position: toast.POSITION.BOTTOM_RIGHT
+  //     });
+
+  //     onRegister({ username, email, password })
+  //     navigate("/home");
+
+  //   } catch (error: any) {
+  //   }
+  // }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -113,13 +132,15 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
     }
 
     try {
-      const data: User = {
+      const records = await pb.collection('users').getFullList();
+
+      const data = {
         "username": username,
         "email": email,
+        "emailVisibility": true,
         "password": password,
+        "passwordConfirm": rePassword
       };
-
-      const records = await pb.collection('users').getFullList();
 
       const existingEmailRecord = records.find(record => record.email === email);
       if (existingEmailRecord) {
@@ -128,7 +149,7 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
         });
         return;
       }
-
+      
       const existingUsernameRecord = records.find(record => record.username === username);
       if (existingUsernameRecord) {
         toast.error("El nombre de usuario ya está en uso", {
@@ -138,12 +159,12 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
       }
 
       await pb.collection('users').create(data);
-
+      await pb.collection('users').requestVerification(email);
+      
       toast.success("El usuario se ha creado satisfactoriamente", {
         position: toast.POSITION.BOTTOM_RIGHT
       });
 
-      localStorage.setItem("isLoggedIn", "true");
       onRegister({ username, email, password })
       navigate("/home");
 
@@ -178,14 +199,21 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
           <FormField>
             <FormInput type="password" value={password} placeholder='Contraseña' onChange={handlePasswordChange} />
           </FormField>
+          <FormField>
+            <FormInput type="password" value={rePassword} placeholder='Repetor contraseña' onChange={handleRepasswordChange} />
+          </FormField>
           <ButtonsContainer>
             <Button type="submit" variants={variants} whileHover="hover">
               Registrarse
             </Button>
+            {/* <Button variants={variants} whileHover="hover" style={{backgroundColor:"#fff", color: "#000", display: 'flex', alignItems:"center", justifyContent:"space-around"}} onClick={handleGithubLogin}>
+              Registrarse con GitHub
+              <Image src={githubIcon} alt="github icon"/>
+            </Button> */}
           </ButtonsContainer>
           <FormSubtitle>Ya tienes una cuenta?
             <Link to="/" style={{ color: "#f8b500" }}>
-              <motion.p variants={variants} whileHover="hover" style={{padding:8, margin:0}}>Inicia sesión</motion.p>
+              <motion.p variants={variants} whileHover="hover" style={{ padding: 8, margin: 0 }}>Inicia sesión</motion.p>
             </Link>
           </FormSubtitle>
         </form>

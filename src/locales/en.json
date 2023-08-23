@@ -1,0 +1,11 @@
+{
+    "headerHomeTitle": "HOME",
+    "headerSearchTitle": "SEARCH",
+    "headerListTitle": "MY LIST",
+    "headerMoviesTitle": "MOVIES",
+    "headerTvTitle": "TV SERIES",
+    "footerMessage":"Made with",
+    "footerMessage2":"by",
+    "noResultMessage":"No results found",
+    "placeholderSearch":"Movie or series..."
+}

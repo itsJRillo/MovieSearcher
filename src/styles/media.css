@@ -1,12 +1,12 @@
 .media-container{
-  padding: 3rem;
+  padding: 2rem;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.media-filters{
-  width: 65%;
+.media-filters {
+  width: 75%;
 }
 
 .filter-button{
@@ -23,6 +23,22 @@
   background-color: #f8b500;
   &:hover{
     background-color: #f8b600b5;
+  }
+}
+
+.delete-filter-button{
+  background: none;
+  color: inherit;
+  border: white solid 3px;
+  border-radius: 50px;
+  padding: 20px 3rem;
+  font: inherit;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #121212;
+  &:hover{
+    background-color: #333;
   }
 }
 
@@ -61,6 +77,10 @@
   overflow-y: hidden;
 }
 
+.filter-container::-webkit-scrollbar {
+  width: 8px;
+}
+
 .filter-button.selected {
   background-color: #FF5733;
 }
@@ -69,4 +89,36 @@
   margin-left: 0.5rem;
   font-size: 0.8rem;
   color: #FF5733;
+}
+
+@media (max-width: 600px) {
+  .media-filters {
+    width: 100%;
+  }
+
+  .media-container {
+    padding: 1rem 0 1rem 0;
+  }
+  
+  .media-filters {
+    width: 100%;
+  }
+  
+  .filter-button {
+    padding: 15px 1.5rem;
+    font-size: 16px;
+  }
+  
+  .delete-filter-button {
+    padding: 15px 2rem;
+  }
+  
+  .media-details-overview {
+    width: 100%;
+  }
+  
+  .filter-container {
+    padding: 8px;
+    gap: 0.5rem;
+  }
 }
