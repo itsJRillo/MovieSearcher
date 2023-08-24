@@ -8,6 +8,12 @@
   width: 100%;
 }
 
+@media (max-width: 600px) {
+  .full-width-card{
+    align-items: center;
+  }
+}
+
 .full-width-card-image {
   max-width: 100%;
   height: 100%;
@@ -16,6 +22,12 @@
   border-top-right-radius: 10px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+@media (max-width: 600px) {
+  .full-width-card-image{
+
+  }
 }
 
 .full-width-card-content {

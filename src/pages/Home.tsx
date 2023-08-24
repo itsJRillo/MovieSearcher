@@ -79,13 +79,13 @@ export default function Home({
           ))}
         </Carousel>
       </div>
-      <br />
       <div className="sub-container">
         <h1>Próximos estrenos</h1>
         <Carousel
           arrows
           swipeable
           responsive={responsive}
+          removeArrowOnDeviceType={["tablet", "mobile"]}
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
@@ -94,13 +94,13 @@ export default function Home({
           ))}
         </Carousel>
       </div>
-      <br />
       <div className="sub-container">
         <h1>Series populares</h1>
         <Carousel
           arrows
           swipeable
           responsive={responsive}
+          removeArrowOnDeviceType={["tablet", "mobile"]}
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         > 
@@ -109,13 +109,13 @@ export default function Home({
           ))}
         </Carousel>
       </div>
-      <br />
       <div className="sub-container">
         <h1>Series mejor valoradas</h1>
         <Carousel
           arrows
           swipeable
           responsive={responsive}
+          removeArrowOnDeviceType={["tablet", "mobile"]}
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >

@@ -31,6 +31,10 @@ const TitleImageContainer = styled.div`
     width: 100%;
     max-width: 600px;
     margin-left: 3rem;
+    @media (max-width: 600px) {
+        flex-direction: column;
+        margin: 0 auto;
+    }
 `;
 
 const TitleImage = styled.img`
@@ -46,7 +50,7 @@ const DetailsButton = styled(motion.button)`
     border-radius: 10px;
     padding: 3rem;
     height: 50px;
-    width: 275px;
+    width: 150px;
     background-color: #f8b500;
     color: white;
     border: none;

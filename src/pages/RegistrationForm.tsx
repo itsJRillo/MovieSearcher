@@ -139,7 +139,8 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
         "email": email,
         "emailVisibility": true,
         "password": password,
-        "passwordConfirm": rePassword
+        "passwordConfirm": rePassword,
+        "favourites":{}
       };
 
       const existingEmailRecord = records.find(record => record.email === email);

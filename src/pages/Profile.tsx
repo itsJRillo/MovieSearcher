@@ -41,17 +41,23 @@ const ProfileImage = styled.img`
 
 const DetailsContainer = styled.div`
   padding: 1rem;
-`;
-
-const ProfileName = styled.h2`
-  font-size: 36px;
-  margin-bottom: 0.5rem;
   text-align: center;
 `;
-
-const ProfileDetail = styled.p`
+  
+const Divider = styled.hr`
+  width: 75%;
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #f8b500, #333, #f8b500);
+`
+  
+const ProfileDetails = styled.p`
   font-size: 18px;
   margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 30px;
+  color: #000
 `;
 
 const EditForm = styled.form`
@@ -125,10 +131,11 @@ export default function Profile() {
               </SaveButton>
             </EditForm>
           ) : (
-            <>
-              <ProfileName>{pb.authStore.model?.username}</ProfileName>
-              <ProfileDetail>{pb.authStore.model?.email}</ProfileDetail>
-            </>
+            <div style={{backgroundColor: "#f8b500", padding: "2rem", borderRadius:"30px"}}>
+              <ProfileDetails>Nombre de usuario <Divider/> <span style={{color: "#fff"}}>{pb.authStore.model?.username}</span></ProfileDetails>
+              <br />
+              <ProfileDetails>Correo <Divider/> <span style={{color: "#fff"}}>{pb.authStore.model?.email}</span></ProfileDetails>
+            </div>
           )}
         </DetailsContainer>
         <ToastContainer />

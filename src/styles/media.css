@@ -93,15 +93,11 @@
 
 @media (max-width: 600px) {
   .media-filters {
-    width: 100%;
+    width: 70%;
   }
 
   .media-container {
     padding: 1rem 0 1rem 0;
-  }
-  
-  .media-filters {
-    width: 100%;
   }
   
   .filter-button {

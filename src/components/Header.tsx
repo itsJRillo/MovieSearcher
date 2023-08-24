@@ -19,6 +19,7 @@ const HeaderContainer = styled.header`
   padding: 0 2rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -32,8 +33,8 @@ const HeaderContainer = styled.header`
 `;
 
 const Icon = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   position: relative;
   z-index: 1;
   transition: opacity 0.3s ease;
@@ -82,6 +83,7 @@ const Nav = styled.nav`
   `}
 `;
 
+
 const NavLinkText = styled(Link)`
   text-decoration: none;
   color: black;
@@ -117,6 +119,9 @@ const DropdownMenu = styled.div`
   padding: 1rem;
   border-radius: 4px;
   z-index: 3;
+  @media (max-width: 600px) {
+    right: -3rem;
+  }
 `;
 
 const DropdownMenuItem = styled(NavLinkText)`
@@ -143,8 +148,7 @@ const LanguageDropdown = styled.select`
   color: black;
   border: none;
   border-radius: 4px;
-  padding: 0.5rem;
-  margin-right: 1rem;
+  padding: .25rem;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
