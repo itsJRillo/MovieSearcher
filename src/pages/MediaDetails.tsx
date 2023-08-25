@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Loading from "../components/Loading";
+import Carousel from "react-multi-carousel";
 
 interface MediaDetailsProps {
     media: MovieType | SerieType | undefined;
@@ -51,21 +52,101 @@ const TitleImage = styled.img`
     margin-top: 15rem;
 `;
 
-const OverviewContainer = styled.div`
+const FilterContainer = styled.div`
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
-    max-width: 50%;
+    max-width: 20%;
     margin: 3rem 2rem 2rem 3rem;
     gap: 1rem;
     color: white;
     font-size: 1rem;
     line-height: 1.5;
+    
+    @media (max-width: 600px) {
+        margin: 2rem 1rem 1rem 2rem;
+        max-width: 100%;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
 `;
+
+const OverviewContainer = styled.div`
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 35%;
+    margin: 3rem 2rem 2rem 3rem;
+    gap: 1rem;
+    color: white;
+    font-size: 1rem;
+    line-height: 1.5;
+    @media (max-width: 600px) {
+        max-width: 70%;
+    }
+`;
+
+const Menu = styled.div`
+    display: flex;
+    gap: 20px;
+    margin-top: 6rem;
+    font-size: 1.2rem;
+    position: relative;
+    @media (max-width: 600px) {
+        margin-top: calc(70% + 1rem);
+        top: -3rem;
+    }
+`;
+
+const VideoContainer = styled.div`
+    width: 100%;
+    gap: 3rem;
+    text-align: center;
+`;
+
+const Iframe = styled.iframe`
+    width: 100%;
+    max-width: 800px;
+    height: 350px;
+    border: none;
+`;
+
+
+const MenuItem = styled.div`
+    cursor: pointer;
+    color: white;
+    font-size: 1.5rem;
+    border-bottom: 2px solid white;
+`;
+
+const responsive = {
+    superLargeDesktop: {
+        breakpoint: { max: 4000, min: 1600 },
+        items: 5,
+        partialVisibilityGutter: 40,
+    },
+    desktop: {
+        breakpoint: { max: 1600, min: 1024 },
+        items: 4,
+        partialVisibilityGutter: 30,
+    },
+    tablet: {
+        breakpoint: { max: 1024, min: 768 },
+        items: 3,
+        partialVisibilityGutter: 20,
+    },
+    mobile: {
+        breakpoint: { max: 768, min: 0 },
+        items: 1,
+        partialVisibilityGutter: 100,
+    },
+};
 
 const MediaDetails = ({ media, language }: MediaDetailsProps) => {
     const isMovieType = media?.type === "movie";
     const [details, setDetails] = useState<MovieDetails | TVDetails | undefined>();
+    const [videos, setVideos] = useState<VideoType[]>();
+    const [selectedType, setSelectedType] = useState("trailers");
 
     const [titleImage, setTitleImage] = useState<string | null>(null);
     const [, setLoading] = useState<boolean>(true);
@@ -73,12 +154,29 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
     const handleDetailsMedia = async () => {
         const type = isMovieType ? "movie" : "tv";
         const apiKey = import.meta.env.VITE_API_KEY;
-
-
-        const fetchDetails = await fetch(
-            `https://api.themoviedb.org/3/${type}/${media?.id}?language=${language}&api_key=${apiKey}`
+    
+        const fetchVideos = await fetch(
+            `https://api.themoviedb.org/3/${type}/${media?.id}/videos?language=${language}&api_key=${apiKey}`,
+            {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: import.meta.env.VITE_API_AUTH
+                }
+            }
         );
-
+    
+        const fetchDetails = await fetch(
+            `https://api.themoviedb.org/3/${type}/${media?.id}?language=${language}&api_key=${apiKey}`,
+            {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: import.meta.env.VITE_API_AUTH
+                }
+            }
+        );
+    
         const fetchImages = await fetch(
             `https://api.themoviedb.org/3/${type}/${media?.id}/images?language=${language}`,
             {
@@ -89,26 +187,46 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
                 }
             }
         );
-
+    
         const detailsJSON = await fetchDetails.json();
         const imagesJSON = await fetchImages.json();
-
+        const videosJSON = await fetchVideos.json();
+    
         setDetails({
             type: type,
             ...detailsJSON,
         });
-
-        const filteredImages = imagesJSON.logos
-            .map((image: any) => image.file_path);
-
+    
+        const teaserVideos = videosJSON.results.filter((video: VideoType) => {
+            return video.type === 'Trailer' || video.type === 'Teaser';
+        });
+    
+        setVideos(teaserVideos);
+    
+        const filteredImages = imagesJSON.logos.map((image: any) => image.file_path);
+    
         if (filteredImages.length > 0) {
             const imagePath = filteredImages[0];
             setTitleImage(imagePath);
         }
-
-        setLoading(false)
-
+    
+        setLoading(false);
     };
+    
+
+    const handleMenuItemClick = (type: string) => {
+        setSelectedType(type);
+    };
+
+    const filteredVideos = videos?.filter((video: VideoType) => {
+        if (selectedType === "trailers") {
+            return video.type === "Trailer";
+        } else if (selectedType === "teasers") {
+            return video.type === "Teaser";
+        }
+
+        return true;
+    });
 
     useEffect(() => {
         if (media) {
@@ -133,56 +251,52 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
                         src={`https://image.tmdb.org/t/p/original/${titleImage}`}
                         alt={`${details.type === "movie" ? details.title : (details as TVDetails).name}`}
                     />
-                    {/* <div>
-                        <p className="vote-average">{Math.round(media.vote_average)}</p>
-                        <svg
-                            className="vote-icon"
-                            style={{ fill: '#f9cc6c' }}
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="1em"
-                            viewBox="0 0 576 512"
-                        >
-                            <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                        </svg>
-                    </div> */}
                 </TitleImageContainer>
-                <OverviewContainer>
+                <FilterContainer>
                     {details.genres.map((res: any) => (
                         <Filter key={res.id}>{res.name}</Filter>
                     ))}
-                </OverviewContainer>
+                </FilterContainer>
                 <OverviewContainer>
                     {details.overview}
                 </OverviewContainer>
             </PosterContainer>
-            {/* <div className="media-details-info">
-                <div className="media-details-rating">
-                    <Title>{details.type === "movie" ? details.title : (details as TVDetails).name}</Title>
-                    <svg
-                        className="vote-icon"
-                        style={{ fill: "#f9cc6c" }}
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 576 512"
+
+            <Menu>
+                <MenuItem
+                    onClick={() => handleMenuItemClick("trailers")}
+                >
+                    Trailers
+                </MenuItem>
+                <MenuItem
+                    onClick={() => handleMenuItemClick("teasers")}
+                >
+                    Teasers
+                </MenuItem>
+            </Menu>
+
+            <VideoContainer>
+                <h2>{selectedType === "trailers" ? "Trailers" : "Teasers"}</h2>
+                {filteredVideos && filteredVideos.length > 0 ? (
+                    <Carousel
+                        responsive={responsive}
+                        customTransition="transform 500ms ease-in-out"
                     >
-                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                    </svg>
-                    {Math.round(details.vote_average)}
-                </div>
-                <p className="media-details-overview">{details.overview}</p>
-                <FiltersContainer>
-                    {details.genres.map((res: any) => (
-                        <Filter key={res.id}>{res.name}</Filter>
-                    ))}
-                </FiltersContainer>
-                <ProductionContainer>
-                    {details.production_companies.map((res: any) => (
-                        <div>
-                            <Image src={`https://image.tmdb.org/t/p/original/${res.logo_path}`} />
-                        </div>
-                    ))}
-                </ProductionContainer>
-            </div> */}
+                        {filteredVideos?.slice(0, 4).map((video: VideoType) => (
+                            <div key={video.id}>
+                                <h3>{video.name}</h3>
+                                <Iframe
+                                    src={`https://www.youtube.com/embed/${video.key}`}
+                                    title={video.name}
+                                    allowFullScreen
+                                />
+                            </div>
+                        ))}
+                    </Carousel>
+                ) : (
+                    <p>No {selectedType === "trailers" ? "trailers" : "teasers"} available.</p>
+                )}
+            </VideoContainer>
         </MovieContainer>
     );
 };
