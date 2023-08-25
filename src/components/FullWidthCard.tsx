@@ -3,6 +3,7 @@ import '../styles/fullWidthCard.css';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface FullWidthCardProps {
     media: MovieType | SerieType,
@@ -62,6 +63,8 @@ const DetailsButton = styled(motion.button)`
 `;
 
 const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, language, onMediaClick }) => {
+    const { t } = useTranslation();
+    
     const [, setListImages] = useState<JSONImageType[]>([]);
     const [widestImage, setWidestImage] = useState<string>("");
     const [titleImage, setTitleImage] = useState<string | null>(null);
@@ -132,7 +135,7 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, language, onMediaC
                         key={media.id}
                         onClick={() => onMediaClick?.(media)}
                     >
-                        <DetailsButton variants={variants} whileHover="hover">Más info</DetailsButton>
+                        <DetailsButton variants={variants} whileHover="hover">{t("moreInfo")}</DetailsButton>
                     </Link>
                 </TitleImageContainer>
             </CardContainer>

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { mediaQueries } from "../types/mediaQueries";
 import loadingIcon from '/loading.svg';
 
+import { useTranslation } from "react-i18next";
+
 const Image = styled.img`
     width: 100px;
     height: 100px;
@@ -24,8 +26,10 @@ const LoadingContainer = styled.div`
 `;
 
 export default function Loading() {
+    const { t } = useTranslation();
+    
     return <LoadingContainer>
-        <Image src={loadingIcon} width={300} height={300} alt="Loading" />
-        <span>Loading...</span>
+        <Image src={loadingIcon} width={300} height={300} alt={`${t("loadingMessage")} svg`} />
+        <span>{t("loadingMessage")}</span>
     </LoadingContainer>
 }

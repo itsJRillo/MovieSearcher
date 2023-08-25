@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import userIcon from "/user.png";
 import { ToastContainer, toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const PageContainer = styled.div`
   margin-top: 3rem;
@@ -76,6 +77,7 @@ const SaveButton = styled.button`
 
 export default function Profile() {
   const pb = new PocketBase('https://shoten-api.pockethost.io');
+  const { t } = useTranslation();
 
   const [editing, setEditing] = useState(false);
   const [editedUsername, setEditedUsername] = useState(pb.authStore.model?.username || "");
@@ -95,7 +97,7 @@ export default function Profile() {
     if (!editedUsername || !editedEmail) {
       setEditedEmail("")
       setEditedUsername("")
-      toast.error("Por favor, completa todos los campos", {
+      toast.error(t("warningAllInputs"), {
         position: toast.POSITION.BOTTOM_RIGHT
       });
       return;
@@ -132,9 +134,9 @@ export default function Profile() {
             </EditForm>
           ) : (
             <div style={{backgroundColor: "#f8b500", padding: "2rem", borderRadius:"30px"}}>
-              <ProfileDetails>Nombre de usuario <Divider/> <span style={{color: "#fff"}}>{pb.authStore.model?.username}</span></ProfileDetails>
+              <ProfileDetails>{t("profileTitleUsername")} <Divider/> <span style={{color: "#fff"}}>{pb.authStore.model?.username}</span></ProfileDetails>
               <br />
-              <ProfileDetails>Correo <Divider/> <span style={{color: "#fff"}}>{pb.authStore.model?.email}</span></ProfileDetails>
+              <ProfileDetails>{t("profileTitleEmail")} <Divider/> <span style={{color: "#fff"}}>{pb.authStore.model?.email}</span></ProfileDetails>
             </div>
           )}
         </DetailsContainer>

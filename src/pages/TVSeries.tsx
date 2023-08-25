@@ -22,7 +22,7 @@ const FilterButton = styled(motion.button)`
   background-color: #121212;
 `;
 
-export default function TVSeries({ data, onSerieClick, filters, onAddToFavorites}: { data: SerieType[] | undefined, onSerieClick: (serie: MovieType | SerieType) => void, filters: GenreType[], onAddToFavorites: (serie: MovieType | SerieType) => void}) {
+export default function TVSeries({ data, onSerieClick, filters }: { data: SerieType[] | undefined, onSerieClick: (serie: MovieType | SerieType) => void, filters: GenreType[]}) {
   const [currentPage, setCurrentPage] = useState(1);
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState<number | null>(null);
@@ -109,7 +109,7 @@ export default function TVSeries({ data, onSerieClick, filters, onAddToFavorites
       </div>
       <div className="media-grid">
         {currentItems?.map((serie) => (
-            <Card media={serie} onAddToFavorites={onAddToFavorites} onMediaClick={onSerieClick}/>
+            <Card media={serie} onMediaClick={onSerieClick}/>
         ))}
       </div>
       {filteredSeries && (

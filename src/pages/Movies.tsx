@@ -5,8 +5,11 @@ import '../styles/pagination.css';
 import '../styles/media.css';
 import Card from '../components/Card';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
-export default function Movies({ data, onMediaClick, filters, onAddToFavorites }: { data: MovieType[] | undefined, onMediaClick: (movie: MovieType | SerieType) => void, filters: GenreType[], onAddToFavorites: (movie: MovieType | SerieType) => void }) {
+export default function Movies({ data, onMediaClick, filters }: { data: MovieType[] | undefined, onMediaClick: (movie: MovieType | SerieType) => void, filters: GenreType[]}) {
+  const { t } = useTranslation();
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 16;
 
@@ -63,7 +66,7 @@ export default function Movies({ data, onMediaClick, filters, onAddToFavorites }
 
   return (
     <div className="media-container">
-      <h1 className='container-title'>Películas</h1>
+      <h1 className='container-title'>{t("moviesTitlePage")}</h1>
       <div className='media-filters'>
         {Object.values(filters).map((filter: any) => (
           <div key={filter[0].id} className='filter-container'>
@@ -95,7 +98,7 @@ export default function Movies({ data, onMediaClick, filters, onAddToFavorites }
       <div className="media-grid">
         {currentItems?.map((movie) => (
           <div key={movie.id}>
-            <Card media={movie} onAddToFavorites={onAddToFavorites} onMediaClick={onMediaClick} />
+            <Card media={movie} onMediaClick={onMediaClick} />
           </div>
         ))}
       </div>

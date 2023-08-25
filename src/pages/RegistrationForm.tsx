@@ -1,3 +1,4 @@
+import PocketBase from 'pocketbase';
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,7 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import "../styles/backgroundAnimation.css"
 import 'react-toastify/dist/ReactToastify.css';
 
-import PocketBase from 'pocketbase';
+import { useTranslation } from "react-i18next";
+
 
 const Container = styled.div`
   width: 100%;
@@ -79,6 +81,7 @@ interface RegistrationFormProps {
 
 export default function RegistrationForm({ onRegister }: RegistrationFormProps) {
   const pb = new PocketBase('https://shoten-api.pockethost.io');
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -125,7 +128,7 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
     e.preventDefault();
 
     if (!username || !email || !password) {
-      toast.error("Por favor, completa todos los campos", {
+      toast.error(t("warningAllInputs"), {
         position: toast.POSITION.BOTTOM_RIGHT
       });
       return;
@@ -140,12 +143,12 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
         "emailVisibility": true,
         "password": password,
         "passwordConfirm": rePassword,
-        "favourites":{}
+        "favorites":[{}]
       };
 
       const existingEmailRecord = records.find(record => record.email === email);
       if (existingEmailRecord) {
-        toast.error("El correo electrónico ya está registrado", {
+        toast.error(t("warningExistentEmail"), {
           position: toast.POSITION.BOTTOM_RIGHT
         });
         return;
@@ -153,7 +156,7 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
       
       const existingUsernameRecord = records.find(record => record.username === username);
       if (existingUsernameRecord) {
-        toast.error("El nombre de usuario ya está en uso", {
+        toast.error(t("warningExistentUsername"), {
           position: toast.POSITION.BOTTOM_RIGHT
         });
         return;
@@ -162,7 +165,7 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
       await pb.collection('users').create(data);
       await pb.collection('users').requestVerification(email);
       
-      toast.success("El usuario se ha creado satisfactoriamente", {
+      toast.success(t("successSignup"), {
         position: toast.POSITION.BOTTOM_RIGHT
       });
 
@@ -186,35 +189,35 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
     <Container>
       <FormContainer>
         <TextContainer>
-          <FormTitle>La aventura empieza ahora! 🎥</FormTitle>
-          <FormSubtitle>Crea tu cuenta y empieza a explorar!!</FormSubtitle>
+          <FormTitle>{t("welcomeMessageSignup")}</FormTitle>
+          <FormSubtitle>{t("welcomeSubmessageSignup")}</FormSubtitle>
         </TextContainer>
 
         <form onSubmit={handleSubmit}>
           <FormField>
-            <FormInput type="text" value={username} placeholder='Usuario' onChange={handleUsernameChange} />
+            <FormInput type="text" value={username} placeholder={`${t("placeholderUserInput")}`} onChange={handleUsernameChange} />
           </FormField>
           <FormField>
-            <FormInput type="email" value={email} placeholder='E-mail' onChange={handleEmailChange} />
+            <FormInput type="email" value={email} placeholder={`${t("placeholderEmailInput")}`} onChange={handleEmailChange} />
           </FormField>
           <FormField>
-            <FormInput type="password" value={password} placeholder='Contraseña' onChange={handlePasswordChange} />
+            <FormInput type="password" value={password} placeholder={`${t("placeholderPasswordInput")}`} onChange={handlePasswordChange} />
           </FormField>
           <FormField>
-            <FormInput type="password" value={rePassword} placeholder='Repetor contraseña' onChange={handleRepasswordChange} />
+            <FormInput type="password" value={rePassword} placeholder={`${t("placeholderRepasswordInput")}`} onChange={handleRepasswordChange} />
           </FormField>
           <ButtonsContainer>
             <Button type="submit" variants={variants} whileHover="hover">
-              Registrarse
+              {t("buttonSignup")}
             </Button>
             {/* <Button variants={variants} whileHover="hover" style={{backgroundColor:"#fff", color: "#000", display: 'flex', alignItems:"center", justifyContent:"space-around"}} onClick={handleGithubLogin}>
               Registrarse con GitHub
               <Image src={githubIcon} alt="github icon"/>
             </Button> */}
           </ButtonsContainer>
-          <FormSubtitle>Ya tienes una cuenta?
+          <FormSubtitle>{t("warningNAHA")}
             <Link to="/" style={{ color: "#f8b500" }}>
-              <motion.p variants={variants} whileHover="hover" style={{ padding: 8, margin: 0 }}>Inicia sesión</motion.p>
+              <motion.p variants={variants} whileHover="hover" style={{ padding: 8, margin: 0 }}>{t("buttonLogin")}</motion.p>
             </Link>
           </FormSubtitle>
         </form>

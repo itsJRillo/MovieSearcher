@@ -1,5 +1,3 @@
-import PocketBase from 'pocketbase';
-
 import { useEffect, useState } from "react"
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import "./styles/main.css"
@@ -18,17 +16,29 @@ import SearchPage from "./pages/SearchPage"
 import MyListPage from "./pages/MyListPage"
 import Profile from "./pages/Profile"
 
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { useTranslation } from 'react-i18next';
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 
-import enTranslation from './locales/en.json';
-import esTranslation from './locales/es.json';
+import enTranslation from "./locales/en.json";
+import esTranslation from "./locales/es.json";
+import itTranslation from "./locales/it.json";
+import i18n from 'i18next';
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: enTranslation },
+      es: { translation: esTranslation },
+      it: { translation: itTranslation },
+    },
+    interpolation: {
+      escapeValue: false,
+    },
+  });
 
 function App() {
-  const pb = new PocketBase('https://shoten-api.pockethost.io');
-
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true);
 
@@ -46,8 +56,6 @@ function App() {
 
   const [genresMovies, setGenresMovies] = useState<GenreType[]>([])
   const [genresTV, setGenresTV] = useState<GenreType[]>([])
-
-  const [, setFavorites] = useState([{}])
 
   const api_key = import.meta.env.VITE_API_KEY
   const prefixAPI = "https://api.themoviedb.org/3"
@@ -155,8 +163,6 @@ function App() {
     setLoading(false);
   }
 
-  const { i18n } = useTranslation();
-
   const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newLanguage = event.target.value;
     i18n.changeLanguage(newLanguage);
@@ -167,34 +173,9 @@ function App() {
     setSelectedMovie(media)
   }
 
-  const handleAddToFavorites = (media: MovieType | SerieType) => {
-    const storedFavorites = localStorage.getItem('favorites');
-
-    let favoritesArray: (MovieType | SerieType)[] = [];
-
-    if (storedFavorites) {
-      try {
-        favoritesArray = JSON.parse(storedFavorites);
-      } catch (error) {
-        console.error('Error parsing stored favorites:', error);
-      }
-    }
-
-    const isMediaInFavorites = favoritesArray.some(item => item.id === media.id);
-
-    if (!isMediaInFavorites) {
-      favoritesArray.push(media);
-
-      localStorage.setItem('favorites', JSON.stringify(favoritesArray));
-
-      setFavorites(favoritesArray);
-    }
-  };
-
-
   const handleLogin = (user: UserType) => {
     setLoggedInUser(user)
-    localStorage.setItem("loggedInUser", JSON.stringify(pb.authStore.model))
+    localStorage.setItem("loggedInUser", JSON.stringify(user))
   }
 
   const handleLogout = () => {
@@ -208,11 +189,11 @@ function App() {
 
     const storedUser = JSON.parse(localStorage.getItem("loggedInUser") || "null")
     setLoggedInUser(storedUser)
-  }, [])
+  }, [language])
 
   return (
     <div>
-      {loggedInUser ? <Header onLogout={handleLogout} onChangeLanguage={handleLanguageChange}/> : <EmptyHeader />}
+      {loggedInUser ? <Header onLogout={handleLogout} onChangeLanguage={handleLanguageChange} /> : <EmptyHeader onChangeLanguage={handleLanguageChange} />}
       <div className="container">
         {loading ? (<Loading />) : (
           <Routes>
@@ -230,13 +211,13 @@ function App() {
             {(loggedInUser || location.pathname === "/" || location.pathname === "/sign-up") && (
               <>
                 <Route path="/home" element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: popularSeries, trendingSeries: trendingSeries, language: language, onMediaClick: handleMediaClick }} />} />
-                <Route path="/buscar" element={<SearchPage onMediaClick={handleMediaClick} />} />
-                <Route path="/peliculas" element={<Movies data={movies} onMediaClick={handleMediaClick} filters={genresMovies} onAddToFavorites={handleAddToFavorites} />} />
+                <Route path="/search" element={<SearchPage onMediaClick={handleMediaClick} />} />
+                <Route path="/movies" element={<Movies data={movies} onMediaClick={handleMediaClick} filters={genresMovies} />} />
                 <Route path="/peliculas/*" element={<MediaDetails media={selectedMovie} language={language} />} />
                 <Route path="/tv-series/*" element={<MediaDetails media={selectedMovie} language={language} />} />
-                <Route path="/mi-lista" element={<MyListPage />} />
-                <Route path="/series" element={<TVSeries data={series} onSerieClick={handleMediaClick} filters={genresTV} onAddToFavorites={handleAddToFavorites} />} />
-                <Route path="/cuenta" element={<Profile />} />
+                <Route path="/my-list" element={<MyListPage onMediaClick={handleMediaClick}/>} />
+                <Route path="/tv-series" element={<TVSeries data={series} onSerieClick={handleMediaClick} filters={genresTV} />} />
+                <Route path="/account" element={<Profile />} />
               </>
             )}
           </Routes>
@@ -246,23 +227,6 @@ function App() {
       <Footer />
     </div>
   )
-
 }
-
-// Configura i18next
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en: { translation: enTranslation },
-      es: { translation: esTranslation },
-    },
-    fallbackLng: 'en', // Idioma predeterminado si no se encuentra la traducción
-    debug: true, // Activa el modo de depuración para ver mensajes en la consola
-    interpolation: {
-      escapeValue: false, // Permite el uso de HTML en las cadenas de texto traducidas
-    },
-  });
 
 export default App;

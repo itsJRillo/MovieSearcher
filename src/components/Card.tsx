@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PocketBase from 'pocketbase';
+
 import '../styles/card.css';
 import styled from 'styled-components';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,9 +10,10 @@ import defaultImage from '/placeholder-no-image.png';
 import addIcon from '/heart.svg';
 import removeIcon from '/heart-filled.svg';
 
+import { useTranslation } from "react-i18next";
+
 interface CardProps {
   media: MovieType | SerieType;
-  onAddToFavorites?: (media: MovieType | SerieType) => void;
   onRemoveFromFavorites?: (movie: MovieType | SerieType) => void;
   onMediaClick?: (movie: MovieType | SerieType) => void;
 }
@@ -22,6 +25,9 @@ const Icon = styled.img`
 `;
 
 const Card: React.FC<CardProps> = ({ media, onMediaClick }) => {
+  const { t } = useTranslation();
+  const pb = new PocketBase('https://shoten-api.pockethost.io');
+
   const [isHovered, setIsHovered] = useState(false);
   const isMovieType = media.type === 'movie';
 
@@ -32,18 +38,29 @@ const Card: React.FC<CardProps> = ({ media, onMediaClick }) => {
   
   const hasPoster = media.poster_path !== null && media.poster_path !== undefined;
   
-  const handleAddToFavorites = () => {
+  const handleAddToFavorites = async () => {
+    const user = pb.authStore.model;
+
+    const updatedFavorites = isFavorite
+    ? favorites.filter((fav: any) => fav.id !== media.id)
+    : [...favorites, media];
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+
+    const data = {
+      "username":user?.username,
+      "favorites":updatedFavorites
+    }
+    await pb.collection('users').update(user?.id || "", data);
+
     if (isFavorite) {
-      const updatedFavorites = favorites.filter((fav: any) => fav.id !== media.id);
-      setFavorites(updatedFavorites);
-      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-      toast.info('Removed from favorites ❤️',);
+      toast.info(t("removeCardFav"), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
       window.location.reload();
     } else {
-      const updatedFavorites = [...favorites, media];
-      setFavorites(updatedFavorites);
-      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-      toast.success('Added to favorites⭐',{
+      toast.success(t('addCardFav'),{
         position: toast.POSITION.BOTTOM_RIGHT
       });
     }
@@ -57,7 +74,7 @@ const Card: React.FC<CardProps> = ({ media, onMediaClick }) => {
     >
       {hasPoster ? (
         <Link
-          to={isMovieType ? `/peliculas/${media.id}` : `/series/${media.id}`}
+          to={isMovieType ? `/peliculas/${media.id}` : `/tv-series/${media.id}`}
           onClick={() => onMediaClick?.(media)}
         >
           <img

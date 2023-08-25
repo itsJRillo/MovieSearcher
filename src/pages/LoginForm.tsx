@@ -9,6 +9,8 @@ import '../styles/backgroundAnimation.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { useTranslation } from "react-i18next";
+
 const Container = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -77,7 +79,8 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ onLogin }: LoginFormProps) {
-
+  const { t } = useTranslation();
+  
   const pb = new PocketBase('https://shoten-api.pockethost.io');
   const navigate = useNavigate();
 
@@ -96,7 +99,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
     e.preventDefault();
 
     if (!username || !password) {
-      toast.error("Por favor, completa todos los campos", {
+      toast.error(t("warningAllInputs"), {
         position: toast.POSITION.BOTTOM_RIGHT
       });
       return;
@@ -114,7 +117,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
       );
       
       if(authData){
-        toast.success("Se ha iniciado sesión correctamente", {
+        toast.success(t("successLoginMessage"), {
           position: toast.POSITION.BOTTOM_RIGHT
         });
         onLogin({ username, password });
@@ -141,9 +144,9 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
     <Container>
       <FormContainer>
         <TextContainer>
-          <FormTitle>Bienvenido a Shoten! 👋</FormTitle>
+          <FormTitle>{t("welcomeMessage")}</FormTitle>
           <FormSubtitle>
-            Por favor, inicia sesión en tu cuenta y comienza la aventura.
+          {t("welcomeSubmessage")}
           </FormSubtitle>
         </TextContainer>
 
@@ -152,7 +155,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             <FormInput
               type="text"
               value={username}
-              placeholder="Usuario"
+              placeholder={t("placeholderUserOrEmailInput")}
               onChange={handleUsernameChange}
             />
           </FormField>
@@ -160,19 +163,19 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             <FormInput
               type="password"
               value={password}
-              placeholder="Contraseña"
+              placeholder={t("placeholderPasswordInput")}
               onChange={handlePasswordChange}
             />
           </FormField>
           <ButtonsContainer>
             <Button type="submit" variants={variants} whileHover="hover">
-              Inicia sesión
+              {t("buttonLogin")}
             </Button>
           </ButtonsContainer>
           <FormSubtitle>
-            Eres nuevo en la plataforma?{' '}
+            {t("warningAHA")}{' '}
             <Link to="/sign-up" style={{ color: '#f8b500' }}>
-              <motion.p variants={variants} whileHover="hover" style={{padding:8, margin:0}}>Crea una cuenta</motion.p>
+              <motion.p variants={variants} whileHover="hover" style={{padding:8, margin:0}}>{t("warningNAHAlink")}</motion.p>
             </Link>
           </FormSubtitle>
         </form>

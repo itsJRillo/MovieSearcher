@@ -4,6 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import '../styles/card.css';
 import '../styles/home.css';
 import FullWidthCard from '../components/FullWidthCard';
+import { useTranslation } from 'react-i18next';
 
 const responsiveFullWidth = {
   superLargeDesktop: {
@@ -63,6 +64,8 @@ export default function Home({
     onMediaClick?: (movie: MovieType | SerieType) => void;
   };
 }) {
+  const { t } = useTranslation();
+  
   return (
     <div>
       <div>
@@ -80,7 +83,7 @@ export default function Home({
         </Carousel>
       </div>
       <div className="sub-container">
-        <h1>Próximos estrenos</h1>
+        <h1>{t("homeMoviesLatest")}</h1>
         <Carousel
           arrows
           swipeable
@@ -95,7 +98,7 @@ export default function Home({
         </Carousel>
       </div>
       <div className="sub-container">
-        <h1>Series populares</h1>
+        <h1>{t("homeTVPopular")}</h1>
         <Carousel
           arrows
           swipeable
@@ -110,7 +113,7 @@ export default function Home({
         </Carousel>
       </div>
       <div className="sub-container">
-        <h1>Series mejor valoradas</h1>
+        <h1>{t("homeTVBest")}</h1>
         <Carousel
           arrows
           swipeable

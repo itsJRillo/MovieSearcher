@@ -7,12 +7,14 @@ import listIcon from '/listIcon.png';
 import movieIcon from '/movieIcon.svg';
 import seriesIcon from '/tvIcon.png';
 import profileIcon from '/user.png';
+import languageIcon from '/language.png';
 
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { mediaQueries } from '../types/mediaQueries';
-import { useTranslation } from 'react-i18next';
+
+import { useTranslation } from "react-i18next";
 
 const HeaderContainer = styled.header`
   background-color: #f8b500;
@@ -61,7 +63,6 @@ const HoverContainer = styled.div`
   align-items: center;
 `;
 
-
 const NavItem = styled.div`
 display: flex;
 align-items: center;
@@ -82,7 +83,6 @@ const Nav = styled.nav`
     font-size: 15px;
   `}
 `;
-
 
 const NavLinkText = styled(Link)`
   text-decoration: none;
@@ -149,21 +149,17 @@ const LanguageDropdown = styled.select`
   border: none;
   border-radius: 4px;
   padding: .25rem;
-  font-size: 14px;
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  
-  -moz-appearance:none;
-  -webkit-appearance:none;
-  appearance:none;
 
   &:hover {
     background-color: #ffd966;
   }
-`;
+  `;
 
 const LanguageOption = styled.option`
-  font-size: 14px;
+  font-size: 20px;
 `;
 
 interface HeaderProps {
@@ -172,9 +168,9 @@ interface HeaderProps {
 }
 
 const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
-  const pb = new PocketBase('https://shoten-api.pockethost.io');
-
   const { t } = useTranslation();
+
+  const pb = new PocketBase('https://shoten-api.pockethost.io');
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const handleDropdownOpen = () => {
@@ -202,44 +198,52 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
 
       <Nav>
         <NavItem>
-          <Image src={homeIcon} alt="search icon" />
-          <NavLinkText to="/">{t('headerHomeTitle')}</NavLinkText>
+          <Image src={homeIcon} alt="home icon" />
+          <NavLinkText to="/home">{t('homeTitle')}</NavLinkText>
         </NavItem>
         <NavItem>
-          <Image src={searchIcon} alt="list icon" />
-          <NavLinkText to="/buscar">{t('headerSearchTitle')}</NavLinkText>
+          <Image src={searchIcon} alt="search icon" />
+          <NavLinkText to="/search">{t('searchTitle')}</NavLinkText>
         </NavItem>
         <NavItem>
-          <Image src={listIcon} alt="movie icon" />
-          <NavLinkText to="/mi-lista">{t('headerListTitle')}</NavLinkText>
+          <Image src={listIcon} alt="list icon" />
+          <NavLinkText to="/my-list">{t('listTitle')}</NavLinkText>
         </NavItem>
         <NavItem>
-          <Image src={movieIcon} alt="series" />
-          <NavLinkText to="/peliculas">{t('headerMoviesTitle')}</NavLinkText>
+          <Image src={movieIcon} alt="movie icon" />
+          <NavLinkText to="/movies">{t('moviesTitle')}</NavLinkText>
         </NavItem>
         <NavItem>
           <Image src={seriesIcon} alt="series" />
-          <NavLinkText to="/series">{t('headerTvTitle')}</NavLinkText>
+          <NavLinkText to="/tv-series">{t('tvTitle')}</NavLinkText>
         </NavItem>
       </Nav>
 
-      <LanguageDropdown onChange={onChangeLanguage}>
-        <LanguageOption value="en">EN</LanguageOption>
-        <LanguageOption value="es">ES</LanguageOption>
-      </LanguageDropdown>
+      <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
+        <Image src={languageIcon} />
+        <LanguageDropdown defaultValue={""} onChange={onChangeLanguage}>
+          <LanguageOption value=""></LanguageOption>
+          <LanguageOption value="es">
+            ES
+          </LanguageOption>
+          <LanguageOption value="en">            
+            EN
+          </LanguageOption>
+        </LanguageDropdown>
+      </div>
 
       <HoverContainer onMouseEnter={handleDropdownOpen} onMouseLeave={handleDropdownClose}>
         <Icon src={profileIcon} alt="Profile icon" />
         {dropdownVisible && (
           <DropdownMenu>
-            <DropdownMenuItem to="/cuenta">
-              Cuenta
+            <DropdownMenuItem to="/account">
+              {t("accountMenu")}
             </DropdownMenuItem>
-            <DropdownMenuItem to="/mi-lista">
-              Mi lista
+            <DropdownMenuItem to="/my-list">
+              {t("listMenu")}
             </DropdownMenuItem>
             <Divider />
-            <LogoutButton onClick={handleLogout}>Cerrar sesión</LogoutButton>
+            <LogoutButton onClick={handleLogout}>{t("logout")}</LogoutButton>
           </DropdownMenu>
         )}
       </HoverContainer>

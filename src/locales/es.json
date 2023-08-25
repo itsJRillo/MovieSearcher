@@ -1,11 +1,54 @@
 {
-    "headerHomeTitle": "INICIO",
-    "headerSearchTitle": "BÚSQUEDA",
-    "headerListTitle": "MI LISTA",
-    "headerMoviesTitle": "PELÍCULAS",
-    "headerTvTitle": "TV SERIES",
-    "footerMessage":"Hecho con",
-    "footerMessage2":"por",
-    "noResultMessage":"No hay ningún resultado",
-    "placeholderSearch":"Película o serie..."
+    "welcomeMessage": "Bienvenido a Shoten! 👋",
+    "welcomeSubmessage": "Por favor, inicia sesión en tu cuenta y comienza la aventura.",
+    "warningAllInputs": "Por favor, completa todos los campos",
+    "successLoginMessage": "Se ha iniciado sesión correctamente",
+    "placeholderUserInput": "Usuario",
+    "placeholderUserOrEmailInput": "Usuario o correo",
+    "placeholderEmailInput": "Correo",
+    "placeholderPasswordInput": "Contraseña",
+    "placeholderRepasswordInput": "Repetir contraseña",
+    "buttonLogin": "Inicia sesión",
+    "warningAHA": "Eres nuevo en la plataforma?",
+    "moreInfo":"Más info",
+    "profileTitleUsername": "Nombre de usuario",
+    "profileTitleEmail": "Correo",
+    "welcomeMessageSignup": "La aventura empieza ahora! 🎥",
+    "welcomeSubmessageSignup": "Crea tu cuenta y empieza a explorar!!",
+    "warningExistentEmail": "El correo electrónico ya está registrado",
+    "warningExistentUsername": "El nombre de usuario ya está en uso",
+    "successSignup": "El usuario se ha creado satisfactoriamente",
+    "buttonSignup": "Registrarse",
+    "warningNAHA": "Ya tienes una cuenta?",
+    "warningNAHAlink": "Crea una cuenta",
+
+    "accountMenu": "Cuenta",
+    "listMenu": "Mi lista",
+    "moviesTitlePage": "Películas",
+
+    "homeTitle": "INICIO",
+    "searchTitle": "BÚSQUEDA",
+    "listTitle": "MI LISTA",
+    "moviesTitle": "PELÍCULAS",
+    "tvTitle": "TV SERIES",
+    "logout": "Cerrar sesión",
+
+    "removeCardFav": "Eliminado de favoritos ❤️",
+    "addCardFav": "Añadido a favoritos ⭐",
+
+    "footerMessage": "Hecho con",
+    "footerMessage2": "por",
+
+    "placeholderSearch": "Película o serie...",
+    "noResultMessage": "No hay ningún resultado",
+
+    "emptyListTitle": "Mi lista está vacía",
+    "emptyListSubtitle": "El contenido que añadas a Mi lista aparecerá aquí",
+    "listTitlePage": "Mi lista",
+
+    "loadingMessage": "Cargando...",
+
+    "homeMoviesLatest": "Próximos estrenos",
+    "homeTVPopular": "Series populares",
+    "homeTVBest": "Series mejor valoradas"
 }

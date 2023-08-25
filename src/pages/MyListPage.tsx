@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PocketBase from 'pocketbase';
 import ReactPaginate from "react-paginate";
 
 import emptyListIcon from "/emptyList.png";
@@ -10,34 +11,46 @@ import "../styles/favoritesList.css";
 import "../styles/media.css";
 import { mediaQueries } from "../types/mediaQueries";
 
+import { useTranslation } from "react-i18next";
+
 const EmptyListContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  @media (max-width: 600px) {
+   margin-top: 4rem;
+  }
 `;
 
 const EmptyListImage = styled.img`
   width: 200px;
-`;
-
+  @media (max-width: 600px) {
+    width: 100px;
+  }
+  `;
+  
 const EmptyListTitle = styled.h1`
   font-size: 48px;
   ${mediaQueries("sm")`
     font-size: 30px;
   `} 
   `;
-  
-  const EmptyListText = styled.p`
+
+const EmptyListText = styled.p`
   font-size: 25px;
   text-align: center;
-  ${mediaQueries("sm")`
-    font-size: 20px;
-  `} 
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
-export default function MyListPage() {
+export default function MyListPage({onMediaClick}:{onMediaClick: (movie: MovieType | SerieType) => void}) {
+  const { t } = useTranslation();
+  const pb = new PocketBase('https://shoten-api.pockethost.io');
+  const user = pb.authStore.model;
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 16;
 
@@ -53,7 +66,8 @@ export default function MyListPage() {
   };
 
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    const storedFavorites = user?.favorites || [];
+
     setFavorites(storedFavorites);
     setIsLoading(false);
   }, []);
@@ -69,16 +83,16 @@ export default function MyListPage() {
       {isEmpty ? (
         <EmptyListContainer>
           <EmptyListImage src={emptyListIcon} alt="empty list icon" />
-          <EmptyListTitle>Mi lista está vacía</EmptyListTitle>
-          <EmptyListText>El contenido que añadas a Mi lista aparecerá aquí</EmptyListText>
+          <EmptyListTitle>{t("emptyListTitle")}</EmptyListTitle>
+          <EmptyListText>{t("emptyListSubtitle")}</EmptyListText>
         </EmptyListContainer>
       ) : (
         <div style={{ padding: "2rem" }}>
-          <h1 className='container-title'>Mi lista</h1>
+          <h1 className='container-title'>{t("listTitlePage")}</h1>
           <div className="media-grid">
             {favorites.map((fav: any) => (
               <div key={fav.id}>
-                <Card media={fav} />
+                <Card media={fav} onMediaClick={onMediaClick}/>
               </div>
             ))}
           </div>

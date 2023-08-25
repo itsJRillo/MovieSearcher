@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import heartIcon from '/heart.png';
-import { useTranslation } from 'react-i18next';
+
+import { useTranslation } from "react-i18next";
 
 const FooterContainer = styled.footer`
   display: flex;
@@ -26,7 +27,7 @@ const HeartIcon = styled.img`
 `;
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   
   return (
     <FooterContainer>
