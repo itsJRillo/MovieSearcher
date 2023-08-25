@@ -14,10 +14,3 @@
     spec = "cypress/e2e/firstTest.cy.ts"
     configFile = "cypress.netlify.config.js"
 
-  [plugins.inputs.preBuild]
-    enable = true
-    command = 'npm install -g serve'
-    args = 'npm start & npx wait-on http://localhost:3000'
-
-  [plugins.inputs.postBuild]
-    enable = false
