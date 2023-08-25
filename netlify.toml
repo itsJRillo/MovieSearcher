@@ -12,7 +12,6 @@
   [plugins.inputs]
     record = true
     spec = "cypress/e2e/firstTest.cy.ts"
-    browser = "chrome"
     configFile = "cypress.netlify.config.js"
 
   [plugins.inputs.preBuild]
