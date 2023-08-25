@@ -26,6 +26,7 @@
     "i18next-browser-languagedetector": "^7.1.0",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.0",
+    "netlify-plugin-cypress": "^2.2.0",
     "nodemon": "^3.0.1",
     "pocketbase": "^0.16.0",
     "react": "^18.2.0",
