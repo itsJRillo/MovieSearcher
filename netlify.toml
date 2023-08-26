@@ -9,9 +9,6 @@
 [[plugins]]
   package = "netlify-plugin-cypress"
 
-  [plugins.inputs]
-    spec = "cypress/e2e/smoke.cy.ts"
-
   [plugins.inputs.preBuild]
     enable = true
     start = 'netlify dev'
