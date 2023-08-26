@@ -191,7 +191,7 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
   };
 
   return (
-    <HeaderContainer>
+    <HeaderContainer data-cy="Header">
       <div>
         <Title src={logo} alt="logo Shoten" />
       </div>

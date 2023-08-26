@@ -112,7 +112,7 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
   //   try {
 
   //     await pb.collection('users').authWithOAuth2({ provider: 'github' });
-      
+
   //     toast.success("El usuario se ha creado satisfactoriamente", {
   //       position: toast.POSITION.BOTTOM_RIGHT
   //     });
@@ -143,7 +143,7 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
         "emailVisibility": true,
         "password": password,
         "passwordConfirm": rePassword,
-        "favorites":[]
+        "favorites": []
       };
 
       const existingEmailRecord = records.find(record => record.email === email);
@@ -153,7 +153,7 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
         });
         return;
       }
-      
+
       const existingUsernameRecord = records.find(record => record.username === username);
       if (existingUsernameRecord) {
         toast.error(t("warningExistentUsername"), {
@@ -164,7 +164,7 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
 
       await pb.collection('users').create(data);
       await pb.collection('users').requestVerification(email);
-      
+
       toast.success(t("successSignup"), {
         position: toast.POSITION.BOTTOM_RIGHT
       });
@@ -186,7 +186,7 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
   };
 
   return (
-    <Container>
+    <Container data-cy="signupContainer">
       <FormContainer>
         <TextContainer>
           <FormTitle>{t("welcomeMessageSignup")}</FormTitle>
@@ -195,19 +195,40 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
 
         <form onSubmit={handleSubmit}>
           <FormField>
-            <FormInput type="text" value={username} placeholder={`${t("placeholderUserInput")}`} onChange={handleUsernameChange} />
+            <FormInput
+              type="text"
+              value={username}
+              placeholder={`${t("placeholderUserInput")}`}
+              onChange={handleUsernameChange}
+              data-cy="signupUserInput"
+            />
           </FormField>
           <FormField>
-            <FormInput type="email" value={email} placeholder={`${t("placeholderEmailInput")}`} onChange={handleEmailChange} />
+            <FormInput
+              type="email"
+              value={email}
+              placeholder={`${t("placeholderEmailInput")}`}
+              onChange={handleEmailChange}
+              data-cy="signupEmailInput" />
           </FormField>
           <FormField>
-            <FormInput type="password" value={password} placeholder={`${t("placeholderPasswordInput")}`} onChange={handlePasswordChange} />
+            <FormInput
+              type="password"
+              value={password}
+              placeholder={`${t("placeholderPasswordInput")}`}
+              onChange={handlePasswordChange}
+              data-cy="signupPasswordInput" />
           </FormField>
           <FormField>
-            <FormInput type="password" value={rePassword} placeholder={`${t("placeholderRepasswordInput")}`} onChange={handleRepasswordChange} />
+            <FormInput
+              type="password"
+              value={rePassword}
+              placeholder={`${t("placeholderRepasswordInput")}`}
+              onChange={handleRepasswordChange}
+              data-cy="signupRepasswordInput" />
           </FormField>
           <ButtonsContainer>
-            <Button type="submit" variants={variants} whileHover="hover">
+            <Button type="submit" variants={variants} whileHover="hover" data-cy="submitSignup">
               {t("buttonSignup")}
             </Button>
             {/* <Button variants={variants} whileHover="hover" style={{backgroundColor:"#fff", color: "#000", display: 'flex', alignItems:"center", justifyContent:"space-around"}} onClick={handleGithubLogin}>

@@ -141,7 +141,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
   };
 
   return (
-    <Container>
+    <Container data-cy="loginContainer">
       <FormContainer>
         <TextContainer>
           <FormTitle>{t("welcomeMessage")}</FormTitle>
@@ -157,6 +157,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
               value={username}
               placeholder={t("placeholderUserOrEmailInput")}
               onChange={handleUsernameChange}
+              data-cy="inputUserLogin"
             />
           </FormField>
           <FormField>
@@ -165,17 +166,18 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
               value={password}
               placeholder={t("placeholderPasswordInput")}
               onChange={handlePasswordChange}
+              data-cy="inputPasswordLogin"
             />
           </FormField>
           <ButtonsContainer>
-            <Button type="submit" variants={variants} whileHover="hover">
+            <Button type="submit" variants={variants} whileHover="hover" data-cy="submitLogin">
               {t("buttonLogin")}
             </Button>
           </ButtonsContainer>
           <FormSubtitle>
             {t("warningAHA")}{' '}
             <Link to="/sign-up" style={{ color: '#f8b500' }}>
-              <motion.p variants={variants} whileHover="hover" style={{padding:8, margin:0}}>{t("warningNAHAlink")}</motion.p>
+              <motion.p variants={variants} whileHover="hover" style={{padding:8, margin:0}} data-cy="toSignupButton">{t("warningNAHAlink")}</motion.p>
             </Link>
           </FormSubtitle>
         </form>
