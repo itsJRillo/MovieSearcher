@@ -13,7 +13,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       
     },
-    baseUrl: "https://shoten-itsjrillo.netlify.app/",
+    baseUrl: "http://localhost:5173/",
     video: false
   },
 });

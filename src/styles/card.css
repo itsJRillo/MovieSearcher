@@ -124,16 +124,22 @@ a:active {
 
   grid-template-columns: repeat(4, minmax(250px, 1fr));
 
-  @media (max-width: 1200px) {
+}
+@media (max-width: 1200px) {
+  .media-grid{
     grid-template-columns: repeat(3, minmax(250px, 1fr));
   }
+}
 
-  @media (max-width: 992px) {
+@media (max-width: 992px) {
+  .media-grid{
     grid-template-columns: repeat(2, minmax(250px, 1fr));
     grid-gap: 15px;
   }
+}
 
-  @media (max-width: 576px) {
+@media (max-width: 576px) {
+  .media-grid{
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 10px;
   }

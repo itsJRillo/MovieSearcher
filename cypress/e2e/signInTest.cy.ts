@@ -1,6 +1,6 @@
 describe("Sign in", () => {
   beforeEach(() => {
-    cy.visit("https://shoten-itsjrillo.netlify.app/");
+    cy.visit("http://localhost:5173/");
   });
 
   it("EmptyHeader component is rendering", () => {

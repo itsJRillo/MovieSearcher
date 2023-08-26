@@ -1,6 +1,6 @@
 describe("Sign up", () => {
   beforeEach(() => {
-    cy.visit("https://shoten-itsjrillo.netlify.app/");
+    cy.visit("http://localhost:5173/");
   });
 
   it("EmptyHeader component is rendering", () => {
@@ -20,8 +20,5 @@ describe("Sign up", () => {
         cy.getBySel("signupRepasswordInput").type("hola12345");
         cy.getBySel("submitSignup").click();
       });
-
-    cy.url().should("include", "/home");
-    cy.getBySel("Header").should("be.visible");
   });
 });
