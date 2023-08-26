@@ -29,3 +29,6 @@ objetivos.todo
 
 # Local Netlify folder
 .netlify
+
+#Cypress
+/cypress/screenshots
