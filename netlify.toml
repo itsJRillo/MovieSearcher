@@ -1,6 +1,6 @@
 [build]
   command = "CI= npm run build"
-  publish = "public"
+  publish = "build"
 
 [build.environment]
   CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
