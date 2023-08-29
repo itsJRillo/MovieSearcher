@@ -169,11 +169,6 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
               data-cy="inputPasswordLogin"
             />
           </FormField>
-
-          <Link to="/forgot-password" style={{ color: '#f8b500', textAlign: "right" }}>
-            <motion.p variants={variants} whileHover="hover" style={{ padding: 8, margin: 0 }} data-cy="toSignupButton">{t("forgotPassword")}</motion.p>
-          </Link>
-
           <ButtonsContainer>
             <Button type="submit" variants={variants} whileHover="hover" data-cy="submitLogin">
               {t("buttonLogin")}
