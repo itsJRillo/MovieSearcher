@@ -87,8 +87,10 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+
   const [password, setPassword] = useState('');
   const [rePassword, setRepassword] = useState('');
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -99,7 +101,9 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    setIsPasswordValid(newPassword.length >= 8); // Adjust the minimum length as needed
   };
 
   const handleRepasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,6 +134,20 @@ export default function RegistrationForm({ onRegister }: RegistrationFormProps) 
     if (!username || !email || !password) {
       toast.error(t("warningAllInputs"), {
         position: toast.POSITION.BOTTOM_RIGHT
+      });
+      return;
+    }
+
+    if (!isPasswordValid) {
+      toast.error(t("warningPassword"), {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+
+    if (password !== rePassword) {
+      toast.error(t("matchPasswords"), {
+        position: toast.POSITION.BOTTOM_RIGHT,
       });
       return;
     }

@@ -164,7 +164,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             <FormInput
               type="password"
               value={password}
-              placeholder={t("placeholderPasswordInput")}
+              placeholder={t("placeholderPasswordInputLogin")}
               onChange={handlePasswordChange}
               data-cy="inputPasswordLogin"
             />
