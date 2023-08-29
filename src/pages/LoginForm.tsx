@@ -50,7 +50,7 @@ const FormField = styled.div`
 `;
 
 const FormInput = styled.input`
-  width: 100%;
+  width: 95%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -80,7 +80,7 @@ interface LoginFormProps {
 
 export default function LoginForm({ onLogin }: LoginFormProps) {
   const { t } = useTranslation();
-  
+
   const pb = new PocketBase('https://shoten-api.pockethost.io');
   const navigate = useNavigate();
 
@@ -115,8 +115,8 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         data.username,
         data.password
       );
-      
-      if(authData){
+
+      if (authData) {
         toast.success(t("successLoginMessage"), {
           position: toast.POSITION.BOTTOM_RIGHT
         });
@@ -133,7 +133,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
 
   const variants = {
     hover: {
-      scale: 1.05,
+      scale: 1.01,
       transition: {
         duration: 0.2,
       },
@@ -146,7 +146,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         <TextContainer>
           <FormTitle>{t("welcomeMessage")}</FormTitle>
           <FormSubtitle>
-          {t("welcomeSubmessage")}
+            {t("welcomeSubmessage")}
           </FormSubtitle>
         </TextContainer>
 
@@ -169,16 +169,23 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
               data-cy="inputPasswordLogin"
             />
           </FormField>
+
+          <Link to="/forgot-password" style={{ color: '#f8b500', textAlign: "right" }}>
+            <motion.p variants={variants} whileHover="hover" style={{ padding: 8, margin: 0 }} data-cy="toSignupButton">{t("forgotPassword")}</motion.p>
+          </Link>
+
           <ButtonsContainer>
             <Button type="submit" variants={variants} whileHover="hover" data-cy="submitLogin">
               {t("buttonLogin")}
             </Button>
           </ButtonsContainer>
           <FormSubtitle>
-            {t("warningAHA")}{' '}
-            <Link to="/sign-up" style={{ color: '#f8b500' }}>
-              <motion.p variants={variants} whileHover="hover" style={{padding:8, margin:0}} data-cy="toSignupButton">{t("warningNAHAlink")}</motion.p>
-            </Link>
+            <div>
+              {t("warningAHA")}{' '}
+              <Link to="/sign-up" style={{ color: '#f8b500' }}>
+                <motion.p variants={variants} whileHover="hover" style={{ padding: 8, margin: 0 }} data-cy="toSignupButton">{t("warningNAHAlink")}</motion.p>
+              </Link>
+            </div>
           </FormSubtitle>
         </form>
         <ToastContainer />

@@ -1,0 +1,9 @@
+.icon {
+  fill: black;
+  transition: fill 0.3s ease;
+  cursor: pointer;
+}
+
+.icon:hover {
+  fill: white;
+}

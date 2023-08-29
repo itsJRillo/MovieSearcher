@@ -74,6 +74,7 @@ export default function Home({
           swipeable
           responsive={responsiveFullWidth}
           removeArrowOnDeviceType={["tablet", "mobile"]}
+          showDots
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
@@ -89,11 +90,12 @@ export default function Home({
           swipeable
           responsive={responsive}
           removeArrowOnDeviceType={["tablet", "mobile"]}
+          showDots
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
           {data.upcomingMovies?.map((movie) => (
-            <CarouselCard key={movie.id} media={movie}/>
+            <CarouselCard key={movie.id} media={movie} onMediaClick={data.onMediaClick}/>
           ))}
         </Carousel>
       </div>
@@ -104,11 +106,12 @@ export default function Home({
           swipeable
           responsive={responsive}
           removeArrowOnDeviceType={["tablet", "mobile"]}
+          showDots
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         > 
-          {data.series?.map((serie) => (
-            <CarouselCard key={serie.id} media={serie} />
+          {data.series?.slice(0,15).map((serie) => (
+            <CarouselCard key={serie.id} media={serie} onMediaClick={data.onMediaClick}/>
           ))}
         </Carousel>
       </div>
@@ -119,11 +122,12 @@ export default function Home({
           swipeable
           responsive={responsive}
           removeArrowOnDeviceType={["tablet", "mobile"]}
+          showDots
           ssr={true}
           customTransition="transform 500ms ease-in-out"
         >
           {data.trendingSeries?.map((serie) => (
-            <CarouselCard key={serie.id} media={serie} />
+            <CarouselCard key={serie.id} media={serie} onMediaClick={data.onMediaClick}/>
           ))}
         </Carousel>
       </div>

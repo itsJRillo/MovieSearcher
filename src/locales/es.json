@@ -50,5 +50,18 @@
 
     "homeMoviesLatest": "Próximos estrenos",
     "homeTVPopular": "Series populares",
-    "homeTVBest": "Series mejor valoradas"
+    "homeTVBest": "Series mejor valoradas",
+
+    "forgotPassword":"Has olvidado la contraseña?",
+    "forgotPasswordTitle":"Has olvidado la contraseña? 🔒",
+    "forgotPasswordSubtitle":"Introduce tu correo y te enviaremos instrucciones para recuperar tu contraseña",
+    "returnLogin":"< Volver al inicio de sesión",
+    "resetPasswordButton":"Enviar enlace de recuperación",
+    "resetMessage":"Enlace de reseteo enviado",
+
+    "trailerNoAvailable":"Ningún trailer disponible",
+    "teaserNoAvailable":"Ningún teaser disponible",
+    "resetPasswordTitle":"Recuperación de contraseña",
+    "resetPasswordSubtitle":"Introduce tu nueva contraseña",
+    "resetNewPassword":"Cambiar contraseña"
 }

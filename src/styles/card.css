@@ -108,7 +108,7 @@ a:active {
 }
 
 .add-to-favorites-button:hover {
-  background-color: #e64a19;
+  background-color: #fbe7ae
 }
 
 .card.hovered .card-overlay {
@@ -123,8 +123,8 @@ a:active {
   padding: 20px;
 
   grid-template-columns: repeat(4, minmax(250px, 1fr));
-
 }
+
 @media (max-width: 1200px) {
   .media-grid{
     grid-template-columns: repeat(3, minmax(250px, 1fr));

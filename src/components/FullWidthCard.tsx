@@ -60,6 +60,7 @@ const DetailsButton = styled(motion.button)`
     font-size: 1rem;
     text-transform: uppercase;
     font-weight: bold;
+    margin-bottom: 2rem;
 `;
 
 const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, language, onMediaClick }) => {
@@ -131,7 +132,7 @@ const FullWidthCard: React.FC<FullWidthCardProps> = ({ media, language, onMediaC
                         alt={`${media.type === "movie" ? media.title : ""}`}
                     />
                     <Link
-                        to={`/peliculas/${media.id}`}
+                        to={`/movies/${media.id}`}
                         key={media.id}
                         onClick={() => onMediaClick?.(media)}
                     >

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Loading from "../components/Loading";
 import Carousel from "react-multi-carousel";
+import { useTranslation } from "react-i18next";
 
 interface MediaDetailsProps {
     media: MovieType | SerieType | undefined;
@@ -151,10 +152,12 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
     const [titleImage, setTitleImage] = useState<string | null>(null);
     const [, setLoading] = useState<boolean>(true);
 
+    const { t } = useTranslation();
+
     const handleDetailsMedia = async () => {
         const type = isMovieType ? "movie" : "tv";
         const apiKey = import.meta.env.VITE_API_KEY;
-    
+
         const fetchVideos = await fetch(
             `https://api.themoviedb.org/3/${type}/${media?.id}/videos?language=${language}&api_key=${apiKey}`,
             {
@@ -165,7 +168,7 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
                 }
             }
         );
-    
+
         const fetchDetails = await fetch(
             `https://api.themoviedb.org/3/${type}/${media?.id}?language=${language}&api_key=${apiKey}`,
             {
@@ -176,7 +179,7 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
                 }
             }
         );
-    
+
         const fetchImages = await fetch(
             `https://api.themoviedb.org/3/${type}/${media?.id}/images?language=${language}`,
             {
@@ -187,32 +190,32 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
                 }
             }
         );
-    
+
         const detailsJSON = await fetchDetails.json();
         const imagesJSON = await fetchImages.json();
         const videosJSON = await fetchVideos.json();
-    
+
         setDetails({
             type: type,
             ...detailsJSON,
         });
-    
+
         const teaserVideos = videosJSON.results.filter((video: VideoType) => {
             return video.type === 'Trailer' || video.type === 'Teaser';
         });
-    
+
         setVideos(teaserVideos);
-    
+
         const filteredImages = imagesJSON.logos.map((image: any) => image.file_path);
-    
+
         if (filteredImages.length > 0) {
             const imagePath = filteredImages[0];
             setTitleImage(imagePath);
         }
-    
+
         setLoading(false);
     };
-    
+
 
     const handleMenuItemClick = (type: string) => {
         setSelectedType(type);
@@ -294,7 +297,13 @@ const MediaDetails = ({ media, language }: MediaDetailsProps) => {
                         ))}
                     </Carousel>
                 ) : (
-                    <p>No {selectedType === "trailers" ? "trailers" : "teasers"} available.</p>
+                    <>
+                        {selectedType === "trailers" ? (<p>
+                            {t("trailerNoAvailable")}
+                        </p>) : (<p>
+                            {t("teaserNoAvailable")}
+                        </p>)}
+                    </>
                 )}
             </VideoContainer>
         </MovieContainer>

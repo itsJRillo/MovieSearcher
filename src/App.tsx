@@ -1,3 +1,5 @@
+import PocketBase from 'pocketbase';
+
 import { useEffect, useState } from "react"
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import "./styles/main.css"
@@ -23,6 +25,8 @@ import enTranslation from "./locales/en.json";
 import esTranslation from "./locales/es.json";
 import itTranslation from "./locales/it.json";
 import i18n from 'i18next';
+import ForgotPassword from "./pages/ForgotPassword"
+import ResetPassword from './pages/ResetPassword';
 
 i18n
   .use(LanguageDetector)
@@ -41,6 +45,7 @@ i18n
 function App() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true);
+  const pb = new PocketBase('https://shoten-api.pockethost.io');
 
   const [loggedInUser, setLoggedInUser] = useState<UserType | null>(null)
   const [language, setLanguage] = useState("en")
@@ -207,15 +212,28 @@ function App() {
                 loggedInUser ? <Navigate to="/home" /> : <RegisterForm onRegister={handleLogin} />
               }
             />
+            <Route
+              path="/forgot-password"
+              element={
+                loggedInUser ? <Navigate to="/home" /> : <ForgotPassword />
+              }
+            />
+            
+            <Route
+              path={`/confirm-password-reset/${pb.authStore.token}`}
+              element={
+                loggedInUser ? <Navigate to="/home" /> : <ResetPassword />
+              }
+            />
 
             {(loggedInUser || location.pathname === "/" || location.pathname === "/sign-up") && (
               <>
                 <Route path="/home" element={<Home data={{ movies: popularMovies, upcomingMovies: upcomingMovies, series: popularSeries, trendingSeries: trendingSeries, language: language, onMediaClick: handleMediaClick }} />} />
                 <Route path="/search" element={<SearchPage onMediaClick={handleMediaClick} />} />
                 <Route path="/movies" element={<Movies data={movies} onMediaClick={handleMediaClick} filters={genresMovies} />} />
-                <Route path="/peliculas/*" element={<MediaDetails media={selectedMovie} language={language} />} />
+                <Route path="/movies/*" element={<MediaDetails media={selectedMovie} language={language} />} />
                 <Route path="/tv-series/*" element={<MediaDetails media={selectedMovie} language={language} />} />
-                <Route path="/my-list" element={<MyListPage onMediaClick={handleMediaClick}/>} />
+                <Route path="/my-list" element={<MyListPage onMediaClick={handleMediaClick} />} />
                 <Route path="/tv-series" element={<TVSeries data={series} onSerieClick={handleMediaClick} filters={genresTV} />} />
                 <Route path="/account" element={<Profile />} />
               </>

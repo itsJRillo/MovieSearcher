@@ -74,7 +74,7 @@ const Card: React.FC<CardProps> = ({ media, onMediaClick }) => {
     >
       {hasPoster ? (
         <Link
-          to={isMovieType ? `/peliculas/${media.id}` : `/tv-series/${media.id}`}
+          to={isMovieType ? `/movies/${media.id}` : `/tv-series/${media.id}`}
           onClick={() => onMediaClick?.(media)}
         >
           <img

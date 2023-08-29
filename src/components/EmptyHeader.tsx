@@ -49,9 +49,10 @@ const Image = styled.img`
   `}
 `;
 
-const EmptyHeader = ({onChangeLanguage}:{onChangeLanguage: (event: React.ChangeEvent<HTMLSelectElement>) => void;}) => {
+const EmptyHeader = ({ onChangeLanguage }: { onChangeLanguage: (event: React.ChangeEvent<HTMLSelectElement>) => void; }) => {
   return (
     <HeaderContainer data-cy="EmptyHeader">
+
       <Title src={ShotenLogo} alt="Logo" />
 
       <Image src={languageIcon} />

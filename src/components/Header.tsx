@@ -1,20 +1,19 @@
 import PocketBase from 'pocketbase';
+import { useEffect, useState } from 'react';
+import { useTranslation } from "react-i18next";
 
 import logo from '/shotenLogo.png';
-import homeIcon from '/homeIcon.png';
-import searchIcon from '/searchIcon.png';
-import listIcon from '/listIcon.png';
-import movieIcon from '/movieIcon.svg';
-import seriesIcon from '/tvIcon.png';
+import searchIcon from '/searchIcon.svg';
+import listIcon from '/listIcon.svg';
+import movieIcon from '/movie.svg';
+import seriesIcon from '/tvIcon.svg';
 import profileIcon from '/user.png';
 import languageIcon from '/language.png';
 
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useState } from 'react';
 import { mediaQueries } from '../types/mediaQueries';
-
-import { useTranslation } from "react-i18next";
+import "../styles/icon.css"
 
 const HeaderContainer = styled.header`
   background-color: #f8b500;
@@ -35,8 +34,8 @@ const HeaderContainer = styled.header`
 `;
 
 const Icon = styled.img`
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
   position: relative;
   z-index: 1;
   transition: opacity 0.3s ease;
@@ -92,12 +91,12 @@ const NavLinkText = styled(Link)`
 `;
 
 const Image = styled.img`
-  width: 12px;
-  height: 12px;
-  ${mediaQueries("lg")`
   width: 25px;
   height: 25px;
-  `}
+  @media (max-width: 600px){
+    width: 35px;
+    height: 35px;
+  }
 `;
 
 const Title = styled.img`
@@ -121,6 +120,7 @@ const DropdownMenu = styled.div`
   z-index: 3;
   @media (max-width: 600px) {
     right: -3rem;
+    font-size: 1rem;
   }
 `;
 
@@ -149,7 +149,7 @@ const LanguageDropdown = styled.select`
   border: none;
   border-radius: 4px;
   padding: .25rem;
-  font-size: 20px;
+  font-size: 12px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 
@@ -190,65 +190,130 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
     pb.authStore.clear();
   };
 
+  const [isMobileLayout, setIsMobileLayout] = useState(window.innerWidth <= 600);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setIsMobileLayout(window.innerWidth <= 600);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
   return (
-    <HeaderContainer data-cy="Header">
-      <div>
-        <Title src={logo} alt="logo Shoten" />
-      </div>
+    <>
+      {!isMobileLayout ? (
+        <HeaderContainer data-cy="Header">
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <Link to="/home">
+              <Title src={logo} alt="logo Shoten" />
+            </Link>
+          </div>
 
-      <Nav>
-        <NavItem>
-          <Image src={homeIcon} alt="home icon" />
-          <NavLinkText to="/home">{t('homeTitle')}</NavLinkText>
-        </NavItem>
-        <NavItem>
-          <Image src={searchIcon} alt="search icon" />
-          <NavLinkText to="/search">{t('searchTitle')}</NavLinkText>
-        </NavItem>
-        <NavItem>
-          <Image src={listIcon} alt="list icon" />
-          <NavLinkText to="/my-list">{t('listTitle')}</NavLinkText>
-        </NavItem>
-        <NavItem>
-          <Image src={movieIcon} alt="movie icon" />
-          <NavLinkText to="/movies">{t('moviesTitle')}</NavLinkText>
-        </NavItem>
-        <NavItem>
-          <Image src={seriesIcon} alt="series" />
-          <NavLinkText to="/tv-series">{t('tvTitle')}</NavLinkText>
-        </NavItem>
-      </Nav>
+          <Nav>
+            <NavItem>
+              <Image src={searchIcon} alt="search icon" />
+              <NavLinkText to="/search">{t('searchTitle')}</NavLinkText>
+            </NavItem>
+            <NavItem>
+              <Image src={listIcon} alt="list icon" />
+              <NavLinkText to="/my-list">{t('listTitle')}</NavLinkText>
+            </NavItem>
+            <NavItem>
+              <Image src={movieIcon} alt="movie icon" />
+              <NavLinkText to="/movies">{t('moviesTitle')}</NavLinkText>
+            </NavItem>
+            <NavItem>
+              <Image src={seriesIcon} alt="series" />
+              <NavLinkText to="/tv-series">{t('tvTitle')}</NavLinkText>
+            </NavItem>
+          </Nav>
 
-      <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
-        <Image src={languageIcon} />
-        <LanguageDropdown defaultValue={""} onChange={onChangeLanguage}>
-          <LanguageOption value=""></LanguageOption>
-          <LanguageOption value="es">
-            ES
-          </LanguageOption>
-          <LanguageOption value="en">            
-            EN
-          </LanguageOption>
-        </LanguageDropdown>
-      </div>
+          <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
+              <Image src={languageIcon} />
+              <LanguageDropdown defaultValue={""} onChange={onChangeLanguage}>
+                <LanguageOption value=""></LanguageOption>
+                <LanguageOption value="es">
+                  ES
+                </LanguageOption>
+                <LanguageOption value="en">
+                  EN
+                </LanguageOption>
+              </LanguageDropdown>
+            </div>
 
-      <HoverContainer onMouseEnter={handleDropdownOpen} onMouseLeave={handleDropdownClose}>
-        <Icon src={profileIcon} alt="Profile icon" />
-        {dropdownVisible && (
-          <DropdownMenu>
-            <DropdownMenuItem to="/account">
-              {t("accountMenu")}
-            </DropdownMenuItem>
-            <DropdownMenuItem to="/my-list">
-              {t("listMenu")}
-            </DropdownMenuItem>
-            <Divider />
-            <LogoutButton onClick={handleLogout}>{t("logout")}</LogoutButton>
-          </DropdownMenu>
-        )}
-      </HoverContainer>
+            <HoverContainer onMouseEnter={handleDropdownOpen} onMouseLeave={handleDropdownClose}>
+              <Icon src={profileIcon} alt="Profile icon" />
+              {dropdownVisible && (
+                <DropdownMenu>
+                  <DropdownMenuItem to="/account">
+                    {t("accountMenu")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem to="/my-list">
+                    {t("listMenu")}
+                  </DropdownMenuItem>
+                  <Divider />
+                  <LogoutButton onClick={handleLogout}>{t("logout")}</LogoutButton>
+                </DropdownMenu>
+              )}
+            </HoverContainer>
+          </div>
 
-    </HeaderContainer>
+        </HeaderContainer>
+      ) : (
+        <HeaderContainer data-cy="Header">
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <Link to="/home">
+              <Title src={logo} alt="logo Shoten" />
+            </Link>
+            <HoverContainer onMouseEnter={handleDropdownOpen} onMouseLeave={handleDropdownClose}>
+              <Icon src={profileIcon} alt="Profile icon" />
+              {dropdownVisible && (
+                <DropdownMenu>
+                  <DropdownMenuItem to="/account">
+                    {t("accountMenu")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem to="/my-list">
+                    {t("listMenu")}
+                  </DropdownMenuItem>
+                  <Divider />
+                  <LogoutButton onClick={handleLogout}>{t("logout")}</LogoutButton>
+                </DropdownMenu>
+              )}
+            </HoverContainer>
+          </div>
+
+          <Nav>
+            <NavItem>
+              <Link to="/search">
+                <Image className="icon" src={searchIcon} alt="search icon" />
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/my-list">
+                <Image className="icon" src={listIcon} alt="list icon" />
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/movies">
+                <Image className="icon" src={movieIcon} alt="movie icon" />
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/tv-series">
+                <Image className="icon" src={seriesIcon} alt="series" />
+              </Link>
+            </NavItem>
+          </Nav>
+          <br />
+        </HeaderContainer>
+      )}
+    </>
   );
 };
 

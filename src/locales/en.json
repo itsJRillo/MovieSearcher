@@ -26,17 +26,21 @@
 
     "accountMenu": "Account",
     "listMenu": "My list",
+
     "homeTitle": "HOME",
     "searchTitle": "SEARCH",
     "listTitle": "MY LIST",
     "moviesTitlePage": "Movies",
     "moviesTitle": "MOVIES",
     "tvTitle": "TV SERIES",
+
     "logout": "Log out",
     "removeCardFav": "Removed from favorites ❤️",
     "addCardFav": "Added to favorites ⭐",
+
     "footerMessage": "Made with",
     "footerMessage2": "by",
+
     "noResultMessage": "There are no results",
     "placeholderSearch": "Movie or series...",
     "emptyListTitle": "My list is empty",
@@ -45,5 +49,19 @@
     "loadingMessage": "Loading...",
     "homeMoviesLatest": "Upcoming Releases",
     "homeTVPopular": "Popular TV Shows",
-    "homeTVBest": "Top Rated TV Shows"
+    "homeTVBest": "Top Rated TV Shows",
+
+    "forgotPassword":"Forgot password?",
+    "forgotPasswordTitle":"Forgot Password? 🔒",
+    "forgotPasswordSubtitle":"Enter your email and we'll send you instructions to reset your password",
+    "returnLogin":"< Back to login",
+    "resetPasswordButton":"Send reset link",
+    "resetMessage":"Reset link sent",
+    
+    "trailerNoAvailable":"No trailers available",
+    "teaserNoAvailable":"No teasers available",
+    "resetPasswordTitle":"Password recovery",
+    "resetPasswordSubtitle":"Enter your new password",
+    "resetNewPassword":"Change password"
+
 }
