@@ -19,6 +19,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   margin-top: 2rem;
+  background-color: #121212;
 `;
 
 const FormContainer = styled.div`

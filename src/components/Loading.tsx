@@ -23,6 +23,7 @@ const LoadingContainer = styled.div`
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    background-color: #121212
 `;
 
 export default function Loading() {
@@ -30,6 +31,6 @@ export default function Loading() {
     
     return <LoadingContainer>
         <Image src={loadingIcon} width={300} height={300} alt={`${t("loadingMessage")} svg`} />
-        <span>{t("loadingMessage")}</span>
+        <span style={{color:"#fff"}}>{t("loadingMessage")}</span>
     </LoadingContainer>
 }

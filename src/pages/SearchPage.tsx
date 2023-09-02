@@ -14,6 +14,7 @@ const PageContainer = styled.div`
   align-items: center;
   overflow-x: hidden;
   padding: 3rem;
+  background-color: #121212;
   @media (max-width: 600px) {
     margin-top: 5rem;
     padding: 3rem 0 3rem 0;
@@ -72,6 +73,7 @@ const NoResultDiv = styled.div`
 const NoResultText = styled.div`
   font-size: 36px;
   text-align: center;
+  color: white;
   @media (max-width: 600px) {
     font-size: 25px;
   }

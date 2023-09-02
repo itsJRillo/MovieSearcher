@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
 
 import logo from '/shotenLogo.png';
+import homeIcon from '/homeIcon.svg';
 import searchIcon from '/searchIcon.svg';
 import listIcon from '/listIcon.svg';
 import movieIcon from '/movie.svg';
@@ -254,9 +255,6 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
                   <DropdownMenuItem to="/account">
                     {t("accountMenu")}
                   </DropdownMenuItem>
-                  <DropdownMenuItem to="/my-list">
-                    {t("listMenu")}
-                  </DropdownMenuItem>
                   <Divider />
                   <LogoutButton onClick={handleLogout}>{t("logout")}</LogoutButton>
                 </DropdownMenu>
@@ -268,18 +266,13 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
       ) : (
         <HeaderContainer data-cy="Header">
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <Link to="/home">
               <Title src={logo} alt="logo Shoten" />
-            </Link>
             <HoverContainer onMouseEnter={handleDropdownOpen} onMouseLeave={handleDropdownClose}>
               <Icon src={profileIcon} alt="Profile icon" />
               {dropdownVisible && (
                 <DropdownMenu>
                   <DropdownMenuItem to="/account">
                     {t("accountMenu")}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem to="/my-list">
-                    {t("listMenu")}
                   </DropdownMenuItem>
                   <Divider />
                   <LogoutButton onClick={handleLogout}>{t("logout")}</LogoutButton>
@@ -289,6 +282,11 @@ const Header = ({ onLogout, onChangeLanguage }: HeaderProps) => {
           </div>
 
           <Nav>
+            <NavItem>
+              <Link to="/">
+                <Image className="icon" src={homeIcon} alt="home icon" />
+              </Link>
+            </NavItem>
             <NavItem>
               <Link to="/search">
                 <Image className="icon" src={searchIcon} alt="search icon" />

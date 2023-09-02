@@ -9,6 +9,7 @@
     "placeholderPasswordInput": "Password (Min: 8 characters)",
     "warningPassword": "Password must be at least 8 characters long",
     "matchPasswords": "Passwords do not match",
+    "placeholderPasswordInputLogin": "Password",
     "placeholderRepasswordInput": "Repeat password",
     "buttonLogin": "Log in",
     "warningAHA": "Are you new to the platform?",
@@ -27,7 +28,6 @@
     "warningNAHAlink": "Create an account",
 
     "accountMenu": "Account",
-    "listMenu": "My list",
 
     "homeTitle": "HOME",
     "searchTitle": "SEARCH",

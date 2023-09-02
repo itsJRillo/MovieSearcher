@@ -84,6 +84,7 @@
   text-align: center;
   font-size: 5rem;
   margin-top: 100px;
+  color: white;
 }
 
 @media (max-width: 600px) {

@@ -19,6 +19,7 @@ const EmptyListContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  background-color:#121212;
   @media (max-width: 600px) {
    margin-top: 4rem;
   }
@@ -33,6 +34,7 @@ const EmptyListImage = styled.img`
   
 const EmptyListTitle = styled.h1`
   font-size: 48px;
+  color: white;
   ${mediaQueries("sm")`
     font-size: 30px;
   `} 

@@ -67,7 +67,7 @@ export default function Home({
   const { t } = useTranslation();
   
   return (
-    <div>
+    <div style={{backgroundColor: "#121212"}}>
       <div>
         <Carousel
           arrows

@@ -11,6 +11,7 @@ const PageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  background-color: #121212;
 `;
 
 const ProfileInfoContainer = styled.div`

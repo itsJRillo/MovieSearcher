@@ -14,6 +14,7 @@ const MovieContainer = styled.div`
     flex-direction: column; 
     align-items: center;
     gap: 20px;
+    background-color: #121212
 `;
 
 const Filter = styled.div`
