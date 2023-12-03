@@ -89,9 +89,9 @@ I'd like to credit the following resources:
 [Netlify-url]: https://www.netlify.com
 
 [PocketBase]: https://img.shields.io/badge/PocketBase-ffffff?style=for-the-badge&logo=PocketBase&logoColor=black
-[PocketBase-url]: https://www.netlify.com
+[PocketBase-url]: https://pocketbase.io
 
 [Cypress]: https://img.shields.io/badge/Cypress-000000?style=for-the-badge&logo=Cypress&logoColor=white
-[Cypress-url]: https://www.netlify.com
+[Cypress-url]: https://www.cypress.io
 
 
